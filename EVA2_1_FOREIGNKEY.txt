@@ -1,0 +1,292 @@
+MySQL Shell 8.0.43
+
+Copyright (c) 2016, 2025, Oracle and/or its affiliates.
+Oracle is a registered trademark of Oracle Corporation and/or its affiliates.
+Other names may be trademarks of their respective owners.
+
+Type '\help' or '\?' for help; '\quit' to exit.
+ MySQL  JS > \SQL
+Unknown command: '\SQL'
+ MySQL  JS > \sql
+Switching to SQL mode... Commands end with ;
+ MySQL  SQL > \connect --mc root@localhost
+Creating a Classic session to 'root@localhost'
+Fetching global names for auto-completion... Press ^C to stop.
+Your MySQL connection id is 11
+Server version: 8.0.43 MySQL Community Server - GPL
+No default schema selected; type \use <schema> to set one.
+ MySQL  localhost:3306 ssl  SQL > SHOW DATABASES;
++--------------------+
+| Database           |
++--------------------+
+| information_schema |
+| mysql              |
+| performance_schema |
+| prueba_tbd         |
+| sakila             |
+| sys                |
+| tbd1               |
+| world              |
++--------------------+
+8 rows in set (0.0015 sec)
+ MySQL  localhost:3306 ssl  SQL > CREATE DATABASE tbd2;
+Query OK, 1 row affected (0.0208 sec)
+ MySQL  localhost:3306 ssl  SQL > USE tbd2;
+Default schema set to `tbd2`.
+Fetching global names, object names from `tbd2` for auto-completion... Press ^C to stop.
+ MySQL  localhost:3306 ssl  tbd2  SQL > CREATE TABLE cliente(
+                                     -> IDcliente INT NOT NULL AUTO_INCREMENT KEY,
+                                     -> nombre VARCHAR(50) NOT NULL,
+                                     -> RFC VARCHAR(13
+                                     -> ) NOT NULL);
+Query OK, 0 rows affected (0.0439 sec)
+ MySQL  localhost:3306 ssl  tbd2  SQL > DESC cliente;
++-----------+-------------+------+-----+---------+----------------+
+| Field     | Type        | Null | Key | Default | Extra          |
++-----------+-------------+------+-----+---------+----------------+
+| IDcliente | int         | NO   | PRI | NULL    | auto_increment |
+| nombre    | varchar(50) | NO   |     | NULL    |                |
+| RFC       | varchar(13) | NO   |     | NULL    |                |
++-----------+-------------+------+-----+---------+----------------+
+3 rows in set (0.0145 sec)
+ MySQL  localhost:3306 ssl  tbd2  SQL > INSERT INTO cliente(nombre, RFC)
+                                     -> VALUES('Ernesto', 'TFDS536978521'), ('Juana', 'RTFD879632578'), ('Sofia', 'FIPT896352147');
+Query OK, 3 rows affected (0.0174 sec)
+
+Records: 3  Duplicates: 0  Warnings: 0
+ MySQL  localhost:3306 ssl  tbd2  SQL > SELECT * FROM cliente;
++-----------+---------+---------------+
+| IDcliente | nombre  | RFC           |
++-----------+---------+---------------+
+|         1 | Ernesto | TFDS536978521 |
+|         2 | Juana   | RTFD879632578 |
+|         3 | Sofia   | FIPT896352147 |
++-----------+---------+---------------+
+3 rows in set (0.0008 sec)
+ MySQL  localhost:3306 ssl  tbd2  SQL > CREATE TABLE venta(
+                                     -> IDventa INT NOT NULL AUTO_INCREMENT KEY,
+                                     -> Fecha DATE NOT NULL,
+                                     -> IDcliente INT NOT NULL
+                                     -> , FOREIGN KEY(IDcliente)
+                                     -> REFERENCES cliente(IDcliente));
+Query OK, 0 rows affected (0.0643 sec)
+ MySQL  localhost:3306 ssl  tbd2  SQL > SHOW CREATE TABLE venta;
++-------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| Table | Create Table                                                                                                                                                                                                                                                                                                                                 |
++-------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| venta | CREATE TABLE `venta` (
+  `IDventa` int NOT NULL AUTO_INCREMENT,
+  `Fecha` date NOT NULL,
+  `IDcliente` int NOT NULL,
+  PRIMARY KEY (`IDventa`),
+  KEY `IDcliente` (`IDcliente`),
+  CONSTRAINT `venta_ibfk_1` FOREIGN KEY (`IDcliente`) REFERENCES `cliente` (`IDcliente`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci |
++-------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+1 row in set (0.0130 sec)
+ MySQL  localhost:3306 ssl  tbd2  SQL > SELECT * FROM cliente;
++-----------+---------+---------------+
+| IDcliente | nombre  | RFC           |
++-----------+---------+---------------+
+|         1 | Ernesto | TFDS536978521 |
+|         2 | Juana   | RTFD879632578 |
+|         3 | Sofia   | FIPT896352147 |
++-----------+---------+---------------+
+3 rows in set (0.0018 sec)
+ MySQL  localhost:3306 ssl  tbd2  SQL > DESC venta;
++-----------+------+------+-----+---------+----------------+
+| Field     | Type | Null | Key | Default | Extra          |
++-----------+------+------+-----+---------+----------------+
+| IDventa   | int  | NO   | PRI | NULL    | auto_increment |
+| Fecha     | date | NO   |     | NULL    |                |
+| IDcliente | int  | NO   | MUL | NULL    |                |
++-----------+------+------+-----+---------+----------------+
+3 rows in set (0.0023 sec)
+ MySQL  localhost:3306 ssl  tbd2  SQL > INSERT INTO venta(fecha, IDcliente)
+                                     -> VALUE('2025-08-30', 5);
+ERROR: 1452 (23000): Cannot add or update a child row: a foreign key constraint fails (`tbd2`.`venta`, CONSTRAINT `venta_ibfk_1` FOREIGN KEY (`IDcliente`) REFERENCES `cliente` (`IDcliente`))
+ MySQL  localhost:3306 ssl  tbd2  SQL > INSERT INTO venta(fecha, IDcliente) VALUE('2025-08-30', 1);
+Query OK, 1 row affected (0.0152 sec)
+ MySQL  localhost:3306 ssl  tbd2  SQL > INSERT INTO venta(fecha, IDcliente) VALUE('2025-08-30', 2);
+Query OK, 1 row affected (0.0148 sec)
+ MySQL  localhost:3306 ssl  tbd2  SQL > INSERT INTO venta(fecha, IDcliente) VALUE('2025-08-30', 3);
+Query OK, 1 row affected (0.0124 sec)
+ MySQL  localhost:3306 ssl  tbd2  SQL > SELECT * FROM cliente;
++-----------+---------+---------------+
+| IDcliente | nombre  | RFC           |
++-----------+---------+---------------+
+|         1 | Ernesto | TFDS536978521 |
+|         2 | Juana   | RTFD879632578 |
+|         3 | Sofia   | FIPT896352147 |
++-----------+---------+---------------+
+3 rows in set (0.0008 sec)
+ MySQL  localhost:3306 ssl  tbd2  SQL > SELECT * FROM venta;
++---------+------------+-----------+
+| IDventa | Fecha      | IDcliente |
++---------+------------+-----------+
+|       2 | 2025-08-30 |         1 |
+|       3 | 2025-08-30 |         2 |
+|       4 | 2025-08-30 |         3 |
++---------+------------+-----------+
+3 rows in set (0.0007 sec)
+ MySQL  localhost:3306 ssl  tbd2  SQL > INSERT INTO venta(fecha, IDcliente) VALUE('2025-08-30', 3);
+Query OK, 1 row affected (0.0157 sec)
+ MySQL  localhost:3306 ssl  tbd2  SQL > SELECT * FROM venta;
++---------+------------+-----------+
+| IDventa | Fecha      | IDcliente |
++---------+------------+-----------+
+|       2 | 2025-08-30 |         1 |
+|       3 | 2025-08-30 |         2 |
+|       4 | 2025-08-30 |         3 |
+|       5 | 2025-08-30 |         3 |
++---------+------------+-----------+
+4 rows in set (0.0007 sec)
+ MySQL  localhost:3306 ssl  tbd2  SQL > DELETE FROM cliente
+                                     -> WHERE IDcliente=1;
+ERROR: 1451 (23000): Cannot delete or update a parent row: a foreign key constraint fails (`tbd2`.`venta`, CONSTRAINT `venta_ibfk_1` FOREIGN KEY (`IDcliente`) REFERENCES `cliente` (`IDcliente`))
+ MySQL  localhost:3306 ssl  tbd2  SQL > DELETE FROM venta WHERE IDcliente=1;
+Query OK, 1 row affected (0.0153 sec)
+ MySQL  localhost:3306 ssl  tbd2  SQL > DELETE FROM cliente WHERE IDcliente=1;
+Query OK, 1 row affected (0.0149 sec)
+ MySQL  localhost:3306 ssl  tbd2  SQL > DESC venta;
++-----------+------+------+-----+---------+----------------+
+| Field     | Type | Null | Key | Default | Extra          |
++-----------+------+------+-----+---------+----------------+
+| IDventa   | int  | NO   | PRI | NULL    | auto_increment |
+| Fecha     | date | NO   |     | NULL    |                |
+| IDcliente | int  | NO   | MUL | NULL    |                |
++-----------+------+------+-----+---------+----------------+
+3 rows in set (0.0024 sec)
+ MySQL  localhost:3306 ssl  tbd2  SQL > SHOW CREATE TABLE venta;
++-------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| Table | Create Table                                                                                                                                                                                                                                                                                                                                                  |
++-------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| venta | CREATE TABLE `venta` (
+  `IDventa` int NOT NULL AUTO_INCREMENT,
+  `Fecha` date NOT NULL,
+  `IDcliente` int NOT NULL,
+  PRIMARY KEY (`IDventa`),
+  KEY `IDcliente` (`IDcliente`),
+  CONSTRAINT `venta_ibfk_1` FOREIGN KEY (`IDcliente`) REFERENCES `cliente` (`IDcliente`)
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci |
++-------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+1 row in set (0.0011 sec)
+ MySQL  localhost:3306 ssl  tbd2  SQL > ALTER TABLE venta
+                                     -> DROP CONSTRAINT venta_ibfk_1;
+Query OK, 0 rows affected (0.0162 sec)
+
+Records: 0  Duplicates: 0  Warnings: 0
+ MySQL  localhost:3306 ssl  tbd2  SQL > SHOW CREATE TABLE venta;
++-------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| Table | Create Table                                                                                                                                                                                                                                                        |
++-------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| venta | CREATE TABLE `venta` (
+  `IDventa` int NOT NULL AUTO_INCREMENT,
+  `Fecha` date NOT NULL,
+  `IDcliente` int NOT NULL,
+  PRIMARY KEY (`IDventa`),
+  KEY `IDcliente` (`IDcliente`)
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci |
++-------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+1 row in set (0.0008 sec)
+ MySQL  localhost:3306 ssl  tbd2  SQL > ALTER TABLE venta
+                                     -> ADD CONSTRAINT FOREIGN KEY (IDcliente)
+                                     -> REFERENCES cliente(IDcliente);
+Query OK, 3 rows affected (0.2339 sec)
+
+Records: 3  Duplicates: 0  Warnings: 0
+ MySQL  localhost:3306 ssl  tbd2  SQL > SHOW CREATE TABLE venta;
++-------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| Table | Create Table                                                                                                                                                                                                                                                                                                                                                  |
++-------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| venta | CREATE TABLE `venta` (
+  `IDventa` int NOT NULL AUTO_INCREMENT,
+  `Fecha` date NOT NULL,
+  `IDcliente` int NOT NULL,
+  PRIMARY KEY (`IDventa`),
+  KEY `IDcliente` (`IDcliente`),
+  CONSTRAINT `venta_ibfk_1` FOREIGN KEY (`IDcliente`) REFERENCES `cliente` (`IDcliente`)
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci |
++-------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+1 row in set (0.0009 sec)
+ MySQL  localhost:3306 ssl  tbd2  SQL > CREATE TABLE producto(
+                                     -> IDproducto INT NOT NULL AUTO_INCREMENT KEY,
+                                     -> nombre VARCHAR
+                                     -> (50) NOT NULL,
+                                     -> precio DECIMAL (8,2) NOT NULL);
+Query OK, 0 rows affected (0.0333 sec)
+ MySQL  localhost:3306 ssl  tbd2  SQL > INSERT INTO producto(nombre, precio)
+                                     -> VALUES('Celular', 10000.0),
+                                     -> ('Television', 15456.2),
+                                     -> ('Laptop', 35123.2);
+Query OK, 3 rows affected (0.0170 sec)
+
+Records: 3  Duplicates: 0  Warnings: 0
+ MySQL  localhost:3306 ssl  tbd2  SQL > SELECT * FROM producto;
++------------+------------+----------+
+| IDproducto | nombre     | precio   |
++------------+------------+----------+
+|          1 | Celular    | 10000.00 |
+|          2 | Television | 15456.20 |
+|          3 | Laptop     | 35123.20 |
++------------+------------+----------+
+3 rows in set (0.0008 sec)
+ MySQL  localhost:3306 ssl  tbd2  SQL > CREATE TABLE venta_detalle(
+                                     -> IDventadetalle INT NOT NULL AUTO_INCREMENT KEY,
+                                     -> IDventa INT NOT NULL,
+                                     -> IDproducto INT NOT NULL,
+                                     -> cantidad INT,
+                                     -> FOREIGN KEY(IDventa) REFERENCES venta(IDventa),
+                                     -> FOREIGN KEY(IDproducto) REFERENCES producto(IDproducto));
+Query OK, 0 rows affected (0.0724 sec)
+ MySQL  localhost:3306 ssl  tbd2  SQL > SHOW CREATE TABLE venta_detalle;
++---------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| Table         | Create Table                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              |
++---------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| venta_detalle | CREATE TABLE `venta_detalle` (
+  `IDventadetalle` int NOT NULL AUTO_INCREMENT,
+  `IDventa` int NOT NULL,
+  `IDproducto` int NOT NULL,
+  `cantidad` int DEFAULT NULL,
+  PRIMARY KEY (`IDventadetalle`),
+  KEY `IDventa` (`IDventa`),
+  KEY `IDproducto` (`IDproducto`),
+  CONSTRAINT `venta_detalle_ibfk_1` FOREIGN KEY (`IDventa`) REFERENCES `venta` (`IDventa`),
+  CONSTRAINT `venta_detalle_ibfk_2` FOREIGN KEY (`IDproducto`) REFERENCES `producto` (`IDproducto`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci |
++---------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+1 row in set (0.0020 sec)
+ MySQL  localhost:3306 ssl  tbd2  SQL > SELECT * FROM venta;
++---------+------------+-----------+
+| IDventa | Fecha      | IDcliente |
++---------+------------+-----------+
+|       3 | 2025-08-30 |         2 |
+|       4 | 2025-08-30 |         3 |
+|       5 | 2025-08-30 |         3 |
++---------+------------+-----------+
+3 rows in set (0.0018 sec)
+ MySQL  localhost:3306 ssl  tbd2  SQL > SELECT * FROM producto;
++------------+------------+----------+
+| IDproducto | nombre     | precio   |
++------------+------------+----------+
+|          1 | Celular    | 10000.00 |
+|          2 | Television | 15456.20 |
+|          3 | Laptop     | 35123.20 |
++------------+------------+----------+
+3 rows in set (0.0018 sec)
+ MySQL  localhost:3306 ssl  tbd2  SQL > INSERT INTO venta_detalle(IDventa, IDproducto, cantidad)
+                                     -> VALUES(3,1,5), (3,2,1), (4,3,10), (5,1,1);
+Query OK, 4 rows affected (0.0037 sec)
+
+Records: 4  Duplicates: 0  Warnings: 0
+ MySQL  localhost:3306 ssl  tbd2  SQL > SELECT * FROM venta_detalle;
++----------------+---------+------------+----------+
+| IDventadetalle | IDventa | IDproducto | cantidad |
++----------------+---------+------------+----------+
+|              1 |       3 |          1 |        5 |
+|              2 |       3 |          2 |        1 |
+|              3 |       4 |          3 |       10 |
+|              4 |       5 |          1 |        1 |
++----------------+---------+------------+----------+
+4 rows in set (0.0011 sec)
+ MySQL  localhost:3306 ssl  tbd2  SQL >
