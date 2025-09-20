@@ -1,0 +1,291 @@
+MySQL Shell 8.0.43
+
+Copyright (c) 2016, 2025, Oracle and/or its affiliates.
+Oracle is a registered trademark of Oracle Corporation and/or its affiliates.
+Other names may be trademarks of their respective owners.
+
+Type '\help' or '\?' for help; '\quit' to exit.
+ MySQL  JS > \sql
+Switching to SQL mode... Commands end with ;
+ MySQL  SQL > \c --mc root@localhost
+Creating a Classic session to 'root@localhost'
+Fetching global names for auto-completion... Press ^C to stop.
+Your MySQL connection id is 73
+Server version: 8.0.43 MySQL Community Server - GPL
+No default schema selected; type \use <schema> to set one.
+ MySQL  localhost:3306 ssl  SQL > SHOW DATABASES;
++--------------------+
+| Database           |
++--------------------+
+| creditcards        |
+| examenpractico_1   |
+| humanresources     |
+| information_schema |
+| mysql              |
+| orders             |
+| performance_schema |
+| prueba_tbd         |
+| sakila             |
+| sys                |
+| tbd1               |
+| tbd2               |
+| world              |
++--------------------+
+13 rows in set (0.0012 sec)
+ MySQL  localhost:3306 ssl  SQL > USE tbd2;
+Default schema set to `tbd2`.
+Fetching global names, object names from `tbd2` for auto-completion... Press ^C to stop.
+ MySQL  localhost:3306 ssl  tbd2  SQL > SHOW TABLES;
++----------------+
+| Tables_in_tbd2 |
++----------------+
+| cliente        |
+| producto       |
+| venta          |
+| venta_detalle  |
++----------------+
+4 rows in set (0.0018 sec)
+ MySQL  localhost:3306 ssl  tbd2  SQL > CREATE TABLE Estudiante(
+                                     -> IDestudiante INT NOT NULL AUTO_INCREMENT KEY,
+                                     -> Nombre VARCHAR(50) NOR NULL,
+                                     -> ;
+ERROR: 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'NOR NULL,' at line 3
+ MySQL  localhost:3306 ssl  tbd2  SQL > CREATE TABLE Estudiante(
+                                     -> IDestudiante INT NOT NULL AUTO_INCREMENT KEY,
+                                     -> Nombre VARCHAR(50) NOT NULL,
+                                     -> FechaNac DATE NOT NULL);
+Query OK, 0 rows affected (0.0345 sec)
+ MySQL  localhost:3306 ssl  tbd2  SQL > CREATE TABLE Asignatura(
+                                     -> IDasignatura INT NOT NULL AUTO_INCREMENT KEY,
+                                     -> Nombre VARCHAR(50) NOT NULL,
+                                     -> Creditos INT NOT NUL);
+ERROR: 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'NUL)' at line 4
+ MySQL  localhost:3306 ssl  tbd2  SQL > CREATE TABLE Asignatura( IDasignatura INT NOT NULL AUTO_INCREMENT KEY, Nombre VARCHAR(50) NOT NULL, Creditos INT NOT NULL);
+Query OK, 0 rows affected (0.0283 sec)
+ MySQL  localhost:3306 ssl  tbd2  SQL > CREATE TABLE Horario(
+                                     -> IDhorario INT NOT NULL AUTO_INCREMENT KEY,
+                                     -> IDestudiante INT NOT NULL,
+                                     -> FOREIGN KEY (IDestudiante) REFERENCES estudiante (IDestudiante)
+                                     -> OND DELETE RESTRICT ON UPDATE CASCADE);
+ERROR: 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'OND DELETE RESTRICT ON UPDATE CASCADE)' at line 5
+ MySQL  localhost:3306 ssl  tbd2  SQL > CREATE TABLE Horario( IDhorario INT NOT NULL AUTO_INCREMENT KEY, IDestudiante INT NOT NULL, FOREIGN KEY (IDestudiante) REFERENCES estudiante (IDestudiante) ON DELETE RESTRICT ON UPDATE CASCADE);
+Query OK, 0 rows affected (0.0722 sec)
+ MySQL  localhost:3306 ssl  tbd2  SQL > INSERT INTO Estudiante(Nombre, FechaNac)
+                                     -> VALUES("Valeria Torres", "2004,03,18"), ("Ever Pinto", "2003-);
+                                     "> ;
+                                     "> ^C
+ MySQL  localhost:3306 ssl  tbd2  SQL > INSERT INTO Estudiante(Nombre, FechaNac)
+                                     -> VALUES("Valeria Torres", "2004-03-18"),
+                                     -> ("Ever Pinto", "2003-02-16"),
+                                     -> ("Armando Alvidrez", "2002-12-06");
+Query OK, 3 rows affected (0.0174 sec)
+
+Records: 3  Duplicates: 0  Warnings: 0
+ MySQL  localhost:3306 ssl  tbd2  SQL > SELECT * FROM Estudiante;
++--------------+------------------+------------+
+| IDestudiante | Nombre           | FechaNac   |
++--------------+------------------+------------+
+|            1 | Valeria Torres   | 2004-03-18 |
+|            2 | Ever Pinto       | 2003-02-16 |
+|            3 | Armando Alvidrez | 2002-12-06 |
++--------------+------------------+------------+
+3 rows in set (0.0008 sec)
+ MySQL  localhost:3306 ssl  tbd2  SQL > DESC Estudiante;
++--------------+-------------+------+-----+---------+----------------+
+| Field        | Type        | Null | Key | Default | Extra          |
++--------------+-------------+------+-----+---------+----------------+
+| IDestudiante | int         | NO   | PRI | NULL    | auto_increment |
+| Nombre       | varchar(50) | NO   |     | NULL    |                |
+| FechaNac     | date        | NO   |     | NULL    |                |
++--------------+-------------+------+-----+---------+----------------+
+3 rows in set (0.0025 sec)
+ MySQL  localhost:3306 ssl  tbd2  SQL > DESC Horario;
++--------------+------+------+-----+---------+----------------+
+| Field        | Type | Null | Key | Default | Extra          |
++--------------+------+------+-----+---------+----------------+
+| IDhorario    | int  | NO   | PRI | NULL    | auto_increment |
+| IDestudiante | int  | NO   | MUL | NULL    |                |
++--------------+------+------+-----+---------+----------------+
+2 rows in set (0.0024 sec)
+ MySQL  localhost:3306 ssl  tbd2  SQL > INSERT INTO Hotario(IDestudiante)
+                                     -> VALUES(1), (2), (3);
+ERROR: 1146 (42S02): Table 'tbd2.hotario' doesn't exist
+ MySQL  localhost:3306 ssl  tbd2  SQL > INSERT INTO Horario(IDestudiante) VALUES(1), (2), (3);
+Query OK, 3 rows affected (0.0045 sec)
+
+Records: 3  Duplicates: 0  Warnings: 0
+ MySQL  localhost:3306 ssl  tbd2  SQL > SELECT * FROM Horario;
++-----------+--------------+
+| IDhorario | IDestudiante |
++-----------+--------------+
+|         1 |            1 |
+|         2 |            2 |
+|         3 |            3 |
++-----------+--------------+
+3 rows in set (0.0007 sec)
+ MySQL  localhost:3306 ssl  tbd2  SQL > SELECT * FROM Estudiante;
++--------------+------------------+------------+
+| IDestudiante | Nombre           | FechaNac   |
++--------------+------------------+------------+
+|            1 | Valeria Torres   | 2004-03-18 |
+|            2 | Ever Pinto       | 2003-02-16 |
+|            3 | Armando Alvidrez | 2002-12-06 |
++--------------+------------------+------------+
+3 rows in set (0.0005 sec)
+ MySQL  localhost:3306 ssl  tbd2  SQL > DELETE * FROM Estudiante WHERE IDestudiante = 1;
+ERROR: 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '* FROM Estudiante WHERE IDestudiante = 1' at line 1
+ MySQL  localhost:3306 ssl  tbd2  SQL > DELETE FROM Estudiante WHERE IDestudiante = 1;
+ERROR: 1451 (23000): Cannot delete or update a parent row: a foreign key constraint fails (`tbd2`.`horario`, CONSTRAINT `horario_ibfk_1` FOREIGN KEY (`IDestudiante`) REFERENCES `estudiante` (`IDestudiante`) ON DELETE RESTRICT ON UPDATE CASCADE)
+ MySQL  localhost:3306 ssl  tbd2  SQL > UPDATE Estudiante
+                                     -> SET IDestudiante = 10
+                                     -> WHERE IDestudiante = 1;
+Query OK, 1 row affected (0.0156 sec)
+
+Rows matched: 1  Changed: 1  Warnings: 0
+ MySQL  localhost:3306 ssl  tbd2  SQL > SELECT * FROM Estudiante;
++--------------+------------------+------------+
+| IDestudiante | Nombre           | FechaNac   |
++--------------+------------------+------------+
+|            2 | Ever Pinto       | 2003-02-16 |
+|            3 | Armando Alvidrez | 2002-12-06 |
+|           10 | Valeria Torres   | 2004-03-18 |
++--------------+------------------+------------+
+3 rows in set (0.0006 sec)
+ MySQL  localhost:3306 ssl  tbd2  SQL > SELECT * FROM Horario;
++-----------+--------------+
+| IDhorario | IDestudiante |
++-----------+--------------+
+|         2 |            2 |
+|         3 |            3 |
+|         1 |           10 |
++-----------+--------------+
+3 rows in set (0.0007 sec)
+ MySQL  localhost:3306 ssl  tbd2  SQL > CREATE TABLE DetalleHorario(
+                                     -> IDdetalle INT NOT NULL AUTO_INCREMENT KEY,
+                                     -> Idhorario INT NOT NULL,
+                                     -> IDasignatura INT NOT NULL,
+                                     -> FOREIGN KEY(IDhorario) REFERENCES Horario(IDhorario) ON DELETE RESTRICT ON UPDATE CASCADE,
+                                     -> FOREIGN KEY(IDasignatura) REFERENCES Asignatura(IDasignatura) ON DELETE RESTRICT ON UPDATE CASACADE);
+ERROR: 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'CASACADE)' at line 6
+ MySQL  localhost:3306 ssl  tbd2  SQL > CREATE TABLE DetalleHorario( IDdetalle INT NOT NULL AUTO_INCREMENT KEY, Idhorario INT NOT NULL, IDasignatura INT NOT NULL, FOREIGN KEY(IDhorario) REFERENCES Horario(IDhorario) ON DELETE RESTRICT ON UPDATE CASCADE, FOREIGN KEY(IDasignatura) REFERENCES Asignatura(IDasignatura) ON DELETE RESTRICT ON UPDATE CASCADE);
+Query OK, 0 rows affected (0.0583 sec)
+ MySQL  localhost:3306 ssl  tbd2  SQL > DESC Asignatura;
++--------------+-------------+------+-----+---------+----------------+
+| Field        | Type        | Null | Key | Default | Extra          |
++--------------+-------------+------+-----+---------+----------------+
+| IDasignatura | int         | NO   | PRI | NULL    | auto_increment |
+| Nombre       | varchar(50) | NO   |     | NULL    |                |
+| Creditos     | int         | NO   |     | NULL    |                |
++--------------+-------------+------+-----+---------+----------------+
+3 rows in set (0.0026 sec)
+ MySQL  localhost:3306 ssl  tbd2  SQL > INSERT INTO Asignatura(
+                                     -> nombre, creditos)
+                                     -> VALUES("Taller de Base de Datos", 4),
+                                     -> ("Lenguajes y Automatas", 5),
+                                     -> ("Ingenieria de Software", 5);
+Query OK, 3 rows affected (0.0060 sec)
+
+Records: 3  Duplicates: 0  Warnings: 0
+ MySQL  localhost:3306 ssl  tbd2  SQL > DESC DetalleHorario;
++--------------+------+------+-----+---------+----------------+
+| Field        | Type | Null | Key | Default | Extra          |
++--------------+------+------+-----+---------+----------------+
+| IDdetalle    | int  | NO   | PRI | NULL    | auto_increment |
+| Idhorario    | int  | NO   | MUL | NULL    |                |
+| IDasignatura | int  | NO   | MUL | NULL    |                |
++--------------+------+------+-----+---------+----------------+
+3 rows in set (0.0029 sec)
+ MySQL  localhost:3306 ssl  tbd2  SQL > SELECT * FROM Horario;
++-----------+--------------+
+| IDhorario | IDestudiante |
++-----------+--------------+
+|         2 |            2 |
+|         3 |            3 |
+|         1 |           10 |
++-----------+--------------+
+3 rows in set (0.0018 sec)
+ MySQL  localhost:3306 ssl  tbd2  SQL > INSERT INTO DetalleHorario(IDhorario, IDasignatura)
+                                     -> VALUES(1,1), (1,2), (1,3),
+                                     -> (2,1), (2,2), (2,3),
+                                     -> (3,1), (3,2), (3,3);
+Query OK, 9 rows affected (0.0161 sec)
+
+Records: 9  Duplicates: 0  Warnings: 0
+ MySQL  localhost:3306 ssl  tbd2  SQL > SELECT * FROM Horario;
++-----------+--------------+
+| IDhorario | IDestudiante |
++-----------+--------------+
+|         2 |            2 |
+|         3 |            3 |
+|         1 |           10 |
++-----------+--------------+
+3 rows in set (0.0007 sec)
+ MySQL  localhost:3306 ssl  tbd2  SQL > SELECT * FROM DetalleHorario;
++-----------+-----------+--------------+
+| IDdetalle | Idhorario | IDasignatura |
++-----------+-----------+--------------+
+|         1 |         1 |            1 |
+|         2 |         1 |            2 |
+|         3 |         1 |            3 |
+|         4 |         2 |            1 |
+|         5 |         2 |            2 |
+|         6 |         2 |            3 |
+|         7 |         3 |            1 |
+|         8 |         3 |            2 |
+|         9 |         3 |            3 |
++-----------+-----------+--------------+
+9 rows in set (0.0006 sec)
+ MySQL  localhost:3306 ssl  tbd2  SQL > SELECT * FROM Asignatura;
++--------------+-------------------------+----------+
+| IDasignatura | Nombre                  | Creditos |
++--------------+-------------------------+----------+
+|            1 | Taller de Base de Datos |        4 |
+|            2 | Lenguajes y Automatas   |        5 |
+|            3 | Ingenieria de Software  |        5 |
++--------------+-------------------------+----------+
+3 rows in set (0.0007 sec)
+ MySQL  localhost:3306 ssl  tbd2  SQL > DELETE FROM Horario WHERE IDhorario = 1;
+ERROR: 1451 (23000): Cannot delete or update a parent row: a foreign key constraint fails (`tbd2`.`detallehorario`, CONSTRAINT `detallehorario_ibfk_1` FOREIGN KEY (`Idhorario`) REFERENCES `horario` (`IDhorario`) ON DELETE RESTRICT ON UPDATE CASCADE)
+ MySQL  localhost:3306 ssl  tbd2  SQL > UPDATE Horario SET IDhorario=5 WHERE IDhorario=1;
+Query OK, 1 row affected (0.0162 sec)
+
+Rows matched: 1  Changed: 1  Warnings: 0
+ MySQL  localhost:3306 ssl  tbd2  SQL > SELECT * FROM Horario;
++-----------+--------------+
+| IDhorario | IDestudiante |
++-----------+--------------+
+|         2 |            2 |
+|         3 |            3 |
+|         5 |           10 |
++-----------+--------------+
+3 rows in set (0.0007 sec)
+ MySQL  localhost:3306 ssl  tbd2  SQL > SELECT * FROM DetalleHorario;
++-----------+-----------+--------------+
+| IDdetalle | Idhorario | IDasignatura |
++-----------+-----------+--------------+
+|         1 |         5 |            1 |
+|         2 |         5 |            2 |
+|         3 |         5 |            3 |
+|         4 |         2 |            1 |
+|         5 |         2 |            2 |
+|         6 |         2 |            3 |
+|         7 |         3 |            1 |
+|         8 |         3 |            2 |
+|         9 |         3 |            3 |
++-----------+-----------+--------------+
+9 rows in set (0.0007 sec)
+ MySQL  localhost:3306 ssl  tbd2  SQL > SHOW TABLES;
++----------------+
+| Tables_in_tbd2 |
++----------------+
+| asignatura     |
+| cliente        |
+| detallehorario |
+| estudiante     |
+| horario        |
+| producto       |
+| venta          |
+| venta_detalle  |
++----------------+
+8 rows in set (0.0025 sec)
+ MySQL  localhost:3306 ssl  tbd2  SQL >
