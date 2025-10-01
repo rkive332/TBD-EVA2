@@ -1,0 +1,2885 @@
+MySQL Shell 8.0.43
+
+Copyright (c) 2016, 2025, Oracle and/or its affiliates.
+Oracle is a registered trademark of Oracle Corporation and/or its affiliates.
+Other names may be trademarks of their respective owners.
+
+Type '\help' or '\?' for help; '\quit' to exit.
+ MySQL  JS > \sql
+Switching to SQL mode... Commands end with ;
+ MySQL  SQL > \c --mc root@localhost
+Creating a Classic session to 'root@localhost'
+Fetching global names for auto-completion... Press ^C to stop.
+Your MySQL connection id is 9
+Server version: 8.0.43 MySQL Community Server - GPL
+No default schema selected; type \use <schema> to set one.
+ MySQL  localhost:3306 ssl  SQL > SHOW DATABASES;
++--------------------+
+| Database           |
++--------------------+
+| creditcards        |
+| examenpractico_1   |
+| humanresources     |
+| information_schema |
+| mysql              |
+| orders             |
+| performance_schema |
+| prueba_tbd         |
+| sakila             |
+| sys                |
+| tbd1               |
+| tbd2               |
+| world              |
++--------------------+
+13 rows in set (0.0132 sec)
+ MySQL  localhost:3306 ssl  SQL > use tbd2;
+Default schema set to `tbd2`.
+Fetching global names, object names from `tbd2` for auto-completion... Press ^C to stop.
+ MySQL  localhost:3306 ssl  tbd2  SQL > USE sakila;
+Default schema set to `sakila`.
+Fetching global names, object names from `sakila` for auto-completion... Press ^C to stop.
+ MySQL  localhost:3306 ssl  sakila  SQL > SHOW TABLES;
++----------------------------+
+| Tables_in_sakila           |
++----------------------------+
+| actor                      |
+| actor_info                 |
+| address                    |
+| category                   |
+| city                       |
+| country                    |
+| customer                   |
+| customer_list              |
+| film                       |
+| film_actor                 |
+| film_category              |
+| film_list                  |
+| film_text                  |
+| inventory                  |
+| language                   |
+| nicer_but_slower_film_list |
+| payment                    |
+| rental                     |
+| sales_by_film_category     |
+| sales_by_store             |
+| staff                      |
+| staff_list                 |
+| store                      |
++----------------------------+
+23 rows in set (0.0025 sec)
+ MySQL  localhost:3306 ssl  sakila  SQL > SELECT COUNT(*) FROM rental;
++----------+
+| COUNT(*) |
++----------+
+|    16044 |
++----------+
+1 row in set (0.0695 sec)
+ MySQL  localhost:3306 ssl  sakila  SQL > SELECT COUNT(*) FROM customer;
++----------+
+| COUNT(*) |
++----------+
+|      599 |
++----------+
+1 row in set (0.0290 sec)
+ MySQL  localhost:3306 ssl  sakila  SQL > DESC rental;
++--------------+--------------------+------+-----+-------------------+-----------------------------------------------+
+| Field        | Type               | Null | Key | Default           | Extra                                         |
++--------------+--------------------+------+-----+-------------------+-----------------------------------------------+
+| rental_id    | int                | NO   | PRI | NULL              | auto_increment                                |
+| rental_date  | datetime           | NO   | MUL | NULL              |                                               |
+| inventory_id | mediumint unsigned | NO   | MUL | NULL              |                                               |
+| customer_id  | smallint unsigned  | NO   | MUL | NULL              |                                               |
+| return_date  | datetime           | YES  |     | NULL              |                                               |
+| staff_id     | tinyint unsigned   | NO   | MUL | NULL              |                                               |
+| last_update  | timestamp          | NO   |     | CURRENT_TIMESTAMP | DEFAULT_GENERATED on update CURRENT_TIMESTAMP |
++--------------+--------------------+------+-----+-------------------+-----------------------------------------------+
+7 rows in set (0.0029 sec)
+ MySQL  localhost:3306 ssl  sakila  SQL > SELECT DISTINCT (ccustomer_id) FROM rental;
+ERROR: 1054 (42S22): Unknown column 'ccustomer_id' in 'field list'
+ MySQL  localhost:3306 ssl  sakila  SQL > SELECT DISTINCT (customer_id) FROM rental;
++-------------+
+| customer_id |
++-------------+
+|           1 |
+|           2 |
+|           3 |
+|           4 |
+|           5 |
+|           6 |
+|           7 |
+|           8 |
+|           9 |
+|          10 |
+|          11 |
+|          12 |
+|          13 |
+|          14 |
+|          15 |
+|          16 |
+|          17 |
+|          18 |
+|          19 |
+|          20 |
+|          21 |
+|          22 |
+|          23 |
+|          24 |
+|          25 |
+|          26 |
+|          27 |
+|          28 |
+|          29 |
+|          30 |
+|          31 |
+|          32 |
+|          33 |
+|          34 |
+|          35 |
+|          36 |
+|          37 |
+|          38 |
+|          39 |
+|          40 |
+|          41 |
+|          42 |
+|          43 |
+|          44 |
+|          45 |
+|          46 |
+|          47 |
+|          48 |
+|          49 |
+|          50 |
+|          51 |
+|          52 |
+|          53 |
+|          54 |
+|          55 |
+|          56 |
+|          57 |
+|          58 |
+|          59 |
+|          60 |
+|          61 |
+|          62 |
+|          63 |
+|          64 |
+|          65 |
+|          66 |
+|          67 |
+|          68 |
+|          69 |
+|          70 |
+|          71 |
+|          72 |
+|          73 |
+|          74 |
+|          75 |
+|          76 |
+|          77 |
+|          78 |
+|          79 |
+|          80 |
+|          81 |
+|          82 |
+|          83 |
+|          84 |
+|          85 |
+|          86 |
+|          87 |
+|          88 |
+|          89 |
+|          90 |
+|          91 |
+|          92 |
+|          93 |
+|          94 |
+|          95 |
+|          96 |
+|          97 |
+|          98 |
+|          99 |
+|         100 |
+|         101 |
+|         102 |
+|         103 |
+|         104 |
+|         105 |
+|         106 |
+|         107 |
+|         108 |
+|         109 |
+|         110 |
+|         111 |
+|         112 |
+|         113 |
+|         114 |
+|         115 |
+|         116 |
+|         117 |
+|         118 |
+|         119 |
+|         120 |
+|         121 |
+|         122 |
+|         123 |
+|         124 |
+|         125 |
+|         126 |
+|         127 |
+|         128 |
+|         129 |
+|         130 |
+|         131 |
+|         132 |
+|         133 |
+|         134 |
+|         135 |
+|         136 |
+|         137 |
+|         138 |
+|         139 |
+|         140 |
+|         141 |
+|         142 |
+|         143 |
+|         144 |
+|         145 |
+|         146 |
+|         147 |
+|         148 |
+|         149 |
+|         150 |
+|         151 |
+|         152 |
+|         153 |
+|         154 |
+|         155 |
+|         156 |
+|         157 |
+|         158 |
+|         159 |
+|         160 |
+|         161 |
+|         162 |
+|         163 |
+|         164 |
+|         165 |
+|         166 |
+|         167 |
+|         168 |
+|         169 |
+|         170 |
+|         171 |
+|         172 |
+|         173 |
+|         174 |
+|         175 |
+|         176 |
+|         177 |
+|         178 |
+|         179 |
+|         180 |
+|         181 |
+|         182 |
+|         183 |
+|         184 |
+|         185 |
+|         186 |
+|         187 |
+|         188 |
+|         189 |
+|         190 |
+|         191 |
+|         192 |
+|         193 |
+|         194 |
+|         195 |
+|         196 |
+|         197 |
+|         198 |
+|         199 |
+|         200 |
+|         201 |
+|         202 |
+|         203 |
+|         204 |
+|         205 |
+|         206 |
+|         207 |
+|         208 |
+|         209 |
+|         210 |
+|         211 |
+|         212 |
+|         213 |
+|         214 |
+|         215 |
+|         216 |
+|         217 |
+|         218 |
+|         219 |
+|         220 |
+|         221 |
+|         222 |
+|         223 |
+|         224 |
+|         225 |
+|         226 |
+|         227 |
+|         228 |
+|         229 |
+|         230 |
+|         231 |
+|         232 |
+|         233 |
+|         234 |
+|         235 |
+|         236 |
+|         237 |
+|         238 |
+|         239 |
+|         240 |
+|         241 |
+|         242 |
+|         243 |
+|         244 |
+|         245 |
+|         246 |
+|         247 |
+|         248 |
+|         249 |
+|         250 |
+|         251 |
+|         252 |
+|         253 |
+|         254 |
+|         255 |
+|         256 |
+|         257 |
+|         258 |
+|         259 |
+|         260 |
+|         261 |
+|         262 |
+|         263 |
+|         264 |
+|         265 |
+|         266 |
+|         267 |
+|         268 |
+|         269 |
+|         270 |
+|         271 |
+|         272 |
+|         273 |
+|         274 |
+|         275 |
+|         276 |
+|         277 |
+|         278 |
+|         279 |
+|         280 |
+|         281 |
+|         282 |
+|         283 |
+|         284 |
+|         285 |
+|         286 |
+|         287 |
+|         288 |
+|         289 |
+|         290 |
+|         291 |
+|         292 |
+|         293 |
+|         294 |
+|         295 |
+|         296 |
+|         297 |
+|         298 |
+|         299 |
+|         300 |
+|         301 |
+|         302 |
+|         303 |
+|         304 |
+|         305 |
+|         306 |
+|         307 |
+|         308 |
+|         309 |
+|         310 |
+|         311 |
+|         312 |
+|         313 |
+|         314 |
+|         315 |
+|         316 |
+|         317 |
+|         318 |
+|         319 |
+|         320 |
+|         321 |
+|         322 |
+|         323 |
+|         324 |
+|         325 |
+|         326 |
+|         327 |
+|         328 |
+|         329 |
+|         330 |
+|         331 |
+|         332 |
+|         333 |
+|         334 |
+|         335 |
+|         336 |
+|         337 |
+|         338 |
+|         339 |
+|         340 |
+|         341 |
+|         342 |
+|         343 |
+|         344 |
+|         345 |
+|         346 |
+|         347 |
+|         348 |
+|         349 |
+|         350 |
+|         351 |
+|         352 |
+|         353 |
+|         354 |
+|         355 |
+|         356 |
+|         357 |
+|         358 |
+|         359 |
+|         360 |
+|         361 |
+|         362 |
+|         363 |
+|         364 |
+|         365 |
+|         366 |
+|         367 |
+|         368 |
+|         369 |
+|         370 |
+|         371 |
+|         372 |
+|         373 |
+|         374 |
+|         375 |
+|         376 |
+|         377 |
+|         378 |
+|         379 |
+|         380 |
+|         381 |
+|         382 |
+|         383 |
+|         384 |
+|         385 |
+|         386 |
+|         387 |
+|         388 |
+|         389 |
+|         390 |
+|         391 |
+|         392 |
+|         393 |
+|         394 |
+|         395 |
+|         396 |
+|         397 |
+|         398 |
+|         399 |
+|         400 |
+|         401 |
+|         402 |
+|         403 |
+|         404 |
+|         405 |
+|         406 |
+|         407 |
+|         408 |
+|         409 |
+|         410 |
+|         411 |
+|         412 |
+|         413 |
+|         414 |
+|         415 |
+|         416 |
+|         417 |
+|         418 |
+|         419 |
+|         420 |
+|         421 |
+|         422 |
+|         423 |
+|         424 |
+|         425 |
+|         426 |
+|         427 |
+|         428 |
+|         429 |
+|         430 |
+|         431 |
+|         432 |
+|         433 |
+|         434 |
+|         435 |
+|         436 |
+|         437 |
+|         438 |
+|         439 |
+|         440 |
+|         441 |
+|         442 |
+|         443 |
+|         444 |
+|         445 |
+|         446 |
+|         447 |
+|         448 |
+|         449 |
+|         450 |
+|         451 |
+|         452 |
+|         453 |
+|         454 |
+|         455 |
+|         456 |
+|         457 |
+|         458 |
+|         459 |
+|         460 |
+|         461 |
+|         462 |
+|         463 |
+|         464 |
+|         465 |
+|         466 |
+|         467 |
+|         468 |
+|         469 |
+|         470 |
+|         471 |
+|         472 |
+|         473 |
+|         474 |
+|         475 |
+|         476 |
+|         477 |
+|         478 |
+|         479 |
+|         480 |
+|         481 |
+|         482 |
+|         483 |
+|         484 |
+|         485 |
+|         486 |
+|         487 |
+|         488 |
+|         489 |
+|         490 |
+|         491 |
+|         492 |
+|         493 |
+|         494 |
+|         495 |
+|         496 |
+|         497 |
+|         498 |
+|         499 |
+|         500 |
+|         501 |
+|         502 |
+|         503 |
+|         504 |
+|         505 |
+|         506 |
+|         507 |
+|         508 |
+|         509 |
+|         510 |
+|         511 |
+|         512 |
+|         513 |
+|         514 |
+|         515 |
+|         516 |
+|         517 |
+|         518 |
+|         519 |
+|         520 |
+|         521 |
+|         522 |
+|         523 |
+|         524 |
+|         525 |
+|         526 |
+|         527 |
+|         528 |
+|         529 |
+|         530 |
+|         531 |
+|         532 |
+|         533 |
+|         534 |
+|         535 |
+|         536 |
+|         537 |
+|         538 |
+|         539 |
+|         540 |
+|         541 |
+|         542 |
+|         543 |
+|         544 |
+|         545 |
+|         546 |
+|         547 |
+|         548 |
+|         549 |
+|         550 |
+|         551 |
+|         552 |
+|         553 |
+|         554 |
+|         555 |
+|         556 |
+|         557 |
+|         558 |
+|         559 |
+|         560 |
+|         561 |
+|         562 |
+|         563 |
+|         564 |
+|         565 |
+|         566 |
+|         567 |
+|         568 |
+|         569 |
+|         570 |
+|         571 |
+|         572 |
+|         573 |
+|         574 |
+|         575 |
+|         576 |
+|         577 |
+|         578 |
+|         579 |
+|         580 |
+|         581 |
+|         582 |
+|         583 |
+|         584 |
+|         585 |
+|         586 |
+|         587 |
+|         588 |
+|         589 |
+|         590 |
+|         591 |
+|         592 |
+|         593 |
+|         594 |
+|         595 |
+|         596 |
+|         597 |
+|         598 |
+|         599 |
++-------------+
+599 rows in set (0.0257 sec)
+ MySQL  localhost:3306 ssl  sakila  SQL > DESC customer;
++-------------+-------------------+------+-----+-------------------+-----------------------------------------------+
+| Field       | Type              | Null | Key | Default           | Extra                                         |
++-------------+-------------------+------+-----+-------------------+-----------------------------------------------+
+| customer_id | smallint unsigned | NO   | PRI | NULL              | auto_increment                                |
+| store_id    | tinyint unsigned  | NO   | MUL | NULL              |                                               |
+| first_name  | varchar(45)       | NO   |     | NULL              |                                               |
+| last_name   | varchar(45)       | NO   | MUL | NULL              |                                               |
+| email       | varchar(50)       | YES  |     | NULL              |                                               |
+| address_id  | smallint unsigned | NO   | MUL | NULL              |                                               |
+| active      | tinyint(1)        | NO   |     | 1                 |                                               |
+| create_date | datetime          | NO   |     | NULL              |                                               |
+| last_update | timestamp         | YES  |     | CURRENT_TIMESTAMP | DEFAULT_GENERATED on update CURRENT_TIMESTAMP |
++-------------+-------------------+------+-----+-------------------+-----------------------------------------------+
+9 rows in set (0.0029 sec)
+ MySQL  localhost:3306 ssl  sakila  SQL > SELECT * FROM customer LIMIT 10;
++-------------+----------+------------+-----------+-------------------------------------+------------+--------+---------------------+---------------------+
+| customer_id | store_id | first_name | last_name | email                               | address_id | active | create_date         | last_update         |
++-------------+----------+------------+-----------+-------------------------------------+------------+--------+---------------------+---------------------+
+|           1 |        1 | MARY       | SMITH     | MARY.SMITH@sakilacustomer.org       |          5 |      1 | 2006-02-14 22:04:36 | 2006-02-15 04:57:20 |
+|           2 |        1 | PATRICIA   | JOHNSON   | PATRICIA.JOHNSON@sakilacustomer.org |          6 |      1 | 2006-02-14 22:04:36 | 2006-02-15 04:57:20 |
+|           3 |        1 | LINDA      | WILLIAMS  | LINDA.WILLIAMS@sakilacustomer.org   |          7 |      1 | 2006-02-14 22:04:36 | 2006-02-15 04:57:20 |
+|           4 |        2 | BARBARA    | JONES     | BARBARA.JONES@sakilacustomer.org    |          8 |      1 | 2006-02-14 22:04:36 | 2006-02-15 04:57:20 |
+|           5 |        1 | ELIZABETH  | BROWN     | ELIZABETH.BROWN@sakilacustomer.org  |          9 |      1 | 2006-02-14 22:04:36 | 2006-02-15 04:57:20 |
+|           6 |        2 | JENNIFER   | DAVIS     | JENNIFER.DAVIS@sakilacustomer.org   |         10 |      1 | 2006-02-14 22:04:36 | 2006-02-15 04:57:20 |
+|           7 |        1 | MARIA      | MILLER    | MARIA.MILLER@sakilacustomer.org     |         11 |      1 | 2006-02-14 22:04:36 | 2006-02-15 04:57:20 |
+|           8 |        2 | SUSAN      | WILSON    | SUSAN.WILSON@sakilacustomer.org     |         12 |      1 | 2006-02-14 22:04:36 | 2006-02-15 04:57:20 |
+|           9 |        2 | MARGARET   | MOORE     | MARGARET.MOORE@sakilacustomer.org   |         13 |      1 | 2006-02-14 22:04:36 | 2006-02-15 04:57:20 |
+|          10 |        1 | DOROTHY    | TAYLOR    | DOROTHY.TAYLOR@sakilacustomer.org   |         14 |      1 | 2006-02-14 22:04:36 | 2006-02-15 04:57:20 |
++-------------+----------+------------+-----------+-------------------------------------+------------+--------+---------------------+---------------------+
+10 rows in set (0.0140 sec)
+ MySQL  localhost:3306 ssl  sakila  SQL > INSERT INTO customer(store_id, first_name, last_name, email, address_id, active, create_date, last_update)
+                                       -> VALUE('1', 'Valeria', 'Torres', 'VALERIA.TORRES@sakilacustomer.org', '5', '1', '2025-09-30 19:11:05', '2025-09-30 19:12:00';
+ERROR: 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '' at line 2
+ MySQL  localhost:3306 ssl  sakila  SQL > INSERT INTO customer(store_id, first_name, last_name, email, address_id, active, create_date, last_update) VALUE(1, 'Valeria', 'Torres', 'VALERIA.TORRES@sakilacustomer.org', 5, 1, '2025-09-30 19:11:05', '2025-09-30 19:12:00';
+ERROR: 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '' at line 1
+ MySQL  localhost:3306 ssl  sakila  SQL > INSERT INTO customer(store_id, first_name, last_name, address_id, active, create_date) VALUE(1, 'Valeria', 'Torres', 5, 1, '2025-09-30');
+Query OK, 1 row affected (0.1058 sec)
+ MySQL  localhost:3306 ssl  sakila  SQL > SELECT * FROM customer WHERE first_name = 'Valeria';
++-------------+----------+------------+-----------+-------+------------+--------+---------------------+---------------------+
+| customer_id | store_id | first_name | last_name | email | address_id | active | create_date         | last_update         |
++-------------+----------+------------+-----------+-------+------------+--------+---------------------+---------------------+
+|         600 |        1 | Valeria    | Torres    | NULL  |          5 |      1 | 2025-09-30 19:14:19 | 2025-09-30 19:14:19 |
++-------------+----------+------------+-----------+-------+------------+--------+---------------------+---------------------+
+1 row in set (0.0493 sec)
+ MySQL  localhost:3306 ssl  sakila  SQL > DESC customer;
++-------------+-------------------+------+-----+-------------------+-----------------------------------------------+
+| Field       | Type              | Null | Key | Default           | Extra                                         |
++-------------+-------------------+------+-----+-------------------+-----------------------------------------------+
+| customer_id | smallint unsigned | NO   | PRI | NULL              | auto_increment                                |
+| store_id    | tinyint unsigned  | NO   | MUL | NULL              |                                               |
+| first_name  | varchar(45)       | NO   |     | NULL              |                                               |
+| last_name   | varchar(45)       | NO   | MUL | NULL              |                                               |
+| email       | varchar(50)       | YES  |     | NULL              |                                               |
+| address_id  | smallint unsigned | NO   | MUL | NULL              |                                               |
+| active      | tinyint(1)        | NO   |     | 1                 |                                               |
+| create_date | datetime          | NO   |     | NULL              |                                               |
+| last_update | timestamp         | YES  |     | CURRENT_TIMESTAMP | DEFAULT_GENERATED on update CURRENT_TIMESTAMP |
++-------------+-------------------+------+-----+-------------------+-----------------------------------------------+
+9 rows in set (0.0028 sec)
+ MySQL  localhost:3306 ssl  sakila  SQL > SELECT customer_id, first_name, last_name FROM customer
+                                       -> WHERE customer_id NOT IN(SELECT DISTINCT customer_id FROM rental);
++-------------+------------+-----------+
+| customer_id | first_name | last_name |
++-------------+------------+-----------+
+|         600 | Valeria    | Torres    |
++-------------+------------+-----------+
+1 row in set (0.0154 sec)
+ MySQL  localhost:3306 ssl  sakila  SQL > SELECT customer_id, first_name, last_name FROM customer WHERE customer_id IN(SELECT DISTINCT customer_id FROM rental);
++-------------+-------------+--------------+
+| customer_id | first_name  | last_name    |
++-------------+-------------+--------------+
+|           1 | MARY        | SMITH        |
+|           2 | PATRICIA    | JOHNSON      |
+|           3 | LINDA       | WILLIAMS     |
+|           4 | BARBARA     | JONES        |
+|           5 | ELIZABETH   | BROWN        |
+|           6 | JENNIFER    | DAVIS        |
+|           7 | MARIA       | MILLER       |
+|           8 | SUSAN       | WILSON       |
+|           9 | MARGARET    | MOORE        |
+|          10 | DOROTHY     | TAYLOR       |
+|          11 | LISA        | ANDERSON     |
+|          12 | NANCY       | THOMAS       |
+|          13 | KAREN       | JACKSON      |
+|          14 | BETTY       | WHITE        |
+|          15 | HELEN       | HARRIS       |
+|          16 | SANDRA      | MARTIN       |
+|          17 | DONNA       | THOMPSON     |
+|          18 | CAROL       | GARCIA       |
+|          19 | RUTH        | MARTINEZ     |
+|          20 | SHARON      | ROBINSON     |
+|          21 | MICHELLE    | CLARK        |
+|          22 | LAURA       | RODRIGUEZ    |
+|          23 | SARAH       | LEWIS        |
+|          24 | KIMBERLY    | LEE          |
+|          25 | DEBORAH     | WALKER       |
+|          26 | JESSICA     | HALL         |
+|          27 | SHIRLEY     | ALLEN        |
+|          28 | CYNTHIA     | YOUNG        |
+|          29 | ANGELA      | HERNANDEZ    |
+|          30 | MELISSA     | KING         |
+|          31 | BRENDA      | WRIGHT       |
+|          32 | AMY         | LOPEZ        |
+|          33 | ANNA        | HILL         |
+|          34 | REBECCA     | SCOTT        |
+|          35 | VIRGINIA    | GREEN        |
+|          36 | KATHLEEN    | ADAMS        |
+|          37 | PAMELA      | BAKER        |
+|          38 | MARTHA      | GONZALEZ     |
+|          39 | DEBRA       | NELSON       |
+|          40 | AMANDA      | CARTER       |
+|          41 | STEPHANIE   | MITCHELL     |
+|          42 | CAROLYN     | PEREZ        |
+|          43 | CHRISTINE   | ROBERTS      |
+|          44 | MARIE       | TURNER       |
+|          45 | JANET       | PHILLIPS     |
+|          46 | CATHERINE   | CAMPBELL     |
+|          47 | FRANCES     | PARKER       |
+|          48 | ANN         | EVANS        |
+|          49 | JOYCE       | EDWARDS      |
+|          50 | DIANE       | COLLINS      |
+|          51 | ALICE       | STEWART      |
+|          52 | JULIE       | SANCHEZ      |
+|          53 | HEATHER     | MORRIS       |
+|          54 | TERESA      | ROGERS       |
+|          55 | DORIS       | REED         |
+|          56 | GLORIA      | COOK         |
+|          57 | EVELYN      | MORGAN       |
+|          58 | JEAN        | BELL         |
+|          59 | CHERYL      | MURPHY       |
+|          60 | MILDRED     | BAILEY       |
+|          61 | KATHERINE   | RIVERA       |
+|          62 | JOAN        | COOPER       |
+|          63 | ASHLEY      | RICHARDSON   |
+|          64 | JUDITH      | COX          |
+|          65 | ROSE        | HOWARD       |
+|          66 | JANICE      | WARD         |
+|          67 | KELLY       | TORRES       |
+|          68 | NICOLE      | PETERSON     |
+|          69 | JUDY        | GRAY         |
+|          70 | CHRISTINA   | RAMIREZ      |
+|          71 | KATHY       | JAMES        |
+|          72 | THERESA     | WATSON       |
+|          73 | BEVERLY     | BROOKS       |
+|          74 | DENISE      | KELLY        |
+|          75 | TAMMY       | SANDERS      |
+|          76 | IRENE       | PRICE        |
+|          77 | JANE        | BENNETT      |
+|          78 | LORI        | WOOD         |
+|          79 | RACHEL      | BARNES       |
+|          80 | MARILYN     | ROSS         |
+|          81 | ANDREA      | HENDERSON    |
+|          82 | KATHRYN     | COLEMAN      |
+|          83 | LOUISE      | JENKINS      |
+|          84 | SARA        | PERRY        |
+|          85 | ANNE        | POWELL       |
+|          86 | JACQUELINE  | LONG         |
+|          87 | WANDA       | PATTERSON    |
+|          88 | BONNIE      | HUGHES       |
+|          89 | JULIA       | FLORES       |
+|          90 | RUBY        | WASHINGTON   |
+|          91 | LOIS        | BUTLER       |
+|          92 | TINA        | SIMMONS      |
+|          93 | PHYLLIS     | FOSTER       |
+|          94 | NORMA       | GONZALES     |
+|          95 | PAULA       | BRYANT       |
+|          96 | DIANA       | ALEXANDER    |
+|          97 | ANNIE       | RUSSELL      |
+|          98 | LILLIAN     | GRIFFIN      |
+|          99 | EMILY       | DIAZ         |
+|         100 | ROBIN       | HAYES        |
+|         101 | PEGGY       | MYERS        |
+|         102 | CRYSTAL     | FORD         |
+|         103 | GLADYS      | HAMILTON     |
+|         104 | RITA        | GRAHAM       |
+|         105 | DAWN        | SULLIVAN     |
+|         106 | CONNIE      | WALLACE      |
+|         107 | FLORENCE    | WOODS        |
+|         108 | TRACY       | COLE         |
+|         109 | EDNA        | WEST         |
+|         110 | TIFFANY     | JORDAN       |
+|         111 | CARMEN      | OWENS        |
+|         112 | ROSA        | REYNOLDS     |
+|         113 | CINDY       | FISHER       |
+|         114 | GRACE       | ELLIS        |
+|         115 | WENDY       | HARRISON     |
+|         116 | VICTORIA    | GIBSON       |
+|         117 | EDITH       | MCDONALD     |
+|         118 | KIM         | CRUZ         |
+|         119 | SHERRY      | MARSHALL     |
+|         120 | SYLVIA      | ORTIZ        |
+|         121 | JOSEPHINE   | GOMEZ        |
+|         122 | THELMA      | MURRAY       |
+|         123 | SHANNON     | FREEMAN      |
+|         124 | SHEILA      | WELLS        |
+|         125 | ETHEL       | WEBB         |
+|         126 | ELLEN       | SIMPSON      |
+|         127 | ELAINE      | STEVENS      |
+|         128 | MARJORIE    | TUCKER       |
+|         129 | CARRIE      | PORTER       |
+|         130 | CHARLOTTE   | HUNTER       |
+|         131 | MONICA      | HICKS        |
+|         132 | ESTHER      | CRAWFORD     |
+|         133 | PAULINE     | HENRY        |
+|         134 | EMMA        | BOYD         |
+|         135 | JUANITA     | MASON        |
+|         136 | ANITA       | MORALES      |
+|         137 | RHONDA      | KENNEDY      |
+|         138 | HAZEL       | WARREN       |
+|         139 | AMBER       | DIXON        |
+|         140 | EVA         | RAMOS        |
+|         141 | DEBBIE      | REYES        |
+|         142 | APRIL       | BURNS        |
+|         143 | LESLIE      | GORDON       |
+|         144 | CLARA       | SHAW         |
+|         145 | LUCILLE     | HOLMES       |
+|         146 | JAMIE       | RICE         |
+|         147 | JOANNE      | ROBERTSON    |
+|         148 | ELEANOR     | HUNT         |
+|         149 | VALERIE     | BLACK        |
+|         150 | DANIELLE    | DANIELS      |
+|         151 | MEGAN       | PALMER       |
+|         152 | ALICIA      | MILLS        |
+|         153 | SUZANNE     | NICHOLS      |
+|         154 | MICHELE     | GRANT        |
+|         155 | GAIL        | KNIGHT       |
+|         156 | BERTHA      | FERGUSON     |
+|         157 | DARLENE     | ROSE         |
+|         158 | VERONICA    | STONE        |
+|         159 | JILL        | HAWKINS      |
+|         160 | ERIN        | DUNN         |
+|         161 | GERALDINE   | PERKINS      |
+|         162 | LAUREN      | HUDSON       |
+|         163 | CATHY       | SPENCER      |
+|         164 | JOANN       | GARDNER      |
+|         165 | LORRAINE    | STEPHENS     |
+|         166 | LYNN        | PAYNE        |
+|         167 | SALLY       | PIERCE       |
+|         168 | REGINA      | BERRY        |
+|         169 | ERICA       | MATTHEWS     |
+|         170 | BEATRICE    | ARNOLD       |
+|         171 | DOLORES     | WAGNER       |
+|         172 | BERNICE     | WILLIS       |
+|         173 | AUDREY      | RAY          |
+|         174 | YVONNE      | WATKINS      |
+|         175 | ANNETTE     | OLSON        |
+|         176 | JUNE        | CARROLL      |
+|         177 | SAMANTHA    | DUNCAN       |
+|         178 | MARION      | SNYDER       |
+|         179 | DANA        | HART         |
+|         180 | STACY       | CUNNINGHAM   |
+|         181 | ANA         | BRADLEY      |
+|         182 | RENEE       | LANE         |
+|         183 | IDA         | ANDREWS      |
+|         184 | VIVIAN      | RUIZ         |
+|         185 | ROBERTA     | HARPER       |
+|         186 | HOLLY       | FOX          |
+|         187 | BRITTANY    | RILEY        |
+|         188 | MELANIE     | ARMSTRONG    |
+|         189 | LORETTA     | CARPENTER    |
+|         190 | YOLANDA     | WEAVER       |
+|         191 | JEANETTE    | GREENE       |
+|         192 | LAURIE      | LAWRENCE     |
+|         193 | KATIE       | ELLIOTT      |
+|         194 | KRISTEN     | CHAVEZ       |
+|         195 | VANESSA     | SIMS         |
+|         196 | ALMA        | AUSTIN       |
+|         197 | SUE         | PETERS       |
+|         198 | ELSIE       | KELLEY       |
+|         199 | BETH        | FRANKLIN     |
+|         200 | JEANNE      | LAWSON       |
+|         201 | VICKI       | FIELDS       |
+|         202 | CARLA       | GUTIERREZ    |
+|         203 | TARA        | RYAN         |
+|         204 | ROSEMARY    | SCHMIDT      |
+|         205 | EILEEN      | CARR         |
+|         206 | TERRI       | VASQUEZ      |
+|         207 | GERTRUDE    | CASTILLO     |
+|         208 | LUCY        | WHEELER      |
+|         209 | TONYA       | CHAPMAN      |
+|         210 | ELLA        | OLIVER       |
+|         211 | STACEY      | MONTGOMERY   |
+|         212 | WILMA       | RICHARDS     |
+|         213 | GINA        | WILLIAMSON   |
+|         214 | KRISTIN     | JOHNSTON     |
+|         215 | JESSIE      | BANKS        |
+|         216 | NATALIE     | MEYER        |
+|         217 | AGNES       | BISHOP       |
+|         218 | VERA        | MCCOY        |
+|         219 | WILLIE      | HOWELL       |
+|         220 | CHARLENE    | ALVAREZ      |
+|         221 | BESSIE      | MORRISON     |
+|         222 | DELORES     | HANSEN       |
+|         223 | MELINDA     | FERNANDEZ    |
+|         224 | PEARL       | GARZA        |
+|         225 | ARLENE      | HARVEY       |
+|         226 | MAUREEN     | LITTLE       |
+|         227 | COLLEEN     | BURTON       |
+|         228 | ALLISON     | STANLEY      |
+|         229 | TAMARA      | NGUYEN       |
+|         230 | JOY         | GEORGE       |
+|         231 | GEORGIA     | JACOBS       |
+|         232 | CONSTANCE   | REID         |
+|         233 | LILLIE      | KIM          |
+|         234 | CLAUDIA     | FULLER       |
+|         235 | JACKIE      | LYNCH        |
+|         236 | MARCIA      | DEAN         |
+|         237 | TANYA       | GILBERT      |
+|         238 | NELLIE      | GARRETT      |
+|         239 | MINNIE      | ROMERO       |
+|         240 | MARLENE     | WELCH        |
+|         241 | HEIDI       | LARSON       |
+|         242 | GLENDA      | FRAZIER      |
+|         243 | LYDIA       | BURKE        |
+|         244 | VIOLA       | HANSON       |
+|         245 | COURTNEY    | DAY          |
+|         246 | MARIAN      | MENDOZA      |
+|         247 | STELLA      | MORENO       |
+|         248 | CAROLINE    | BOWMAN       |
+|         249 | DORA        | MEDINA       |
+|         250 | JO          | FOWLER       |
+|         251 | VICKIE      | BREWER       |
+|         252 | MATTIE      | HOFFMAN      |
+|         253 | TERRY       | CARLSON      |
+|         254 | MAXINE      | SILVA        |
+|         255 | IRMA        | PEARSON      |
+|         256 | MABEL       | HOLLAND      |
+|         257 | MARSHA      | DOUGLAS      |
+|         258 | MYRTLE      | FLEMING      |
+|         259 | LENA        | JENSEN       |
+|         260 | CHRISTY     | VARGAS       |
+|         261 | DEANNA      | BYRD         |
+|         262 | PATSY       | DAVIDSON     |
+|         263 | HILDA       | HOPKINS      |
+|         264 | GWENDOLYN   | MAY          |
+|         265 | JENNIE      | TERRY        |
+|         266 | NORA        | HERRERA      |
+|         267 | MARGIE      | WADE         |
+|         268 | NINA        | SOTO         |
+|         269 | CASSANDRA   | WALTERS      |
+|         270 | LEAH        | CURTIS       |
+|         271 | PENNY       | NEAL         |
+|         272 | KAY         | CALDWELL     |
+|         273 | PRISCILLA   | LOWE         |
+|         274 | NAOMI       | JENNINGS     |
+|         275 | CAROLE      | BARNETT      |
+|         276 | BRANDY      | GRAVES       |
+|         277 | OLGA        | JIMENEZ      |
+|         278 | BILLIE      | HORTON       |
+|         279 | DIANNE      | SHELTON      |
+|         280 | TRACEY      | BARRETT      |
+|         281 | LEONA       | OBRIEN       |
+|         282 | JENNY       | CASTRO       |
+|         283 | FELICIA     | SUTTON       |
+|         284 | SONIA       | GREGORY      |
+|         285 | MIRIAM      | MCKINNEY     |
+|         286 | VELMA       | LUCAS        |
+|         287 | BECKY       | MILES        |
+|         288 | BOBBIE      | CRAIG        |
+|         289 | VIOLET      | RODRIQUEZ    |
+|         290 | KRISTINA    | CHAMBERS     |
+|         291 | TONI        | HOLT         |
+|         292 | MISTY       | LAMBERT      |
+|         293 | MAE         | FLETCHER     |
+|         294 | SHELLY      | WATTS        |
+|         295 | DAISY       | BATES        |
+|         296 | RAMONA      | HALE         |
+|         297 | SHERRI      | RHODES       |
+|         298 | ERIKA       | PENA         |
+|         299 | JAMES       | GANNON       |
+|         300 | JOHN        | FARNSWORTH   |
+|         301 | ROBERT      | BAUGHMAN     |
+|         302 | MICHAEL     | SILVERMAN    |
+|         303 | WILLIAM     | SATTERFIELD  |
+|         304 | DAVID       | ROYAL        |
+|         305 | RICHARD     | MCCRARY      |
+|         306 | CHARLES     | KOWALSKI     |
+|         307 | JOSEPH      | JOY          |
+|         308 | THOMAS      | GRIGSBY      |
+|         309 | CHRISTOPHER | GRECO        |
+|         310 | DANIEL      | CABRAL       |
+|         311 | PAUL        | TROUT        |
+|         312 | MARK        | RINEHART     |
+|         313 | DONALD      | MAHON        |
+|         314 | GEORGE      | LINTON       |
+|         315 | KENNETH     | GOODEN       |
+|         316 | STEVEN      | CURLEY       |
+|         317 | EDWARD      | BAUGH        |
+|         318 | BRIAN       | WYMAN        |
+|         319 | RONALD      | WEINER       |
+|         320 | ANTHONY     | SCHWAB       |
+|         321 | KEVIN       | SCHULER      |
+|         322 | JASON       | MORRISSEY    |
+|         323 | MATTHEW     | MAHAN        |
+|         324 | GARY        | COY          |
+|         325 | TIMOTHY     | BUNN         |
+|         326 | JOSE        | ANDREW       |
+|         327 | LARRY       | THRASHER     |
+|         328 | JEFFREY     | SPEAR        |
+|         329 | FRANK       | WAGGONER     |
+|         330 | SCOTT       | SHELLEY      |
+|         331 | ERIC        | ROBERT       |
+|         332 | STEPHEN     | QUALLS       |
+|         333 | ANDREW      | PURDY        |
+|         334 | RAYMOND     | MCWHORTER    |
+|         335 | GREGORY     | MAULDIN      |
+|         336 | JOSHUA      | MARK         |
+|         337 | JERRY       | JORDON       |
+|         338 | DENNIS      | GILMAN       |
+|         339 | WALTER      | PERRYMAN     |
+|         340 | PATRICK     | NEWSOM       |
+|         341 | PETER       | MENARD       |
+|         342 | HAROLD      | MARTINO      |
+|         343 | DOUGLAS     | GRAF         |
+|         344 | HENRY       | BILLINGSLEY  |
+|         345 | CARL        | ARTIS        |
+|         346 | ARTHUR      | SIMPKINS     |
+|         347 | RYAN        | SALISBURY    |
+|         348 | ROGER       | QUINTANILLA  |
+|         349 | JOE         | GILLILAND    |
+|         350 | JUAN        | FRALEY       |
+|         351 | JACK        | FOUST        |
+|         352 | ALBERT      | CROUSE       |
+|         353 | JONATHAN    | SCARBOROUGH  |
+|         354 | JUSTIN      | NGO          |
+|         355 | TERRY       | GRISSOM      |
+|         356 | GERALD      | FULTZ        |
+|         357 | KEITH       | RICO         |
+|         358 | SAMUEL      | MARLOW       |
+|         359 | WILLIE      | MARKHAM      |
+|         360 | RALPH       | MADRIGAL     |
+|         361 | LAWRENCE    | LAWTON       |
+|         362 | NICHOLAS    | BARFIELD     |
+|         363 | ROY         | WHITING      |
+|         364 | BENJAMIN    | VARNEY       |
+|         365 | BRUCE       | SCHWARZ      |
+|         366 | BRANDON     | HUEY         |
+|         367 | ADAM        | GOOCH        |
+|         368 | HARRY       | ARCE         |
+|         369 | FRED        | WHEAT        |
+|         370 | WAYNE       | TRUONG       |
+|         371 | BILLY       | POULIN       |
+|         372 | STEVE       | MACKENZIE    |
+|         373 | LOUIS       | LEONE        |
+|         374 | JEREMY      | HURTADO      |
+|         375 | AARON       | SELBY        |
+|         376 | RANDY       | GAITHER      |
+|         377 | HOWARD      | FORTNER      |
+|         378 | EUGENE      | CULPEPPER    |
+|         379 | CARLOS      | COUGHLIN     |
+|         380 | RUSSELL     | BRINSON      |
+|         381 | BOBBY       | BOUDREAU     |
+|         382 | VICTOR      | BARKLEY      |
+|         383 | MARTIN      | BALES        |
+|         384 | ERNEST      | STEPP        |
+|         385 | PHILLIP     | HOLM         |
+|         386 | TODD        | TAN          |
+|         387 | JESSE       | SCHILLING    |
+|         388 | CRAIG       | MORRELL      |
+|         389 | ALAN        | KAHN         |
+|         390 | SHAWN       | HEATON       |
+|         391 | CLARENCE    | GAMEZ        |
+|         392 | SEAN        | DOUGLASS     |
+|         393 | PHILIP      | CAUSEY       |
+|         394 | CHRIS       | BROTHERS     |
+|         395 | JOHNNY      | TURPIN       |
+|         396 | EARL        | SHANKS       |
+|         397 | JIMMY       | SCHRADER     |
+|         398 | ANTONIO     | MEEK         |
+|         399 | DANNY       | ISOM         |
+|         400 | BRYAN       | HARDISON     |
+|         401 | TONY        | CARRANZA     |
+|         402 | LUIS        | YANEZ        |
+|         403 | MIKE        | WAY          |
+|         404 | STANLEY     | SCROGGINS    |
+|         405 | LEONARD     | SCHOFIELD    |
+|         406 | NATHAN      | RUNYON       |
+|         407 | DALE        | RATCLIFF     |
+|         408 | MANUEL      | MURRELL      |
+|         409 | RODNEY      | MOELLER      |
+|         410 | CURTIS      | IRBY         |
+|         411 | NORMAN      | CURRIER      |
+|         412 | ALLEN       | BUTTERFIELD  |
+|         413 | MARVIN      | YEE          |
+|         414 | VINCENT     | RALSTON      |
+|         415 | GLENN       | PULLEN       |
+|         416 | JEFFERY     | PINSON       |
+|         417 | TRAVIS      | ESTEP        |
+|         418 | JEFF        | EAST         |
+|         419 | CHAD        | CARBONE      |
+|         420 | JACOB       | LANCE        |
+|         421 | LEE         | HAWKS        |
+|         422 | MELVIN      | ELLINGTON    |
+|         423 | ALFRED      | CASILLAS     |
+|         424 | KYLE        | SPURLOCK     |
+|         425 | FRANCIS     | SIKES        |
+|         426 | BRADLEY     | MOTLEY       |
+|         427 | JESUS       | MCCARTNEY    |
+|         428 | HERBERT     | KRUGER       |
+|         429 | FREDERICK   | ISBELL       |
+|         430 | RAY         | HOULE        |
+|         431 | JOEL        | FRANCISCO    |
+|         432 | EDWIN       | BURK         |
+|         433 | DON         | BONE         |
+|         434 | EDDIE       | TOMLIN       |
+|         435 | RICKY       | SHELBY       |
+|         436 | TROY        | QUIGLEY      |
+|         437 | RANDALL     | NEUMANN      |
+|         438 | BARRY       | LOVELACE     |
+|         439 | ALEXANDER   | FENNELL      |
+|         440 | BERNARD     | COLBY        |
+|         441 | MARIO       | CHEATHAM     |
+|         442 | LEROY       | BUSTAMANTE   |
+|         443 | FRANCISCO   | SKIDMORE     |
+|         444 | MARCUS      | HIDALGO      |
+|         445 | MICHEAL     | FORMAN       |
+|         446 | THEODORE    | CULP         |
+|         447 | CLIFFORD    | BOWENS       |
+|         448 | MIGUEL      | BETANCOURT   |
+|         449 | OSCAR       | AQUINO       |
+|         450 | JAY         | ROBB         |
+|         451 | JIM         | REA          |
+|         452 | TOM         | MILNER       |
+|         453 | CALVIN      | MARTEL       |
+|         454 | ALEX        | GRESHAM      |
+|         455 | JON         | WILES        |
+|         456 | RONNIE      | RICKETTS     |
+|         457 | BILL        | GAVIN        |
+|         458 | LLOYD       | DOWD         |
+|         459 | TOMMY       | COLLAZO      |
+|         460 | LEON        | BOSTIC       |
+|         461 | DEREK       | BLAKELY      |
+|         462 | WARREN      | SHERROD      |
+|         463 | DARRELL     | POWER        |
+|         464 | JEROME      | KENYON       |
+|         465 | FLOYD       | GANDY        |
+|         466 | LEO         | EBERT        |
+|         467 | ALVIN       | DELOACH      |
+|         468 | TIM         | CARY         |
+|         469 | WESLEY      | BULL         |
+|         470 | GORDON      | ALLARD       |
+|         471 | DEAN        | SAUER        |
+|         472 | GREG        | ROBINS       |
+|         473 | JORGE       | OLIVARES     |
+|         474 | DUSTIN      | GILLETTE     |
+|         475 | PEDRO       | CHESTNUT     |
+|         476 | DERRICK     | BOURQUE      |
+|         477 | DAN         | PAINE        |
+|         478 | LEWIS       | LYMAN        |
+|         479 | ZACHARY     | HITE         |
+|         480 | COREY       | HAUSER       |
+|         481 | HERMAN      | DEVORE       |
+|         482 | MAURICE     | CRAWLEY      |
+|         483 | VERNON      | CHAPA        |
+|         484 | ROBERTO     | VU           |
+|         485 | CLYDE       | TOBIAS       |
+|         486 | GLEN        | TALBERT      |
+|         487 | HECTOR      | POINDEXTER   |
+|         488 | SHANE       | MILLARD      |
+|         489 | RICARDO     | MEADOR       |
+|         490 | SAM         | MCDUFFIE     |
+|         491 | RICK        | MATTOX       |
+|         492 | LESTER      | KRAUS        |
+|         493 | BRENT       | HARKINS      |
+|         494 | RAMON       | CHOATE       |
+|         495 | CHARLIE     | BESS         |
+|         496 | TYLER       | WREN         |
+|         497 | GILBERT     | SLEDGE       |
+|         498 | GENE        | SANBORN      |
+|         499 | MARC        | OUTLAW       |
+|         500 | REGINALD    | KINDER       |
+|         501 | RUBEN       | GEARY        |
+|         502 | BRETT       | CORNWELL     |
+|         503 | ANGEL       | BARCLAY      |
+|         504 | NATHANIEL   | ADAM         |
+|         505 | RAFAEL      | ABNEY        |
+|         506 | LESLIE      | SEWARD       |
+|         507 | EDGAR       | RHOADS       |
+|         508 | MILTON      | HOWLAND      |
+|         509 | RAUL        | FORTIER      |
+|         510 | BEN         | EASTER       |
+|         511 | CHESTER     | BENNER       |
+|         512 | CECIL       | VINES        |
+|         513 | DUANE       | TUBBS        |
+|         514 | FRANKLIN    | TROUTMAN     |
+|         515 | ANDRE       | RAPP         |
+|         516 | ELMER       | NOE          |
+|         517 | BRAD        | MCCURDY      |
+|         518 | GABRIEL     | HARDER       |
+|         519 | RON         | DELUCA       |
+|         520 | MITCHELL    | WESTMORELAND |
+|         521 | ROLAND      | SOUTH        |
+|         522 | ARNOLD      | HAVENS       |
+|         523 | HARVEY      | GUAJARDO     |
+|         524 | JARED       | ELY          |
+|         525 | ADRIAN      | CLARY        |
+|         526 | KARL        | SEAL         |
+|         527 | CORY        | MEEHAN       |
+|         528 | CLAUDE      | HERZOG       |
+|         529 | ERIK        | GUILLEN      |
+|         530 | DARRYL      | ASHCRAFT     |
+|         531 | JAMIE       | WAUGH        |
+|         532 | NEIL        | RENNER       |
+|         533 | JESSIE      | MILAM        |
+|         534 | CHRISTIAN   | JUNG         |
+|         535 | JAVIER      | ELROD        |
+|         536 | FERNANDO    | CHURCHILL    |
+|         537 | CLINTON     | BUFORD       |
+|         538 | TED         | BREAUX       |
+|         539 | MATHEW      | BOLIN        |
+|         540 | TYRONE      | ASHER        |
+|         541 | DARREN      | WINDHAM      |
+|         542 | LONNIE      | TIRADO       |
+|         543 | LANCE       | PEMBERTON    |
+|         544 | CODY        | NOLEN        |
+|         545 | JULIO       | NOLAND       |
+|         546 | KELLY       | KNOTT        |
+|         547 | KURT        | EMMONS       |
+|         548 | ALLAN       | CORNISH      |
+|         549 | NELSON      | CHRISTENSON  |
+|         550 | GUY         | BROWNLEE     |
+|         551 | CLAYTON     | BARBEE       |
+|         552 | HUGH        | WALDROP      |
+|         553 | MAX         | PITT         |
+|         554 | DWAYNE      | OLVERA       |
+|         555 | DWIGHT      | LOMBARDI     |
+|         556 | ARMANDO     | GRUBER       |
+|         557 | FELIX       | GAFFNEY      |
+|         558 | JIMMIE      | EGGLESTON    |
+|         559 | EVERETT     | BANDA        |
+|         560 | JORDAN      | ARCHULETA    |
+|         561 | IAN         | STILL        |
+|         562 | WALLACE     | SLONE        |
+|         563 | KEN         | PREWITT      |
+|         564 | BOB         | PFEIFFER     |
+|         565 | JAIME       | NETTLES      |
+|         566 | CASEY       | MENA         |
+|         567 | ALFREDO     | MCADAMS      |
+|         568 | ALBERTO     | HENNING      |
+|         569 | DAVE        | GARDINER     |
+|         570 | IVAN        | CROMWELL     |
+|         571 | JOHNNIE     | CHISHOLM     |
+|         572 | SIDNEY      | BURLESON     |
+|         573 | BYRON       | BOX          |
+|         574 | JULIAN      | VEST         |
+|         575 | ISAAC       | OGLESBY      |
+|         576 | MORRIS      | MCCARTER     |
+|         577 | CLIFTON     | MALCOLM      |
+|         578 | WILLARD     | LUMPKIN      |
+|         579 | DARYL       | LARUE        |
+|         580 | ROSS        | GREY         |
+|         581 | VIRGIL      | WOFFORD      |
+|         582 | ANDY        | VANHORN      |
+|         583 | MARSHALL    | THORN        |
+|         584 | SALVADOR    | TEEL         |
+|         585 | PERRY       | SWAFFORD     |
+|         586 | KIRK        | STCLAIR      |
+|         587 | SERGIO      | STANFIELD    |
+|         588 | MARION      | OCAMPO       |
+|         589 | TRACY       | HERRMANN     |
+|         590 | SETH        | HANNON       |
+|         591 | KENT        | ARSENAULT    |
+|         592 | TERRANCE    | ROUSH        |
+|         593 | RENE        | MCALISTER    |
+|         594 | EDUARDO     | HIATT        |
+|         595 | TERRENCE    | GUNDERSON    |
+|         596 | ENRIQUE     | FORSYTHE     |
+|         597 | FREDDIE     | DUGGAN       |
+|         598 | WADE        | DELVALLE     |
+|         599 | AUSTIN      | CINTRON      |
++-------------+-------------+--------------+
+599 rows in set (0.0097 sec)
+ MySQL  localhost:3306 ssl  sakila  SQL > SELECT customer_id, first_name, last_name ORDER BY last_name;
+ERROR: 1054 (42S22): Unknown column 'customer_id' in 'field list'
+ MySQL  localhost:3306 ssl  sakila  SQL > SELECT customer_id, first_name, last_name FROM customer ORDER BY last_name;
++-------------+-------------+--------------+
+| customer_id | first_name  | last_name    |
++-------------+-------------+--------------+
+|         505 | RAFAEL      | ABNEY        |
+|         504 | NATHANIEL   | ADAM         |
+|          36 | KATHLEEN    | ADAMS        |
+|          96 | DIANA       | ALEXANDER    |
+|         470 | GORDON      | ALLARD       |
+|          27 | SHIRLEY     | ALLEN        |
+|         220 | CHARLENE    | ALVAREZ      |
+|          11 | LISA        | ANDERSON     |
+|         326 | JOSE        | ANDREW       |
+|         183 | IDA         | ANDREWS      |
+|         449 | OSCAR       | AQUINO       |
+|         368 | HARRY       | ARCE         |
+|         560 | JORDAN      | ARCHULETA    |
+|         188 | MELANIE     | ARMSTRONG    |
+|         170 | BEATRICE    | ARNOLD       |
+|         591 | KENT        | ARSENAULT    |
+|         345 | CARL        | ARTIS        |
+|         530 | DARRYL      | ASHCRAFT     |
+|         540 | TYRONE      | ASHER        |
+|         196 | ALMA        | AUSTIN       |
+|          60 | MILDRED     | BAILEY       |
+|          37 | PAMELA      | BAKER        |
+|         383 | MARTIN      | BALES        |
+|         559 | EVERETT     | BANDA        |
+|         215 | JESSIE      | BANKS        |
+|         551 | CLAYTON     | BARBEE       |
+|         503 | ANGEL       | BARCLAY      |
+|         362 | NICHOLAS    | BARFIELD     |
+|         382 | VICTOR      | BARKLEY      |
+|          79 | RACHEL      | BARNES       |
+|         275 | CAROLE      | BARNETT      |
+|         280 | TRACEY      | BARRETT      |
+|         295 | DAISY       | BATES        |
+|         317 | EDWARD      | BAUGH        |
+|         301 | ROBERT      | BAUGHMAN     |
+|          58 | JEAN        | BELL         |
+|         511 | CHESTER     | BENNER       |
+|          77 | JANE        | BENNETT      |
+|         168 | REGINA      | BERRY        |
+|         495 | CHARLIE     | BESS         |
+|         448 | MIGUEL      | BETANCOURT   |
+|         344 | HENRY       | BILLINGSLEY  |
+|         217 | AGNES       | BISHOP       |
+|         149 | VALERIE     | BLACK        |
+|         461 | DEREK       | BLAKELY      |
+|         539 | MATHEW      | BOLIN        |
+|         433 | DON         | BONE         |
+|         460 | LEON        | BOSTIC       |
+|         381 | BOBBY       | BOUDREAU     |
+|         476 | DERRICK     | BOURQUE      |
+|         447 | CLIFFORD    | BOWENS       |
+|         248 | CAROLINE    | BOWMAN       |
+|         573 | BYRON       | BOX          |
+|         134 | EMMA        | BOYD         |
+|         181 | ANA         | BRADLEY      |
+|         538 | TED         | BREAUX       |
+|         251 | VICKIE      | BREWER       |
+|         380 | RUSSELL     | BRINSON      |
+|          73 | BEVERLY     | BROOKS       |
+|         394 | CHRIS       | BROTHERS     |
+|           5 | ELIZABETH   | BROWN        |
+|         550 | GUY         | BROWNLEE     |
+|          95 | PAULA       | BRYANT       |
+|         537 | CLINTON     | BUFORD       |
+|         469 | WESLEY      | BULL         |
+|         325 | TIMOTHY     | BUNN         |
+|         432 | EDWIN       | BURK         |
+|         243 | LYDIA       | BURKE        |
+|         572 | SIDNEY      | BURLESON     |
+|         142 | APRIL       | BURNS        |
+|         227 | COLLEEN     | BURTON       |
+|         442 | LEROY       | BUSTAMANTE   |
+|          91 | LOIS        | BUTLER       |
+|         412 | ALLEN       | BUTTERFIELD  |
+|         261 | DEANNA      | BYRD         |
+|         310 | DANIEL      | CABRAL       |
+|         272 | KAY         | CALDWELL     |
+|          46 | CATHERINE   | CAMPBELL     |
+|         419 | CHAD        | CARBONE      |
+|         253 | TERRY       | CARLSON      |
+|         189 | LORETTA     | CARPENTER    |
+|         205 | EILEEN      | CARR         |
+|         401 | TONY        | CARRANZA     |
+|         176 | JUNE        | CARROLL      |
+|          40 | AMANDA      | CARTER       |
+|         468 | TIM         | CARY         |
+|         423 | ALFRED      | CASILLAS     |
+|         207 | GERTRUDE    | CASTILLO     |
+|         282 | JENNY       | CASTRO       |
+|         393 | PHILIP      | CAUSEY       |
+|         290 | KRISTINA    | CHAMBERS     |
+|         483 | VERNON      | CHAPA        |
+|         209 | TONYA       | CHAPMAN      |
+|         194 | KRISTEN     | CHAVEZ       |
+|         441 | MARIO       | CHEATHAM     |
+|         475 | PEDRO       | CHESTNUT     |
+|         571 | JOHNNIE     | CHISHOLM     |
+|         494 | RAMON       | CHOATE       |
+|         549 | NELSON      | CHRISTENSON  |
+|         536 | FERNANDO    | CHURCHILL    |
+|         599 | AUSTIN      | CINTRON      |
+|          21 | MICHELLE    | CLARK        |
+|         525 | ADRIAN      | CLARY        |
+|         440 | BERNARD     | COLBY        |
+|         108 | TRACY       | COLE         |
+|          82 | KATHRYN     | COLEMAN      |
+|         459 | TOMMY       | COLLAZO      |
+|          50 | DIANE       | COLLINS      |
+|          56 | GLORIA      | COOK         |
+|          62 | JOAN        | COOPER       |
+|         548 | ALLAN       | CORNISH      |
+|         502 | BRETT       | CORNWELL     |
+|         379 | CARLOS      | COUGHLIN     |
+|          64 | JUDITH      | COX          |
+|         324 | GARY        | COY          |
+|         288 | BOBBIE      | CRAIG        |
+|         132 | ESTHER      | CRAWFORD     |
+|         482 | MAURICE     | CRAWLEY      |
+|         570 | IVAN        | CROMWELL     |
+|         352 | ALBERT      | CROUSE       |
+|         118 | KIM         | CRUZ         |
+|         446 | THEODORE    | CULP         |
+|         378 | EUGENE      | CULPEPPER    |
+|         180 | STACY       | CUNNINGHAM   |
+|         316 | STEVEN      | CURLEY       |
+|         411 | NORMAN      | CURRIER      |
+|         270 | LEAH        | CURTIS       |
+|         150 | DANIELLE    | DANIELS      |
+|         262 | PATSY       | DAVIDSON     |
+|           6 | JENNIFER    | DAVIS        |
+|         245 | COURTNEY    | DAY          |
+|         236 | MARCIA      | DEAN         |
+|         467 | ALVIN       | DELOACH      |
+|         519 | RON         | DELUCA       |
+|         598 | WADE        | DELVALLE     |
+|         481 | HERMAN      | DEVORE       |
+|          99 | EMILY       | DIAZ         |
+|         139 | AMBER       | DIXON        |
+|         257 | MARSHA      | DOUGLAS      |
+|         392 | SEAN        | DOUGLASS     |
+|         458 | LLOYD       | DOWD         |
+|         597 | FREDDIE     | DUGGAN       |
+|         177 | SAMANTHA    | DUNCAN       |
+|         160 | ERIN        | DUNN         |
+|         418 | JEFF        | EAST         |
+|         510 | BEN         | EASTER       |
+|         466 | LEO         | EBERT        |
+|          49 | JOYCE       | EDWARDS      |
+|         558 | JIMMIE      | EGGLESTON    |
+|         422 | MELVIN      | ELLINGTON    |
+|         193 | KATIE       | ELLIOTT      |
+|         114 | GRACE       | ELLIS        |
+|         535 | JAVIER      | ELROD        |
+|         524 | JARED       | ELY          |
+|         547 | KURT        | EMMONS       |
+|         417 | TRAVIS      | ESTEP        |
+|          48 | ANN         | EVANS        |
+|         300 | JOHN        | FARNSWORTH   |
+|         439 | ALEXANDER   | FENNELL      |
+|         156 | BERTHA      | FERGUSON     |
+|         223 | MELINDA     | FERNANDEZ    |
+|         201 | VICKI       | FIELDS       |
+|         113 | CINDY       | FISHER       |
+|         258 | MYRTLE      | FLEMING      |
+|         293 | MAE         | FLETCHER     |
+|          89 | JULIA       | FLORES       |
+|         102 | CRYSTAL     | FORD         |
+|         445 | MICHEAL     | FORMAN       |
+|         596 | ENRIQUE     | FORSYTHE     |
+|         509 | RAUL        | FORTIER      |
+|         377 | HOWARD      | FORTNER      |
+|          93 | PHYLLIS     | FOSTER       |
+|         351 | JACK        | FOUST        |
+|         250 | JO          | FOWLER       |
+|         186 | HOLLY       | FOX          |
+|         350 | JUAN        | FRALEY       |
+|         431 | JOEL        | FRANCISCO    |
+|         199 | BETH        | FRANKLIN     |
+|         242 | GLENDA      | FRAZIER      |
+|         123 | SHANNON     | FREEMAN      |
+|         234 | CLAUDIA     | FULLER       |
+|         356 | GERALD      | FULTZ        |
+|         557 | FELIX       | GAFFNEY      |
+|         376 | RANDY       | GAITHER      |
+|         391 | CLARENCE    | GAMEZ        |
+|         465 | FLOYD       | GANDY        |
+|         299 | JAMES       | GANNON       |
+|          18 | CAROL       | GARCIA       |
+|         569 | DAVE        | GARDINER     |
+|         164 | JOANN       | GARDNER      |
+|         238 | NELLIE      | GARRETT      |
+|         224 | PEARL       | GARZA        |
+|         457 | BILL        | GAVIN        |
+|         501 | RUBEN       | GEARY        |
+|         230 | JOY         | GEORGE       |
+|         116 | VICTORIA    | GIBSON       |
+|         237 | TANYA       | GILBERT      |
+|         474 | DUSTIN      | GILLETTE     |
+|         349 | JOE         | GILLILAND    |
+|         338 | DENNIS      | GILMAN       |
+|         121 | JOSEPHINE   | GOMEZ        |
+|          94 | NORMA       | GONZALES     |
+|          38 | MARTHA      | GONZALEZ     |
+|         367 | ADAM        | GOOCH        |
+|         315 | KENNETH     | GOODEN       |
+|         143 | LESLIE      | GORDON       |
+|         343 | DOUGLAS     | GRAF         |
+|         104 | RITA        | GRAHAM       |
+|         154 | MICHELE     | GRANT        |
+|         276 | BRANDY      | GRAVES       |
+|          69 | JUDY        | GRAY         |
+|         309 | CHRISTOPHER | GRECO        |
+|          35 | VIRGINIA    | GREEN        |
+|         191 | JEANETTE    | GREENE       |
+|         284 | SONIA       | GREGORY      |
+|         454 | ALEX        | GRESHAM      |
+|         580 | ROSS        | GREY         |
+|          98 | LILLIAN     | GRIFFIN      |
+|         308 | THOMAS      | GRIGSBY      |
+|         355 | TERRY       | GRISSOM      |
+|         556 | ARMANDO     | GRUBER       |
+|         523 | HARVEY      | GUAJARDO     |
+|         529 | ERIK        | GUILLEN      |
+|         595 | TERRENCE    | GUNDERSON    |
+|         202 | CARLA       | GUTIERREZ    |
+|         296 | RAMONA      | HALE         |
+|          26 | JESSICA     | HALL         |
+|         103 | GLADYS      | HAMILTON     |
+|         590 | SETH        | HANNON       |
+|         222 | DELORES     | HANSEN       |
+|         244 | VIOLA       | HANSON       |
+|         518 | GABRIEL     | HARDER       |
+|         400 | BRYAN       | HARDISON     |
+|         493 | BRENT       | HARKINS      |
+|         185 | ROBERTA     | HARPER       |
+|          15 | HELEN       | HARRIS       |
+|         115 | WENDY       | HARRISON     |
+|         179 | DANA        | HART         |
+|         225 | ARLENE      | HARVEY       |
+|         480 | COREY       | HAUSER       |
+|         522 | ARNOLD      | HAVENS       |
+|         159 | JILL        | HAWKINS      |
+|         421 | LEE         | HAWKS        |
+|         100 | ROBIN       | HAYES        |
+|         390 | SHAWN       | HEATON       |
+|          81 | ANDREA      | HENDERSON    |
+|         568 | ALBERTO     | HENNING      |
+|         133 | PAULINE     | HENRY        |
+|          29 | ANGELA      | HERNANDEZ    |
+|         266 | NORA        | HERRERA      |
+|         589 | TRACY       | HERRMANN     |
+|         528 | CLAUDE      | HERZOG       |
+|         594 | EDUARDO     | HIATT        |
+|         131 | MONICA      | HICKS        |
+|         444 | MARCUS      | HIDALGO      |
+|          33 | ANNA        | HILL         |
+|         479 | ZACHARY     | HITE         |
+|         252 | MATTIE      | HOFFMAN      |
+|         256 | MABEL       | HOLLAND      |
+|         385 | PHILLIP     | HOLM         |
+|         145 | LUCILLE     | HOLMES       |
+|         291 | TONI        | HOLT         |
+|         263 | HILDA       | HOPKINS      |
+|         278 | BILLIE      | HORTON       |
+|         430 | RAY         | HOULE        |
+|          65 | ROSE        | HOWARD       |
+|         219 | WILLIE      | HOWELL       |
+|         508 | MILTON      | HOWLAND      |
+|         162 | LAUREN      | HUDSON       |
+|         366 | BRANDON     | HUEY         |
+|          88 | BONNIE      | HUGHES       |
+|         148 | ELEANOR     | HUNT         |
+|         130 | CHARLOTTE   | HUNTER       |
+|         374 | JEREMY      | HURTADO      |
+|         410 | CURTIS      | IRBY         |
+|         429 | FREDERICK   | ISBELL       |
+|         399 | DANNY       | ISOM         |
+|          13 | KAREN       | JACKSON      |
+|         231 | GEORGIA     | JACOBS       |
+|          71 | KATHY       | JAMES        |
+|          83 | LOUISE      | JENKINS      |
+|         274 | NAOMI       | JENNINGS     |
+|         259 | LENA        | JENSEN       |
+|         277 | OLGA        | JIMENEZ      |
+|           2 | PATRICIA    | JOHNSON      |
+|         214 | KRISTIN     | JOHNSTON     |
+|           4 | BARBARA     | JONES        |
+|         110 | TIFFANY     | JORDAN       |
+|         337 | JERRY       | JORDON       |
+|         307 | JOSEPH      | JOY          |
+|         534 | CHRISTIAN   | JUNG         |
+|         389 | ALAN        | KAHN         |
+|         198 | ELSIE       | KELLEY       |
+|          74 | DENISE      | KELLY        |
+|         137 | RHONDA      | KENNEDY      |
+|         464 | JEROME      | KENYON       |
+|         233 | LILLIE      | KIM          |
+|         500 | REGINALD    | KINDER       |
+|          30 | MELISSA     | KING         |
+|         155 | GAIL        | KNIGHT       |
+|         546 | KELLY       | KNOTT        |
+|         306 | CHARLES     | KOWALSKI     |
+|         492 | LESTER      | KRAUS        |
+|         428 | HERBERT     | KRUGER       |
+|         292 | MISTY       | LAMBERT      |
+|         420 | JACOB       | LANCE        |
+|         182 | RENEE       | LANE         |
+|         241 | HEIDI       | LARSON       |
+|         579 | DARYL       | LARUE        |
+|         192 | LAURIE      | LAWRENCE     |
+|         200 | JEANNE      | LAWSON       |
+|         361 | LAWRENCE    | LAWTON       |
+|          24 | KIMBERLY    | LEE          |
+|         373 | LOUIS       | LEONE        |
+|          23 | SARAH       | LEWIS        |
+|         314 | GEORGE      | LINTON       |
+|         226 | MAUREEN     | LITTLE       |
+|         555 | DWIGHT      | LOMBARDI     |
+|          86 | JACQUELINE  | LONG         |
+|          32 | AMY         | LOPEZ        |
+|         438 | BARRY       | LOVELACE     |
+|         273 | PRISCILLA   | LOWE         |
+|         286 | VELMA       | LUCAS        |
+|         578 | WILLARD     | LUMPKIN      |
+|         478 | LEWIS       | LYMAN        |
+|         235 | JACKIE      | LYNCH        |
+|         372 | STEVE       | MACKENZIE    |
+|         360 | RALPH       | MADRIGAL     |
+|         323 | MATTHEW     | MAHAN        |
+|         313 | DONALD      | MAHON        |
+|         577 | CLIFTON     | MALCOLM      |
+|         336 | JOSHUA      | MARK         |
+|         359 | WILLIE      | MARKHAM      |
+|         358 | SAMUEL      | MARLOW       |
+|         119 | SHERRY      | MARSHALL     |
+|         453 | CALVIN      | MARTEL       |
+|          16 | SANDRA      | MARTIN       |
+|          19 | RUTH        | MARTINEZ     |
+|         342 | HAROLD      | MARTINO      |
+|         135 | JUANITA     | MASON        |
+|         169 | ERICA       | MATTHEWS     |
+|         491 | RICK        | MATTOX       |
+|         335 | GREGORY     | MAULDIN      |
+|         264 | GWENDOLYN   | MAY          |
+|         567 | ALFREDO     | MCADAMS      |
+|         593 | RENE        | MCALISTER    |
+|         576 | MORRIS      | MCCARTER     |
+|         427 | JESUS       | MCCARTNEY    |
+|         218 | VERA        | MCCOY        |
+|         305 | RICHARD     | MCCRARY      |
+|         517 | BRAD        | MCCURDY      |
+|         117 | EDITH       | MCDONALD     |
+|         490 | SAM         | MCDUFFIE     |
+|         285 | MIRIAM      | MCKINNEY     |
+|         334 | RAYMOND     | MCWHORTER    |
+|         489 | RICARDO     | MEADOR       |
+|         249 | DORA        | MEDINA       |
+|         527 | CORY        | MEEHAN       |
+|         398 | ANTONIO     | MEEK         |
+|         566 | CASEY       | MENA         |
+|         341 | PETER       | MENARD       |
+|         246 | MARIAN      | MENDOZA      |
+|         216 | NATALIE     | MEYER        |
+|         533 | JESSIE      | MILAM        |
+|         287 | BECKY       | MILES        |
+|         488 | SHANE       | MILLARD      |
+|           7 | MARIA       | MILLER       |
+|         152 | ALICIA      | MILLS        |
+|         452 | TOM         | MILNER       |
+|          41 | STEPHANIE   | MITCHELL     |
+|         409 | RODNEY      | MOELLER      |
+|         211 | STACEY      | MONTGOMERY   |
+|           9 | MARGARET    | MOORE        |
+|         136 | ANITA       | MORALES      |
+|         247 | STELLA      | MORENO       |
+|          57 | EVELYN      | MORGAN       |
+|         388 | CRAIG       | MORRELL      |
+|          53 | HEATHER     | MORRIS       |
+|         221 | BESSIE      | MORRISON     |
+|         322 | JASON       | MORRISSEY    |
+|         426 | BRADLEY     | MOTLEY       |
+|          59 | CHERYL      | MURPHY       |
+|         122 | THELMA      | MURRAY       |
+|         408 | MANUEL      | MURRELL      |
+|         101 | PEGGY       | MYERS        |
+|         271 | PENNY       | NEAL         |
+|          39 | DEBRA       | NELSON       |
+|         565 | JAIME       | NETTLES      |
+|         437 | RANDALL     | NEUMANN      |
+|         340 | PATRICK     | NEWSOM       |
+|         354 | JUSTIN      | NGO          |
+|         229 | TAMARA      | NGUYEN       |
+|         153 | SUZANNE     | NICHOLS      |
+|         516 | ELMER       | NOE          |
+|         545 | JULIO       | NOLAND       |
+|         544 | CODY        | NOLEN        |
+|         281 | LEONA       | OBRIEN       |
+|         588 | MARION      | OCAMPO       |
+|         575 | ISAAC       | OGLESBY      |
+|         473 | JORGE       | OLIVARES     |
+|         210 | ELLA        | OLIVER       |
+|         175 | ANNETTE     | OLSON        |
+|         554 | DWAYNE      | OLVERA       |
+|         120 | SYLVIA      | ORTIZ        |
+|         499 | MARC        | OUTLAW       |
+|         111 | CARMEN      | OWENS        |
+|         477 | DAN         | PAINE        |
+|         151 | MEGAN       | PALMER       |
+|          47 | FRANCES     | PARKER       |
+|          87 | WANDA       | PATTERSON    |
+|         166 | LYNN        | PAYNE        |
+|         255 | IRMA        | PEARSON      |
+|         543 | LANCE       | PEMBERTON    |
+|         298 | ERIKA       | PENA         |
+|          42 | CAROLYN     | PEREZ        |
+|         161 | GERALDINE   | PERKINS      |
+|          84 | SARA        | PERRY        |
+|         339 | WALTER      | PERRYMAN     |
+|         197 | SUE         | PETERS       |
+|          68 | NICOLE      | PETERSON     |
+|         564 | BOB         | PFEIFFER     |
+|          45 | JANET       | PHILLIPS     |
+|         167 | SALLY       | PIERCE       |
+|         416 | JEFFERY     | PINSON       |
+|         553 | MAX         | PITT         |
+|         487 | HECTOR      | POINDEXTER   |
+|         129 | CARRIE      | PORTER       |
+|         371 | BILLY       | POULIN       |
+|          85 | ANNE        | POWELL       |
+|         463 | DARRELL     | POWER        |
+|         563 | KEN         | PREWITT      |
+|          76 | IRENE       | PRICE        |
+|         415 | GLENN       | PULLEN       |
+|         333 | ANDREW      | PURDY        |
+|         332 | STEPHEN     | QUALLS       |
+|         436 | TROY        | QUIGLEY      |
+|         348 | ROGER       | QUINTANILLA  |
+|         414 | VINCENT     | RALSTON      |
+|          70 | CHRISTINA   | RAMIREZ      |
+|         140 | EVA         | RAMOS        |
+|         515 | ANDRE       | RAPP         |
+|         407 | DALE        | RATCLIFF     |
+|         173 | AUDREY      | RAY          |
+|         451 | JIM         | REA          |
+|          55 | DORIS       | REED         |
+|         232 | CONSTANCE   | REID         |
+|         532 | NEIL        | RENNER       |
+|         141 | DEBBIE      | REYES        |
+|         112 | ROSA        | REYNOLDS     |
+|         507 | EDGAR       | RHOADS       |
+|         297 | SHERRI      | RHODES       |
+|         146 | JAMIE       | RICE         |
+|         212 | WILMA       | RICHARDS     |
+|          63 | ASHLEY      | RICHARDSON   |
+|         456 | RONNIE      | RICKETTS     |
+|         357 | KEITH       | RICO         |
+|         187 | BRITTANY    | RILEY        |
+|         312 | MARK        | RINEHART     |
+|          61 | KATHERINE   | RIVERA       |
+|         450 | JAY         | ROBB         |
+|         331 | ERIC        | ROBERT       |
+|          43 | CHRISTINE   | ROBERTS      |
+|         147 | JOANNE      | ROBERTSON    |
+|         472 | GREG        | ROBINS       |
+|          20 | SHARON      | ROBINSON     |
+|          22 | LAURA       | RODRIGUEZ    |
+|         289 | VIOLET      | RODRIQUEZ    |
+|          54 | TERESA      | ROGERS       |
+|         239 | MINNIE      | ROMERO       |
+|         157 | DARLENE     | ROSE         |
+|          80 | MARILYN     | ROSS         |
+|         592 | TERRANCE    | ROUSH        |
+|         304 | DAVID       | ROYAL        |
+|         184 | VIVIAN      | RUIZ         |
+|         406 | NATHAN      | RUNYON       |
+|          97 | ANNIE       | RUSSELL      |
+|         203 | TARA        | RYAN         |
+|         347 | RYAN        | SALISBURY    |
+|         498 | GENE        | SANBORN      |
+|          52 | JULIE       | SANCHEZ      |
+|          75 | TAMMY       | SANDERS      |
+|         303 | WILLIAM     | SATTERFIELD  |
+|         471 | DEAN        | SAUER        |
+|         353 | JONATHAN    | SCARBOROUGH  |
+|         387 | JESSE       | SCHILLING    |
+|         204 | ROSEMARY    | SCHMIDT      |
+|         405 | LEONARD     | SCHOFIELD    |
+|         397 | JIMMY       | SCHRADER     |
+|         321 | KEVIN       | SCHULER      |
+|         320 | ANTHONY     | SCHWAB       |
+|         365 | BRUCE       | SCHWARZ      |
+|          34 | REBECCA     | SCOTT        |
+|         404 | STANLEY     | SCROGGINS    |
+|         526 | KARL        | SEAL         |
+|         375 | AARON       | SELBY        |
+|         506 | LESLIE      | SEWARD       |
+|         396 | EARL        | SHANKS       |
+|         144 | CLARA       | SHAW         |
+|         435 | RICKY       | SHELBY       |
+|         330 | SCOTT       | SHELLEY      |
+|         279 | DIANNE      | SHELTON      |
+|         462 | WARREN      | SHERROD      |
+|         425 | FRANCIS     | SIKES        |
+|         254 | MAXINE      | SILVA        |
+|         302 | MICHAEL     | SILVERMAN    |
+|          92 | TINA        | SIMMONS      |
+|         346 | ARTHUR      | SIMPKINS     |
+|         126 | ELLEN       | SIMPSON      |
+|         195 | VANESSA     | SIMS         |
+|         443 | FRANCISCO   | SKIDMORE     |
+|         497 | GILBERT     | SLEDGE       |
+|         562 | WALLACE     | SLONE        |
+|           1 | MARY        | SMITH        |
+|         178 | MARION      | SNYDER       |
+|         268 | NINA        | SOTO         |
+|         521 | ROLAND      | SOUTH        |
+|         328 | JEFFREY     | SPEAR        |
+|         163 | CATHY       | SPENCER      |
+|         424 | KYLE        | SPURLOCK     |
+|         587 | SERGIO      | STANFIELD    |
+|         228 | ALLISON     | STANLEY      |
+|         586 | KIRK        | STCLAIR      |
+|         165 | LORRAINE    | STEPHENS     |
+|         384 | ERNEST      | STEPP        |
+|         127 | ELAINE      | STEVENS      |
+|          51 | ALICE       | STEWART      |
+|         561 | IAN         | STILL        |
+|         158 | VERONICA    | STONE        |
+|         105 | DAWN        | SULLIVAN     |
+|         283 | FELICIA     | SUTTON       |
+|         585 | PERRY       | SWAFFORD     |
+|         486 | GLEN        | TALBERT      |
+|         386 | TODD        | TAN          |
+|          10 | DOROTHY     | TAYLOR       |
+|         584 | SALVADOR    | TEEL         |
+|         265 | JENNIE      | TERRY        |
+|          12 | NANCY       | THOMAS       |
+|          17 | DONNA       | THOMPSON     |
+|         583 | MARSHALL    | THORN        |
+|         327 | LARRY       | THRASHER     |
+|         542 | LONNIE      | TIRADO       |
+|         485 | CLYDE       | TOBIAS       |
+|         434 | EDDIE       | TOMLIN       |
+|          67 | KELLY       | TORRES       |
+|         600 | Valeria     | Torres       |
+|         311 | PAUL        | TROUT        |
+|         514 | FRANKLIN    | TROUTMAN     |
+|         370 | WAYNE       | TRUONG       |
+|         513 | DUANE       | TUBBS        |
+|         128 | MARJORIE    | TUCKER       |
+|          44 | MARIE       | TURNER       |
+|         395 | JOHNNY      | TURPIN       |
+|         582 | ANDY        | VANHORN      |
+|         260 | CHRISTY     | VARGAS       |
+|         364 | BENJAMIN    | VARNEY       |
+|         206 | TERRI       | VASQUEZ      |
+|         574 | JULIAN      | VEST         |
+|         512 | CECIL       | VINES        |
+|         484 | ROBERTO     | VU           |
+|         267 | MARGIE      | WADE         |
+|         329 | FRANK       | WAGGONER     |
+|         171 | DOLORES     | WAGNER       |
+|         552 | HUGH        | WALDROP      |
+|          25 | DEBORAH     | WALKER       |
+|         106 | CONNIE      | WALLACE      |
+|         269 | CASSANDRA   | WALTERS      |
+|          66 | JANICE      | WARD         |
+|         138 | HAZEL       | WARREN       |
+|          90 | RUBY        | WASHINGTON   |
+|         174 | YVONNE      | WATKINS      |
+|          72 | THERESA     | WATSON       |
+|         294 | SHELLY      | WATTS        |
+|         531 | JAMIE       | WAUGH        |
+|         403 | MIKE        | WAY          |
+|         190 | YOLANDA     | WEAVER       |
+|         125 | ETHEL       | WEBB         |
+|         319 | RONALD      | WEINER       |
+|         240 | MARLENE     | WELCH        |
+|         124 | SHEILA      | WELLS        |
+|         109 | EDNA        | WEST         |
+|         520 | MITCHELL    | WESTMORELAND |
+|         369 | FRED        | WHEAT        |
+|         208 | LUCY        | WHEELER      |
+|          14 | BETTY       | WHITE        |
+|         363 | ROY         | WHITING      |
+|         455 | JON         | WILES        |
+|           3 | LINDA       | WILLIAMS     |
+|         213 | GINA        | WILLIAMSON   |
+|         172 | BERNICE     | WILLIS       |
+|           8 | SUSAN       | WILSON       |
+|         541 | DARREN      | WINDHAM      |
+|         581 | VIRGIL      | WOFFORD      |
+|          78 | LORI        | WOOD         |
+|         107 | FLORENCE    | WOODS        |
+|         496 | TYLER       | WREN         |
+|          31 | BRENDA      | WRIGHT       |
+|         318 | BRIAN       | WYMAN        |
+|         402 | LUIS        | YANEZ        |
+|         413 | MARVIN      | YEE          |
+|          28 | CYNTHIA     | YOUNG        |
++-------------+-------------+--------------+
+600 rows in set (0.0144 sec)
+ MySQL  localhost:3306 ssl  sakila  SQL > SELECT customer_id, first_name, last_name FROM customer ORDER BY last_name, first_name;
++-------------+-------------+--------------+
+| customer_id | first_name  | last_name    |
++-------------+-------------+--------------+
+|         505 | RAFAEL      | ABNEY        |
+|         504 | NATHANIEL   | ADAM         |
+|          36 | KATHLEEN    | ADAMS        |
+|          96 | DIANA       | ALEXANDER    |
+|         470 | GORDON      | ALLARD       |
+|          27 | SHIRLEY     | ALLEN        |
+|         220 | CHARLENE    | ALVAREZ      |
+|          11 | LISA        | ANDERSON     |
+|         326 | JOSE        | ANDREW       |
+|         183 | IDA         | ANDREWS      |
+|         449 | OSCAR       | AQUINO       |
+|         368 | HARRY       | ARCE         |
+|         560 | JORDAN      | ARCHULETA    |
+|         188 | MELANIE     | ARMSTRONG    |
+|         170 | BEATRICE    | ARNOLD       |
+|         591 | KENT        | ARSENAULT    |
+|         345 | CARL        | ARTIS        |
+|         530 | DARRYL      | ASHCRAFT     |
+|         540 | TYRONE      | ASHER        |
+|         196 | ALMA        | AUSTIN       |
+|          60 | MILDRED     | BAILEY       |
+|          37 | PAMELA      | BAKER        |
+|         383 | MARTIN      | BALES        |
+|         559 | EVERETT     | BANDA        |
+|         215 | JESSIE      | BANKS        |
+|         551 | CLAYTON     | BARBEE       |
+|         503 | ANGEL       | BARCLAY      |
+|         362 | NICHOLAS    | BARFIELD     |
+|         382 | VICTOR      | BARKLEY      |
+|          79 | RACHEL      | BARNES       |
+|         275 | CAROLE      | BARNETT      |
+|         280 | TRACEY      | BARRETT      |
+|         295 | DAISY       | BATES        |
+|         317 | EDWARD      | BAUGH        |
+|         301 | ROBERT      | BAUGHMAN     |
+|          58 | JEAN        | BELL         |
+|         511 | CHESTER     | BENNER       |
+|          77 | JANE        | BENNETT      |
+|         168 | REGINA      | BERRY        |
+|         495 | CHARLIE     | BESS         |
+|         448 | MIGUEL      | BETANCOURT   |
+|         344 | HENRY       | BILLINGSLEY  |
+|         217 | AGNES       | BISHOP       |
+|         149 | VALERIE     | BLACK        |
+|         461 | DEREK       | BLAKELY      |
+|         539 | MATHEW      | BOLIN        |
+|         433 | DON         | BONE         |
+|         460 | LEON        | BOSTIC       |
+|         381 | BOBBY       | BOUDREAU     |
+|         476 | DERRICK     | BOURQUE      |
+|         447 | CLIFFORD    | BOWENS       |
+|         248 | CAROLINE    | BOWMAN       |
+|         573 | BYRON       | BOX          |
+|         134 | EMMA        | BOYD         |
+|         181 | ANA         | BRADLEY      |
+|         538 | TED         | BREAUX       |
+|         251 | VICKIE      | BREWER       |
+|         380 | RUSSELL     | BRINSON      |
+|          73 | BEVERLY     | BROOKS       |
+|         394 | CHRIS       | BROTHERS     |
+|           5 | ELIZABETH   | BROWN        |
+|         550 | GUY         | BROWNLEE     |
+|          95 | PAULA       | BRYANT       |
+|         537 | CLINTON     | BUFORD       |
+|         469 | WESLEY      | BULL         |
+|         325 | TIMOTHY     | BUNN         |
+|         432 | EDWIN       | BURK         |
+|         243 | LYDIA       | BURKE        |
+|         572 | SIDNEY      | BURLESON     |
+|         142 | APRIL       | BURNS        |
+|         227 | COLLEEN     | BURTON       |
+|         442 | LEROY       | BUSTAMANTE   |
+|          91 | LOIS        | BUTLER       |
+|         412 | ALLEN       | BUTTERFIELD  |
+|         261 | DEANNA      | BYRD         |
+|         310 | DANIEL      | CABRAL       |
+|         272 | KAY         | CALDWELL     |
+|          46 | CATHERINE   | CAMPBELL     |
+|         419 | CHAD        | CARBONE      |
+|         253 | TERRY       | CARLSON      |
+|         189 | LORETTA     | CARPENTER    |
+|         205 | EILEEN      | CARR         |
+|         401 | TONY        | CARRANZA     |
+|         176 | JUNE        | CARROLL      |
+|          40 | AMANDA      | CARTER       |
+|         468 | TIM         | CARY         |
+|         423 | ALFRED      | CASILLAS     |
+|         207 | GERTRUDE    | CASTILLO     |
+|         282 | JENNY       | CASTRO       |
+|         393 | PHILIP      | CAUSEY       |
+|         290 | KRISTINA    | CHAMBERS     |
+|         483 | VERNON      | CHAPA        |
+|         209 | TONYA       | CHAPMAN      |
+|         194 | KRISTEN     | CHAVEZ       |
+|         441 | MARIO       | CHEATHAM     |
+|         475 | PEDRO       | CHESTNUT     |
+|         571 | JOHNNIE     | CHISHOLM     |
+|         494 | RAMON       | CHOATE       |
+|         549 | NELSON      | CHRISTENSON  |
+|         536 | FERNANDO    | CHURCHILL    |
+|         599 | AUSTIN      | CINTRON      |
+|          21 | MICHELLE    | CLARK        |
+|         525 | ADRIAN      | CLARY        |
+|         440 | BERNARD     | COLBY        |
+|         108 | TRACY       | COLE         |
+|          82 | KATHRYN     | COLEMAN      |
+|         459 | TOMMY       | COLLAZO      |
+|          50 | DIANE       | COLLINS      |
+|          56 | GLORIA      | COOK         |
+|          62 | JOAN        | COOPER       |
+|         548 | ALLAN       | CORNISH      |
+|         502 | BRETT       | CORNWELL     |
+|         379 | CARLOS      | COUGHLIN     |
+|          64 | JUDITH      | COX          |
+|         324 | GARY        | COY          |
+|         288 | BOBBIE      | CRAIG        |
+|         132 | ESTHER      | CRAWFORD     |
+|         482 | MAURICE     | CRAWLEY      |
+|         570 | IVAN        | CROMWELL     |
+|         352 | ALBERT      | CROUSE       |
+|         118 | KIM         | CRUZ         |
+|         446 | THEODORE    | CULP         |
+|         378 | EUGENE      | CULPEPPER    |
+|         180 | STACY       | CUNNINGHAM   |
+|         316 | STEVEN      | CURLEY       |
+|         411 | NORMAN      | CURRIER      |
+|         270 | LEAH        | CURTIS       |
+|         150 | DANIELLE    | DANIELS      |
+|         262 | PATSY       | DAVIDSON     |
+|           6 | JENNIFER    | DAVIS        |
+|         245 | COURTNEY    | DAY          |
+|         236 | MARCIA      | DEAN         |
+|         467 | ALVIN       | DELOACH      |
+|         519 | RON         | DELUCA       |
+|         598 | WADE        | DELVALLE     |
+|         481 | HERMAN      | DEVORE       |
+|          99 | EMILY       | DIAZ         |
+|         139 | AMBER       | DIXON        |
+|         257 | MARSHA      | DOUGLAS      |
+|         392 | SEAN        | DOUGLASS     |
+|         458 | LLOYD       | DOWD         |
+|         597 | FREDDIE     | DUGGAN       |
+|         177 | SAMANTHA    | DUNCAN       |
+|         160 | ERIN        | DUNN         |
+|         418 | JEFF        | EAST         |
+|         510 | BEN         | EASTER       |
+|         466 | LEO         | EBERT        |
+|          49 | JOYCE       | EDWARDS      |
+|         558 | JIMMIE      | EGGLESTON    |
+|         422 | MELVIN      | ELLINGTON    |
+|         193 | KATIE       | ELLIOTT      |
+|         114 | GRACE       | ELLIS        |
+|         535 | JAVIER      | ELROD        |
+|         524 | JARED       | ELY          |
+|         547 | KURT        | EMMONS       |
+|         417 | TRAVIS      | ESTEP        |
+|          48 | ANN         | EVANS        |
+|         300 | JOHN        | FARNSWORTH   |
+|         439 | ALEXANDER   | FENNELL      |
+|         156 | BERTHA      | FERGUSON     |
+|         223 | MELINDA     | FERNANDEZ    |
+|         201 | VICKI       | FIELDS       |
+|         113 | CINDY       | FISHER       |
+|         258 | MYRTLE      | FLEMING      |
+|         293 | MAE         | FLETCHER     |
+|          89 | JULIA       | FLORES       |
+|         102 | CRYSTAL     | FORD         |
+|         445 | MICHEAL     | FORMAN       |
+|         596 | ENRIQUE     | FORSYTHE     |
+|         509 | RAUL        | FORTIER      |
+|         377 | HOWARD      | FORTNER      |
+|          93 | PHYLLIS     | FOSTER       |
+|         351 | JACK        | FOUST        |
+|         250 | JO          | FOWLER       |
+|         186 | HOLLY       | FOX          |
+|         350 | JUAN        | FRALEY       |
+|         431 | JOEL        | FRANCISCO    |
+|         199 | BETH        | FRANKLIN     |
+|         242 | GLENDA      | FRAZIER      |
+|         123 | SHANNON     | FREEMAN      |
+|         234 | CLAUDIA     | FULLER       |
+|         356 | GERALD      | FULTZ        |
+|         557 | FELIX       | GAFFNEY      |
+|         376 | RANDY       | GAITHER      |
+|         391 | CLARENCE    | GAMEZ        |
+|         465 | FLOYD       | GANDY        |
+|         299 | JAMES       | GANNON       |
+|          18 | CAROL       | GARCIA       |
+|         569 | DAVE        | GARDINER     |
+|         164 | JOANN       | GARDNER      |
+|         238 | NELLIE      | GARRETT      |
+|         224 | PEARL       | GARZA        |
+|         457 | BILL        | GAVIN        |
+|         501 | RUBEN       | GEARY        |
+|         230 | JOY         | GEORGE       |
+|         116 | VICTORIA    | GIBSON       |
+|         237 | TANYA       | GILBERT      |
+|         474 | DUSTIN      | GILLETTE     |
+|         349 | JOE         | GILLILAND    |
+|         338 | DENNIS      | GILMAN       |
+|         121 | JOSEPHINE   | GOMEZ        |
+|          94 | NORMA       | GONZALES     |
+|          38 | MARTHA      | GONZALEZ     |
+|         367 | ADAM        | GOOCH        |
+|         315 | KENNETH     | GOODEN       |
+|         143 | LESLIE      | GORDON       |
+|         343 | DOUGLAS     | GRAF         |
+|         104 | RITA        | GRAHAM       |
+|         154 | MICHELE     | GRANT        |
+|         276 | BRANDY      | GRAVES       |
+|          69 | JUDY        | GRAY         |
+|         309 | CHRISTOPHER | GRECO        |
+|          35 | VIRGINIA    | GREEN        |
+|         191 | JEANETTE    | GREENE       |
+|         284 | SONIA       | GREGORY      |
+|         454 | ALEX        | GRESHAM      |
+|         580 | ROSS        | GREY         |
+|          98 | LILLIAN     | GRIFFIN      |
+|         308 | THOMAS      | GRIGSBY      |
+|         355 | TERRY       | GRISSOM      |
+|         556 | ARMANDO     | GRUBER       |
+|         523 | HARVEY      | GUAJARDO     |
+|         529 | ERIK        | GUILLEN      |
+|         595 | TERRENCE    | GUNDERSON    |
+|         202 | CARLA       | GUTIERREZ    |
+|         296 | RAMONA      | HALE         |
+|          26 | JESSICA     | HALL         |
+|         103 | GLADYS      | HAMILTON     |
+|         590 | SETH        | HANNON       |
+|         222 | DELORES     | HANSEN       |
+|         244 | VIOLA       | HANSON       |
+|         518 | GABRIEL     | HARDER       |
+|         400 | BRYAN       | HARDISON     |
+|         493 | BRENT       | HARKINS      |
+|         185 | ROBERTA     | HARPER       |
+|          15 | HELEN       | HARRIS       |
+|         115 | WENDY       | HARRISON     |
+|         179 | DANA        | HART         |
+|         225 | ARLENE      | HARVEY       |
+|         480 | COREY       | HAUSER       |
+|         522 | ARNOLD      | HAVENS       |
+|         159 | JILL        | HAWKINS      |
+|         421 | LEE         | HAWKS        |
+|         100 | ROBIN       | HAYES        |
+|         390 | SHAWN       | HEATON       |
+|          81 | ANDREA      | HENDERSON    |
+|         568 | ALBERTO     | HENNING      |
+|         133 | PAULINE     | HENRY        |
+|          29 | ANGELA      | HERNANDEZ    |
+|         266 | NORA        | HERRERA      |
+|         589 | TRACY       | HERRMANN     |
+|         528 | CLAUDE      | HERZOG       |
+|         594 | EDUARDO     | HIATT        |
+|         131 | MONICA      | HICKS        |
+|         444 | MARCUS      | HIDALGO      |
+|          33 | ANNA        | HILL         |
+|         479 | ZACHARY     | HITE         |
+|         252 | MATTIE      | HOFFMAN      |
+|         256 | MABEL       | HOLLAND      |
+|         385 | PHILLIP     | HOLM         |
+|         145 | LUCILLE     | HOLMES       |
+|         291 | TONI        | HOLT         |
+|         263 | HILDA       | HOPKINS      |
+|         278 | BILLIE      | HORTON       |
+|         430 | RAY         | HOULE        |
+|          65 | ROSE        | HOWARD       |
+|         219 | WILLIE      | HOWELL       |
+|         508 | MILTON      | HOWLAND      |
+|         162 | LAUREN      | HUDSON       |
+|         366 | BRANDON     | HUEY         |
+|          88 | BONNIE      | HUGHES       |
+|         148 | ELEANOR     | HUNT         |
+|         130 | CHARLOTTE   | HUNTER       |
+|         374 | JEREMY      | HURTADO      |
+|         410 | CURTIS      | IRBY         |
+|         429 | FREDERICK   | ISBELL       |
+|         399 | DANNY       | ISOM         |
+|          13 | KAREN       | JACKSON      |
+|         231 | GEORGIA     | JACOBS       |
+|          71 | KATHY       | JAMES        |
+|          83 | LOUISE      | JENKINS      |
+|         274 | NAOMI       | JENNINGS     |
+|         259 | LENA        | JENSEN       |
+|         277 | OLGA        | JIMENEZ      |
+|           2 | PATRICIA    | JOHNSON      |
+|         214 | KRISTIN     | JOHNSTON     |
+|           4 | BARBARA     | JONES        |
+|         110 | TIFFANY     | JORDAN       |
+|         337 | JERRY       | JORDON       |
+|         307 | JOSEPH      | JOY          |
+|         534 | CHRISTIAN   | JUNG         |
+|         389 | ALAN        | KAHN         |
+|         198 | ELSIE       | KELLEY       |
+|          74 | DENISE      | KELLY        |
+|         137 | RHONDA      | KENNEDY      |
+|         464 | JEROME      | KENYON       |
+|         233 | LILLIE      | KIM          |
+|         500 | REGINALD    | KINDER       |
+|          30 | MELISSA     | KING         |
+|         155 | GAIL        | KNIGHT       |
+|         546 | KELLY       | KNOTT        |
+|         306 | CHARLES     | KOWALSKI     |
+|         492 | LESTER      | KRAUS        |
+|         428 | HERBERT     | KRUGER       |
+|         292 | MISTY       | LAMBERT      |
+|         420 | JACOB       | LANCE        |
+|         182 | RENEE       | LANE         |
+|         241 | HEIDI       | LARSON       |
+|         579 | DARYL       | LARUE        |
+|         192 | LAURIE      | LAWRENCE     |
+|         200 | JEANNE      | LAWSON       |
+|         361 | LAWRENCE    | LAWTON       |
+|          24 | KIMBERLY    | LEE          |
+|         373 | LOUIS       | LEONE        |
+|          23 | SARAH       | LEWIS        |
+|         314 | GEORGE      | LINTON       |
+|         226 | MAUREEN     | LITTLE       |
+|         555 | DWIGHT      | LOMBARDI     |
+|          86 | JACQUELINE  | LONG         |
+|          32 | AMY         | LOPEZ        |
+|         438 | BARRY       | LOVELACE     |
+|         273 | PRISCILLA   | LOWE         |
+|         286 | VELMA       | LUCAS        |
+|         578 | WILLARD     | LUMPKIN      |
+|         478 | LEWIS       | LYMAN        |
+|         235 | JACKIE      | LYNCH        |
+|         372 | STEVE       | MACKENZIE    |
+|         360 | RALPH       | MADRIGAL     |
+|         323 | MATTHEW     | MAHAN        |
+|         313 | DONALD      | MAHON        |
+|         577 | CLIFTON     | MALCOLM      |
+|         336 | JOSHUA      | MARK         |
+|         359 | WILLIE      | MARKHAM      |
+|         358 | SAMUEL      | MARLOW       |
+|         119 | SHERRY      | MARSHALL     |
+|         453 | CALVIN      | MARTEL       |
+|          16 | SANDRA      | MARTIN       |
+|          19 | RUTH        | MARTINEZ     |
+|         342 | HAROLD      | MARTINO      |
+|         135 | JUANITA     | MASON        |
+|         169 | ERICA       | MATTHEWS     |
+|         491 | RICK        | MATTOX       |
+|         335 | GREGORY     | MAULDIN      |
+|         264 | GWENDOLYN   | MAY          |
+|         567 | ALFREDO     | MCADAMS      |
+|         593 | RENE        | MCALISTER    |
+|         576 | MORRIS      | MCCARTER     |
+|         427 | JESUS       | MCCARTNEY    |
+|         218 | VERA        | MCCOY        |
+|         305 | RICHARD     | MCCRARY      |
+|         517 | BRAD        | MCCURDY      |
+|         117 | EDITH       | MCDONALD     |
+|         490 | SAM         | MCDUFFIE     |
+|         285 | MIRIAM      | MCKINNEY     |
+|         334 | RAYMOND     | MCWHORTER    |
+|         489 | RICARDO     | MEADOR       |
+|         249 | DORA        | MEDINA       |
+|         527 | CORY        | MEEHAN       |
+|         398 | ANTONIO     | MEEK         |
+|         566 | CASEY       | MENA         |
+|         341 | PETER       | MENARD       |
+|         246 | MARIAN      | MENDOZA      |
+|         216 | NATALIE     | MEYER        |
+|         533 | JESSIE      | MILAM        |
+|         287 | BECKY       | MILES        |
+|         488 | SHANE       | MILLARD      |
+|           7 | MARIA       | MILLER       |
+|         152 | ALICIA      | MILLS        |
+|         452 | TOM         | MILNER       |
+|          41 | STEPHANIE   | MITCHELL     |
+|         409 | RODNEY      | MOELLER      |
+|         211 | STACEY      | MONTGOMERY   |
+|           9 | MARGARET    | MOORE        |
+|         136 | ANITA       | MORALES      |
+|         247 | STELLA      | MORENO       |
+|          57 | EVELYN      | MORGAN       |
+|         388 | CRAIG       | MORRELL      |
+|          53 | HEATHER     | MORRIS       |
+|         221 | BESSIE      | MORRISON     |
+|         322 | JASON       | MORRISSEY    |
+|         426 | BRADLEY     | MOTLEY       |
+|          59 | CHERYL      | MURPHY       |
+|         122 | THELMA      | MURRAY       |
+|         408 | MANUEL      | MURRELL      |
+|         101 | PEGGY       | MYERS        |
+|         271 | PENNY       | NEAL         |
+|          39 | DEBRA       | NELSON       |
+|         565 | JAIME       | NETTLES      |
+|         437 | RANDALL     | NEUMANN      |
+|         340 | PATRICK     | NEWSOM       |
+|         354 | JUSTIN      | NGO          |
+|         229 | TAMARA      | NGUYEN       |
+|         153 | SUZANNE     | NICHOLS      |
+|         516 | ELMER       | NOE          |
+|         545 | JULIO       | NOLAND       |
+|         544 | CODY        | NOLEN        |
+|         281 | LEONA       | OBRIEN       |
+|         588 | MARION      | OCAMPO       |
+|         575 | ISAAC       | OGLESBY      |
+|         473 | JORGE       | OLIVARES     |
+|         210 | ELLA        | OLIVER       |
+|         175 | ANNETTE     | OLSON        |
+|         554 | DWAYNE      | OLVERA       |
+|         120 | SYLVIA      | ORTIZ        |
+|         499 | MARC        | OUTLAW       |
+|         111 | CARMEN      | OWENS        |
+|         477 | DAN         | PAINE        |
+|         151 | MEGAN       | PALMER       |
+|          47 | FRANCES     | PARKER       |
+|          87 | WANDA       | PATTERSON    |
+|         166 | LYNN        | PAYNE        |
+|         255 | IRMA        | PEARSON      |
+|         543 | LANCE       | PEMBERTON    |
+|         298 | ERIKA       | PENA         |
+|          42 | CAROLYN     | PEREZ        |
+|         161 | GERALDINE   | PERKINS      |
+|          84 | SARA        | PERRY        |
+|         339 | WALTER      | PERRYMAN     |
+|         197 | SUE         | PETERS       |
+|          68 | NICOLE      | PETERSON     |
+|         564 | BOB         | PFEIFFER     |
+|          45 | JANET       | PHILLIPS     |
+|         167 | SALLY       | PIERCE       |
+|         416 | JEFFERY     | PINSON       |
+|         553 | MAX         | PITT         |
+|         487 | HECTOR      | POINDEXTER   |
+|         129 | CARRIE      | PORTER       |
+|         371 | BILLY       | POULIN       |
+|          85 | ANNE        | POWELL       |
+|         463 | DARRELL     | POWER        |
+|         563 | KEN         | PREWITT      |
+|          76 | IRENE       | PRICE        |
+|         415 | GLENN       | PULLEN       |
+|         333 | ANDREW      | PURDY        |
+|         332 | STEPHEN     | QUALLS       |
+|         436 | TROY        | QUIGLEY      |
+|         348 | ROGER       | QUINTANILLA  |
+|         414 | VINCENT     | RALSTON      |
+|          70 | CHRISTINA   | RAMIREZ      |
+|         140 | EVA         | RAMOS        |
+|         515 | ANDRE       | RAPP         |
+|         407 | DALE        | RATCLIFF     |
+|         173 | AUDREY      | RAY          |
+|         451 | JIM         | REA          |
+|          55 | DORIS       | REED         |
+|         232 | CONSTANCE   | REID         |
+|         532 | NEIL        | RENNER       |
+|         141 | DEBBIE      | REYES        |
+|         112 | ROSA        | REYNOLDS     |
+|         507 | EDGAR       | RHOADS       |
+|         297 | SHERRI      | RHODES       |
+|         146 | JAMIE       | RICE         |
+|         212 | WILMA       | RICHARDS     |
+|          63 | ASHLEY      | RICHARDSON   |
+|         456 | RONNIE      | RICKETTS     |
+|         357 | KEITH       | RICO         |
+|         187 | BRITTANY    | RILEY        |
+|         312 | MARK        | RINEHART     |
+|          61 | KATHERINE   | RIVERA       |
+|         450 | JAY         | ROBB         |
+|         331 | ERIC        | ROBERT       |
+|          43 | CHRISTINE   | ROBERTS      |
+|         147 | JOANNE      | ROBERTSON    |
+|         472 | GREG        | ROBINS       |
+|          20 | SHARON      | ROBINSON     |
+|          22 | LAURA       | RODRIGUEZ    |
+|         289 | VIOLET      | RODRIQUEZ    |
+|          54 | TERESA      | ROGERS       |
+|         239 | MINNIE      | ROMERO       |
+|         157 | DARLENE     | ROSE         |
+|          80 | MARILYN     | ROSS         |
+|         592 | TERRANCE    | ROUSH        |
+|         304 | DAVID       | ROYAL        |
+|         184 | VIVIAN      | RUIZ         |
+|         406 | NATHAN      | RUNYON       |
+|          97 | ANNIE       | RUSSELL      |
+|         203 | TARA        | RYAN         |
+|         347 | RYAN        | SALISBURY    |
+|         498 | GENE        | SANBORN      |
+|          52 | JULIE       | SANCHEZ      |
+|          75 | TAMMY       | SANDERS      |
+|         303 | WILLIAM     | SATTERFIELD  |
+|         471 | DEAN        | SAUER        |
+|         353 | JONATHAN    | SCARBOROUGH  |
+|         387 | JESSE       | SCHILLING    |
+|         204 | ROSEMARY    | SCHMIDT      |
+|         405 | LEONARD     | SCHOFIELD    |
+|         397 | JIMMY       | SCHRADER     |
+|         321 | KEVIN       | SCHULER      |
+|         320 | ANTHONY     | SCHWAB       |
+|         365 | BRUCE       | SCHWARZ      |
+|          34 | REBECCA     | SCOTT        |
+|         404 | STANLEY     | SCROGGINS    |
+|         526 | KARL        | SEAL         |
+|         375 | AARON       | SELBY        |
+|         506 | LESLIE      | SEWARD       |
+|         396 | EARL        | SHANKS       |
+|         144 | CLARA       | SHAW         |
+|         435 | RICKY       | SHELBY       |
+|         330 | SCOTT       | SHELLEY      |
+|         279 | DIANNE      | SHELTON      |
+|         462 | WARREN      | SHERROD      |
+|         425 | FRANCIS     | SIKES        |
+|         254 | MAXINE      | SILVA        |
+|         302 | MICHAEL     | SILVERMAN    |
+|          92 | TINA        | SIMMONS      |
+|         346 | ARTHUR      | SIMPKINS     |
+|         126 | ELLEN       | SIMPSON      |
+|         195 | VANESSA     | SIMS         |
+|         443 | FRANCISCO   | SKIDMORE     |
+|         497 | GILBERT     | SLEDGE       |
+|         562 | WALLACE     | SLONE        |
+|           1 | MARY        | SMITH        |
+|         178 | MARION      | SNYDER       |
+|         268 | NINA        | SOTO         |
+|         521 | ROLAND      | SOUTH        |
+|         328 | JEFFREY     | SPEAR        |
+|         163 | CATHY       | SPENCER      |
+|         424 | KYLE        | SPURLOCK     |
+|         587 | SERGIO      | STANFIELD    |
+|         228 | ALLISON     | STANLEY      |
+|         586 | KIRK        | STCLAIR      |
+|         165 | LORRAINE    | STEPHENS     |
+|         384 | ERNEST      | STEPP        |
+|         127 | ELAINE      | STEVENS      |
+|          51 | ALICE       | STEWART      |
+|         561 | IAN         | STILL        |
+|         158 | VERONICA    | STONE        |
+|         105 | DAWN        | SULLIVAN     |
+|         283 | FELICIA     | SUTTON       |
+|         585 | PERRY       | SWAFFORD     |
+|         486 | GLEN        | TALBERT      |
+|         386 | TODD        | TAN          |
+|          10 | DOROTHY     | TAYLOR       |
+|         584 | SALVADOR    | TEEL         |
+|         265 | JENNIE      | TERRY        |
+|          12 | NANCY       | THOMAS       |
+|          17 | DONNA       | THOMPSON     |
+|         583 | MARSHALL    | THORN        |
+|         327 | LARRY       | THRASHER     |
+|         542 | LONNIE      | TIRADO       |
+|         485 | CLYDE       | TOBIAS       |
+|         434 | EDDIE       | TOMLIN       |
+|          67 | KELLY       | TORRES       |
+|         600 | Valeria     | Torres       |
+|         311 | PAUL        | TROUT        |
+|         514 | FRANKLIN    | TROUTMAN     |
+|         370 | WAYNE       | TRUONG       |
+|         513 | DUANE       | TUBBS        |
+|         128 | MARJORIE    | TUCKER       |
+|          44 | MARIE       | TURNER       |
+|         395 | JOHNNY      | TURPIN       |
+|         582 | ANDY        | VANHORN      |
+|         260 | CHRISTY     | VARGAS       |
+|         364 | BENJAMIN    | VARNEY       |
+|         206 | TERRI       | VASQUEZ      |
+|         574 | JULIAN      | VEST         |
+|         512 | CECIL       | VINES        |
+|         484 | ROBERTO     | VU           |
+|         267 | MARGIE      | WADE         |
+|         329 | FRANK       | WAGGONER     |
+|         171 | DOLORES     | WAGNER       |
+|         552 | HUGH        | WALDROP      |
+|          25 | DEBORAH     | WALKER       |
+|         106 | CONNIE      | WALLACE      |
+|         269 | CASSANDRA   | WALTERS      |
+|          66 | JANICE      | WARD         |
+|         138 | HAZEL       | WARREN       |
+|          90 | RUBY        | WASHINGTON   |
+|         174 | YVONNE      | WATKINS      |
+|          72 | THERESA     | WATSON       |
+|         294 | SHELLY      | WATTS        |
+|         531 | JAMIE       | WAUGH        |
+|         403 | MIKE        | WAY          |
+|         190 | YOLANDA     | WEAVER       |
+|         125 | ETHEL       | WEBB         |
+|         319 | RONALD      | WEINER       |
+|         240 | MARLENE     | WELCH        |
+|         124 | SHEILA      | WELLS        |
+|         109 | EDNA        | WEST         |
+|         520 | MITCHELL    | WESTMORELAND |
+|         369 | FRED        | WHEAT        |
+|         208 | LUCY        | WHEELER      |
+|          14 | BETTY       | WHITE        |
+|         363 | ROY         | WHITING      |
+|         455 | JON         | WILES        |
+|           3 | LINDA       | WILLIAMS     |
+|         213 | GINA        | WILLIAMSON   |
+|         172 | BERNICE     | WILLIS       |
+|           8 | SUSAN       | WILSON       |
+|         541 | DARREN      | WINDHAM      |
+|         581 | VIRGIL      | WOFFORD      |
+|          78 | LORI        | WOOD         |
+|         107 | FLORENCE    | WOODS        |
+|         496 | TYLER       | WREN         |
+|          31 | BRENDA      | WRIGHT       |
+|         318 | BRIAN       | WYMAN        |
+|         402 | LUIS        | YANEZ        |
+|         413 | MARVIN      | YEE          |
+|          28 | CYNTHIA     | YOUNG        |
++-------------+-------------+--------------+
+600 rows in set (0.0027 sec)
+ MySQL  localhost:3306 ssl  sakila  SQL > SHOW TABLES;
++----------------------------+
+| Tables_in_sakila           |
++----------------------------+
+| actor                      |
+| actor_info                 |
+| address                    |
+| category                   |
+| city                       |
+| country                    |
+| customer                   |
+| customer_list              |
+| film                       |
+| film_actor                 |
+| film_category              |
+| film_list                  |
+| film_text                  |
+| inventory                  |
+| language                   |
+| nicer_but_slower_film_list |
+| payment                    |
+| rental                     |
+| sales_by_film_category     |
+| sales_by_store             |
+| staff                      |
+| staff_list                 |
+| store                      |
++----------------------------+
+23 rows in set (0.0034 sec)
+ MySQL  localhost:3306 ssl  sakila  SQL > DESC payment;
++--------------+-------------------+------+-----+-------------------+-----------------------------------------------+
+| Field        | Type              | Null | Key | Default           | Extra                                         |
++--------------+-------------------+------+-----+-------------------+-----------------------------------------------+
+| payment_id   | smallint unsigned | NO   | PRI | NULL              | auto_increment                                |
+| customer_id  | smallint unsigned | NO   | MUL | NULL              |                                               |
+| staff_id     | tinyint unsigned  | NO   | MUL | NULL              |                                               |
+| rental_id    | int               | YES  | MUL | NULL              |                                               |
+| amount       | decimal(5,2)      | NO   |     | NULL              |                                               |
+| payment_date | datetime          | NO   |     | NULL              |                                               |
+| last_update  | timestamp         | YES  |     | CURRENT_TIMESTAMP | DEFAULT_GENERATED on update CURRENT_TIMESTAMP |
++--------------+-------------------+------+-----+-------------------+-----------------------------------------------+
+7 rows in set (0.0032 sec)
+ MySQL  localhost:3306 ssl  sakila  SQL > SELECT (*) COUNT FROM customer WHERE customer_id IN(SELECT DISTINCT customer_id FROM payment)
+                                       -> ;
+ERROR: 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '*) COUNT FROM customer WHERE customer_id IN(SELECT DISTINCT customer_id FROM pay' at line 1
+ MySQL  localhost:3306 ssl  sakila  SQL > SELECT (*) COUNT FROM customer WHERE customer_id IN (SELECT DISTINCT customer_id FROM payment);
+ERROR: 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '*) COUNT FROM customer WHERE customer_id IN (SELECT DISTINCT customer_id FROM pa' at line 1
+ MySQL  localhost:3306 ssl  sakila  SQL > SELECT COUNT(*)
+                                       -> FROM customer
+                                       -> WHERE customer_id IN (
+                                       ->     SELECT DISTINCT customer_id
+                                       ->     FROM payment
+                                       -> );
++----------+
+| COUNT(*) |
++----------+
+|      599 |
++----------+
+1 row in set (0.0329 sec)
+ MySQL  localhost:3306 ssl  sakila  SQL > SELECT (*) COUNT FROM payment;
+ERROR: 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '*) COUNT FROM payment' at line 1
+ MySQL  localhost:3306 ssl  sakila  SQL > SELECT COUNT(*) FROM payment;
++----------+
+| COUNT(*) |
++----------+
+|    16044 |
++----------+
+1 row in set (0.0251 sec)
+ MySQL  localhost:3306 ssl  sakila  SQL > SELECT * FROM payment LIMIT 10;
++------------+-------------+----------+-----------+--------+---------------------+---------------------+
+| payment_id | customer_id | staff_id | rental_id | amount | payment_date        | last_update         |
++------------+-------------+----------+-----------+--------+---------------------+---------------------+
+|          1 |           1 |        1 |        76 |   2.99 | 2005-05-25 11:30:37 | 2006-02-15 22:12:30 |
+|          2 |           1 |        1 |       573 |   0.99 | 2005-05-28 10:35:23 | 2006-02-15 22:12:30 |
+|          3 |           1 |        1 |      1185 |   5.99 | 2005-06-15 00:54:12 | 2006-02-15 22:12:30 |
+|          4 |           1 |        2 |      1422 |   0.99 | 2005-06-15 18:02:53 | 2006-02-15 22:12:30 |
+|          5 |           1 |        2 |      1476 |   9.99 | 2005-06-15 21:08:46 | 2006-02-15 22:12:30 |
+|          6 |           1 |        1 |      1725 |   4.99 | 2005-06-16 15:18:57 | 2006-02-15 22:12:30 |
+|          7 |           1 |        1 |      2308 |   4.99 | 2005-06-18 08:41:48 | 2006-02-15 22:12:30 |
+|          8 |           1 |        2 |      2363 |   0.99 | 2005-06-18 13:33:59 | 2006-02-15 22:12:30 |
+|          9 |           1 |        1 |      3284 |   3.99 | 2005-06-21 06:24:45 | 2006-02-15 22:12:30 |
+|         10 |           1 |        2 |      4526 |   5.99 | 2005-07-08 03:17:05 | 2006-02-15 22:12:30 |
++------------+-------------+----------+-----------+--------+---------------------+---------------------+
+10 rows in set (0.0169 sec)
+ MySQL  localhost:3306 ssl  sakila  SQL > SELECT * FROM payment WHERE customer_id=1;
++------------+-------------+----------+-----------+--------+---------------------+---------------------+
+| payment_id | customer_id | staff_id | rental_id | amount | payment_date        | last_update         |
++------------+-------------+----------+-----------+--------+---------------------+---------------------+
+|          1 |           1 |        1 |        76 |   2.99 | 2005-05-25 11:30:37 | 2006-02-15 22:12:30 |
+|          2 |           1 |        1 |       573 |   0.99 | 2005-05-28 10:35:23 | 2006-02-15 22:12:30 |
+|          3 |           1 |        1 |      1185 |   5.99 | 2005-06-15 00:54:12 | 2006-02-15 22:12:30 |
+|          4 |           1 |        2 |      1422 |   0.99 | 2005-06-15 18:02:53 | 2006-02-15 22:12:30 |
+|          5 |           1 |        2 |      1476 |   9.99 | 2005-06-15 21:08:46 | 2006-02-15 22:12:30 |
+|          6 |           1 |        1 |      1725 |   4.99 | 2005-06-16 15:18:57 | 2006-02-15 22:12:30 |
+|          7 |           1 |        1 |      2308 |   4.99 | 2005-06-18 08:41:48 | 2006-02-15 22:12:30 |
+|          8 |           1 |        2 |      2363 |   0.99 | 2005-06-18 13:33:59 | 2006-02-15 22:12:30 |
+|          9 |           1 |        1 |      3284 |   3.99 | 2005-06-21 06:24:45 | 2006-02-15 22:12:30 |
+|         10 |           1 |        2 |      4526 |   5.99 | 2005-07-08 03:17:05 | 2006-02-15 22:12:30 |
+|         11 |           1 |        1 |      4611 |   5.99 | 2005-07-08 07:33:56 | 2006-02-15 22:12:30 |
+|         12 |           1 |        1 |      5244 |   4.99 | 2005-07-09 13:24:07 | 2006-02-15 22:12:30 |
+|         13 |           1 |        1 |      5326 |   4.99 | 2005-07-09 16:38:01 | 2006-02-15 22:12:30 |
+|         14 |           1 |        1 |      6163 |   7.99 | 2005-07-11 10:13:46 | 2006-02-15 22:12:30 |
+|         15 |           1 |        2 |      7273 |   2.99 | 2005-07-27 11:31:22 | 2006-02-15 22:12:30 |
+|         16 |           1 |        1 |      7841 |   4.99 | 2005-07-28 09:04:45 | 2006-02-15 22:12:30 |
+|         17 |           1 |        2 |      8033 |   4.99 | 2005-07-28 16:18:23 | 2006-02-15 22:12:30 |
+|         18 |           1 |        1 |      8074 |   0.99 | 2005-07-28 17:33:39 | 2006-02-15 22:12:30 |
+|         19 |           1 |        2 |      8116 |   0.99 | 2005-07-28 19:20:07 | 2006-02-15 22:12:30 |
+|         20 |           1 |        2 |      8326 |   2.99 | 2005-07-29 03:58:49 | 2006-02-15 22:12:30 |
+|         21 |           1 |        2 |      9571 |   2.99 | 2005-07-31 02:42:18 | 2006-02-15 22:12:30 |
+|         22 |           1 |        2 |     10437 |   4.99 | 2005-08-01 08:51:04 | 2006-02-15 22:12:30 |
+|         23 |           1 |        2 |     11299 |   3.99 | 2005-08-02 15:36:52 | 2006-02-15 22:12:30 |
+|         24 |           1 |        1 |     11367 |   0.99 | 2005-08-02 18:01:38 | 2006-02-15 22:12:30 |
+|         25 |           1 |        2 |     11824 |   4.99 | 2005-08-17 12:37:54 | 2006-02-15 22:12:30 |
+|         26 |           1 |        1 |     12250 |   0.99 | 2005-08-18 03:57:29 | 2006-02-15 22:12:30 |
+|         27 |           1 |        2 |     13068 |   0.99 | 2005-08-19 09:55:16 | 2006-02-15 22:12:30 |
+|         28 |           1 |        2 |     13176 |   2.99 | 2005-08-19 13:56:54 | 2006-02-15 22:12:30 |
+|         29 |           1 |        1 |     14762 |   0.99 | 2005-08-21 23:33:57 | 2006-02-15 22:12:30 |
+|         30 |           1 |        1 |     14825 |   1.99 | 2005-08-22 01:27:57 | 2006-02-15 22:12:30 |
+|         31 |           1 |        2 |     15298 |   2.99 | 2005-08-22 19:41:37 | 2006-02-15 22:12:30 |
+|         32 |           1 |        1 |     15315 |   5.99 | 2005-08-22 20:03:46 | 2006-02-15 22:12:30 |
++------------+-------------+----------+-----------+--------+---------------------+---------------------+
+32 rows in set (0.0013 sec)
+ MySQL  localhost:3306 ssl  sakila  SQL > SELECT COUNT(*) FROM payment WHERE customer_id=1;
++----------+
+| COUNT(*) |                              SELECT SUM(amount) FROM payment WHER;
++-------------+                           SELECT SUM(amount) FROM payment WHER;
+| SUM(amount) |                           SELECT SUM(amount) FROM payment WHER
++-------------+                           SELECT SUM(amount) FROM payment WHERE
+|    67406.56 |.0012 sec)                 SELECT SUM(amount) FROM payment WHER
++-------------+st:3306 ssl  sakila  SQL > SELECT SUM(amount) FROM payment WHE
+1 row in set (0.0703 sec)
+ MySQL  localhost:3306 ssl  sakila  SQL > SELECT SUM(amount) FROM payment WHERE customer_id=1;
++-------------+
+| SUM(amount) |
++-------------+
+|      118.68 |
++-------------+
+1 row in set (0.0013 sec)
+ MySQL  localhost:3306 ssl  sakila  SQL > SELECT SUM(amount) AS TOTAL FROM payment;
++----------+
+| TOTAL    |
++----------+
+| 67406.56 |
++----------+
+1 row in set (0.0108 sec)
+ MySQL  localhost:3306 ssl  sakila  SQL > SHOW TABLES;
++----------------------------+
+| Tables_in_sakila           |
++----------------------------+
+| actor                      |
+| actor_info                 |
+| address                    |
+| category                   |
+| city                       |
+| country                    |
+| customer                   |
+| customer_list              |
+| film                       |
+| film_actor                 |
+| film_category              |
+| film_list                  |
+| film_text                  |
+| inventory                  |
+| language                   |
+| nicer_but_slower_film_list |
+| payment                    |
+| rental                     |
+| sales_by_film_category     |
+| sales_by_store             |
+| staff                      |
+| staff_list                 |
+| store                      |
++----------------------------+
+23 rows in set (0.0036 sec)
+ MySQL  localhost:3306 ssl  sakila  SQL > DESC payment;
++--------------+-------------------+------+-----+-------------------+-----------------------------------------------+
+| Field        | Type              | Null | Key | Default           | Extra                                         |
++--------------+-------------------+------+-----+-------------------+-----------------------------------------------+
+| payment_id   | smallint unsigned | NO   | PRI | NULL              | auto_increment                                |
+| customer_id  | smallint unsigned | NO   | MUL | NULL              |                                               |
+| staff_id     | tinyint unsigned  | NO   | MUL | NULL              |                                               |
+| rental_id    | int               | YES  | MUL | NULL              |                                               |
+| amount       | decimal(5,2)      | NO   |     | NULL              |                                               |
+| payment_date | datetime          | NO   |     | NULL              |                                               |
+| last_update  | timestamp         | YES  |     | CURRENT_TIMESTAMP | DEFAULT_GENERATED on update CURRENT_TIMESTAMP |
++--------------+-------------------+------+-----+-------------------+-----------------------------------------------+
+7 rows in set (0.0031 sec)
+ MySQL  localhost:3306 ssl  sakila  SQL > DESC inventory;
++--------------+--------------------+------+-----+-------------------+-----------------------------------------------+
+| Field        | Type               | Null | Key | Default           | Extra                                         |
++--------------+--------------------+------+-----+-------------------+-----------------------------------------------+
+| inventory_id | mediumint unsigned | NO   | PRI | NULL              | auto_increment                                |
+| film_id      | smallint unsigned  | NO   | MUL | NULL              |                                               |
+| store_id     | tinyint unsigned   | NO   | MUL | NULL              |                                               |
+| last_update  | timestamp          | NO   |     | CURRENT_TIMESTAMP | DEFAULT_GENERATED on update CURRENT_TIMESTAMP |
++--------------+--------------------+------+-----+-------------------+-----------------------------------------------+
+4 rows in set (0.0027 sec)
+ MySQL  localhost:3306 ssl  sakila  SQL > DESC rental;
++--------------+--------------------+------+-----+-------------------+-----------------------------------------------+
+| Field        | Type               | Null | Key | Default           | Extra                                         |
++--------------+--------------------+------+-----+-------------------+-----------------------------------------------+
+| rental_id    | int                | NO   | PRI | NULL              | auto_increment                                |
+| rental_date  | datetime           | NO   | MUL | NULL              |                                               |
+| inventory_id | mediumint unsigned | NO   | MUL | NULL              |                                               |
+| customer_id  | smallint unsigned  | NO   | MUL | NULL              |                                               |
+| return_date  | datetime           | YES  |     | NULL              |                                               |
+| staff_id     | tinyint unsigned   | NO   | MUL | NULL              |                                               |
+| last_update  | timestamp          | NO   |     | CURRENT_TIMESTAMP | DEFAULT_GENERATED on update CURRENT_TIMESTAMP |
++--------------+--------------------+------+-----+-------------------+-----------------------------------------------+
+7 rows in set (0.0029 sec)
+ MySQL  localhost:3306 ssl  sakila  SQL > DESC film;
++----------------------+---------------------------------------------------------------------+------+-----+-------------------+-----------------------------------------------+
+| Field                | Type                                                                | Null | Key | Default           | Extra                                         |
++----------------------+---------------------------------------------------------------------+------+-----+-------------------+-----------------------------------------------+
+| film_id              | smallint unsigned                                                   | NO   | PRI | NULL              | auto_increment                                |
+| title                | varchar(128)                                                        | NO   | MUL | NULL              |                                               |
+| description          | text                                                                | YES  |     | NULL              |                                               |
+| release_year         | year                                                                | YES  |     | NULL              |                                               |
+| language_id          | tinyint unsigned                                                    | NO   | MUL | NULL              |                                               |
+| original_language_id | tinyint unsigned                                                    | YES  | MUL | NULL              |                                               |
+| rental_duration      | tinyint unsigned                                                    | NO   |     | 3                 |                                               |
+| rental_rate          | decimal(4,2)                                                        | NO   |     | 4.99              |                                               |
+| length               | smallint unsigned                                                   | YES  |     | NULL              |                                               |
+| replacement_cost     | decimal(5,2)                                                        | NO   |     | 19.99             |                                               |
+| rating               | enum('G','PG','PG-13','R','NC-17')                                  | YES  |     | G                 |                                               |
+| special_features     | set('Trailers','Commentaries','Deleted Scenes','Behind the Scenes') | YES  |     | NULL              |                                               |
+| last_update          | timestamp                                                           | NO   |     | CURRENT_TIMESTAMP | DEFAULT_GENERATED on update CURRENT_TIMESTAMP |
++----------------------+---------------------------------------------------------------------+------+-----+-------------------+-----------------------------------------------+
+13 rows in set (0.0045 sec)
+ MySQL  localhost:3306 ssl  sakila  SQL > SELECT title FROM film WHERE film_id NOT IN(SELECT film_id FROM inventory WHERE inventory_id IN(SELECT inventory_id FROM rental));
+inventory_id IN(SELECT DISTINCT inventory_id FROM rental));
++------------------------+
+| title                  |
++------------------------+
+| ALICE FANTASIA         |
+| APOLLO TEEN            |
+| ARGONAUTS TOWN         |
+| ARK RIDGEMONT          |
+| ARSENIC INDEPENDENCE   |
+| BOONDOCK BALLROOM      |
+| BUTCH PANTHER          |
+| CATCH AMISTAD          |
+| CHINATOWN GLADIATOR    |
+| CHOCOLATE DUCK         |
+| COMMANDMENTS EXPRESS   |
+| CROSSING DIVORCE       |
+| CROWDS TELEMARK        |
+| CRYSTAL BREAKING       |
+| DAZED PUNK             |
+| DELIVERANCE MULHOLLAND |
+| FIREHOUSE VIETNAM      |
+| FLOATS GARDEN          |
+| FRANKENSTEIN STRANGER  |
+| GLADIATOR WESTWARD     |
+| GUMP DATE              |
+| HATE HANDICAP          |
+| HOCUS FRIDA            |
+| KENTUCKIAN GIANT       |
+| KILL BROTHERHOOD       |
+| MUPPET MILE            |
+| ORDER BETRAYED         |
+| PEARL DESTINY          |
+| PERDITION FARGO        |
+| PSYCHO SHRUNK          |
+| RAIDERS ANTITRUST      |
+| RAINBOW SHOCK          |
+| ROOF CHAMPION          |
+| SISTER FREDDY          |
+| SKY MIRACLE            |
+| SUICIDES SILENCE       |
+| TADPOLE PARK           |
+| TREASURE COMMAND       |
+| VILLAIN DESPERATE      |
+| VOLUME HOUSE           |
+| WAKE JAWS              |
+| WALLS ARTIST           |
++------------------------+
+42 rows in set (0.0137 sec)
+ MySQL  localhost:3306 ssl  sakila  SQL > SELECT title FROM film WHERE film_id IN (SELECT DISTINCT film_id FROM inventory WHERE inventory_id NOT IN(SELECT DISTINCT inventory_id FROM rental));
++------------------+
+| title            |
++------------------+
+| ACADEMY DINOSAUR |
++------------------+
+1 row in set (0.0309 sec)
+ MySQL  localhost:3306 ssl  sakila  SQL > SELECT film_id FROM film WHERE title = 'SKY MIRACLE';
++---------+
+| film_id |
++---------+
+|     802 |
++---------+
+1 row in set (0.0012 sec)
+ MySQL  localhost:3306 ssl  sakila  SQL > SELECT inventory_id FROM inventory WHERE film_id = 802;
+Empty set (0.0010 sec)
+ MySQL  localhost:3306 ssl  sakila  SQL >
