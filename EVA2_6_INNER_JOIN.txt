@@ -1,0 +1,1024 @@
+MySQL Shell 8.0.43
+
+Copyright (c) 2016, 2025, Oracle and/or its affiliates.
+Oracle is a registered trademark of Oracle Corporation and/or its affiliates.
+Other names may be trademarks of their respective owners.
+
+Type '\help' or '\?' for help; '\quit' to exit.
+ MySQL  JS > \sql
+Switching to SQL mode... Commands end with ;
+ MySQL  SQL > \c --mc root@localhost
+Creating a Classic session to 'root@localhost'
+Fetching global names for auto-completion... Press ^C to stop.
+Your MySQL connection id is 12
+Server version: 8.0.43 MySQL Community Server - GPL
+No default schema selected; type \use <schema> to set one.
+ MySQL  localhost:3306 ssl  SQL > USE sakila;
+Default schema set to `sakila`.
+Fetching global names, object names from `sakila` for auto-completion... Press ^C to stop.
+ MySQL  localhost:3306 ssl  sakila  SQL > SHOW TABLES;
++----------------------------+
+| Tables_in_sakila           |
++----------------------------+
+| actor                      |
+| actor_info                 |
+| address                    |
+| category                   |
+| city                       |
+| country                    |
+| customer                   |
+| customer_list              |
+| film                       |
+| film_actor                 |
+| film_category              |
+| film_list                  |
+| film_text                  |
+| inventory                  |
+| language                   |
+| nicer_but_slower_film_list |
+| payment                    |
+| rental                     |
+| sales_by_film_category     |
+| sales_by_store             |
+| staff                      |
+| staff_list                 |
+| store                      |
++----------------------------+
+23 rows in set (0.0033 sec)
+ MySQL  localhost:3306 ssl  sakila  SQL > DESC payment;
++--------------+-------------------+------+-----+-------------------+-----------------------------------------------+
+| Field        | Type              | Null | Key | Default           | Extra                                         |
++--------------+-------------------+------+-----+-------------------+-----------------------------------------------+
+| payment_id   | smallint unsigned | NO   | PRI | NULL              | auto_increment                                |
+| customer_id  | smallint unsigned | NO   | MUL | NULL              |                                               |
+| staff_id     | tinyint unsigned  | NO   | MUL | NULL              |                                               |
+| rental_id    | int               | YES  | MUL | NULL              |                                               |
+| amount       | decimal(5,2)      | NO   |     | NULL              |                                               |
+| payment_date | datetime          | NO   |     | NULL              |                                               |
+| last_update  | timestamp         | YES  |     | CURRENT_TIMESTAMP | DEFAULT_GENERATED on update CURRENT_TIMESTAMP |
++--------------+-------------------+------+-----+-------------------+-----------------------------------------------+
+7 rows in set (0.0160 sec)
+ MySQL  localhost:3306 ssl  sakila  SQL > SELECT customer_id, amount FROM payment LIMIT 50;
++-------------+--------+
+| customer_id | amount |
++-------------+--------+
+|           1 |   2.99 |
+|           1 |   0.99 |
+|           1 |   5.99 |
+|           1 |   0.99 |
+|           1 |   9.99 |
+|           1 |   4.99 |
+|           1 |   4.99 |
+|           1 |   0.99 |
+|           1 |   3.99 |
+|           1 |   5.99 |
+|           1 |   5.99 |
+|           1 |   4.99 |
+|           1 |   4.99 |
+|           1 |   7.99 |
+|           1 |   2.99 |
+|           1 |   4.99 |
+|           1 |   4.99 |
+|           1 |   0.99 |
+|           1 |   0.99 |
+|           1 |   2.99 |
+|           1 |   2.99 |
+|           1 |   4.99 |
+|           1 |   3.99 |
+|           1 |   0.99 |
+|           1 |   4.99 |
+|           1 |   0.99 |
+|           1 |   0.99 |
+|           1 |   2.99 |
+|           1 |   0.99 |
+|           1 |   1.99 |
+|           1 |   2.99 |
+|           1 |   5.99 |
+|           2 |   4.99 |
+|           2 |   2.99 |
+|           2 |   2.99 |
+|           2 |   6.99 |
+|           2 |   4.99 |
+|           2 |   5.99 |
+|           2 |   5.99 |
+|           2 |   5.99 |
+|           2 |   2.99 |
+|           2 |   5.99 |
+|           2 |   4.99 |
+|           2 |  10.99 |
+|           2 |   0.99 |
+|           2 |   6.99 |
+|           2 |   6.99 |
+|           2 |   2.99 |
+|           2 |   0.99 |
+|           2 |   0.99 |
++-------------+--------+
+50 rows in set (0.0171 sec)
+ MySQL  localhost:3306 ssl  sakila  SQL > SELECT B.first_name, B.last_name, A.amount FROM payment A INNER JOIN customer B ON A.customer_id = B.customer_id LIMIT 100;
++------------+-----------+--------+
+| first_name | last_name | amount |
++------------+-----------+--------+
+| MARY       | SMITH     |   2.99 |
+| MARY       | SMITH     |   0.99 |
+| MARY       | SMITH     |   5.99 |
+| MARY       | SMITH     |   0.99 |
+| MARY       | SMITH     |   9.99 |
+| MARY       | SMITH     |   4.99 |
+| MARY       | SMITH     |   4.99 |
+| MARY       | SMITH     |   0.99 |
+| MARY       | SMITH     |   3.99 |
+| MARY       | SMITH     |   5.99 |
+| MARY       | SMITH     |   5.99 |
+| MARY       | SMITH     |   4.99 |
+| MARY       | SMITH     |   4.99 |
+| MARY       | SMITH     |   7.99 |
+| MARY       | SMITH     |   2.99 |
+| MARY       | SMITH     |   4.99 |
+| MARY       | SMITH     |   4.99 |
+| MARY       | SMITH     |   0.99 |
+| MARY       | SMITH     |   0.99 |
+| MARY       | SMITH     |   2.99 |
+| MARY       | SMITH     |   2.99 |
+| MARY       | SMITH     |   4.99 |
+| MARY       | SMITH     |   3.99 |
+| MARY       | SMITH     |   0.99 |
+| MARY       | SMITH     |   4.99 |
+| MARY       | SMITH     |   0.99 |
+| MARY       | SMITH     |   0.99 |
+| MARY       | SMITH     |   2.99 |
+| MARY       | SMITH     |   0.99 |
+| MARY       | SMITH     |   1.99 |
+| MARY       | SMITH     |   2.99 |
+| MARY       | SMITH     |   5.99 |
+| PATRICIA   | JOHNSON   |   4.99 |
+| PATRICIA   | JOHNSON   |   2.99 |
+| PATRICIA   | JOHNSON   |   2.99 |
+| PATRICIA   | JOHNSON   |   6.99 |
+| PATRICIA   | JOHNSON   |   4.99 |
+| PATRICIA   | JOHNSON   |   5.99 |
+| PATRICIA   | JOHNSON   |   5.99 |
+| PATRICIA   | JOHNSON   |   5.99 |
+| PATRICIA   | JOHNSON   |   2.99 |
+| PATRICIA   | JOHNSON   |   5.99 |
+| PATRICIA   | JOHNSON   |   4.99 |
+| PATRICIA   | JOHNSON   |  10.99 |
+| PATRICIA   | JOHNSON   |   0.99 |
+| PATRICIA   | JOHNSON   |   6.99 |
+| PATRICIA   | JOHNSON   |   6.99 |
+| PATRICIA   | JOHNSON   |   2.99 |
+| PATRICIA   | JOHNSON   |   0.99 |
+| PATRICIA   | JOHNSON   |   0.99 |
+| PATRICIA   | JOHNSON   |   5.99 |
+| PATRICIA   | JOHNSON   |   6.99 |
+| PATRICIA   | JOHNSON   |   2.99 |
+| PATRICIA   | JOHNSON   |   2.99 |
+| PATRICIA   | JOHNSON   |   2.99 |
+| PATRICIA   | JOHNSON   |   4.99 |
+| PATRICIA   | JOHNSON   |   5.99 |
+| PATRICIA   | JOHNSON   |   4.99 |
+| PATRICIA   | JOHNSON   |   4.99 |
+| LINDA      | WILLIAMS  |   1.99 |
+| LINDA      | WILLIAMS  |   2.99 |
+| LINDA      | WILLIAMS  |   8.99 |
+| LINDA      | WILLIAMS  |   6.99 |
+| LINDA      | WILLIAMS  |   6.99 |
+| LINDA      | WILLIAMS  |   2.99 |
+| LINDA      | WILLIAMS  |   4.99 |
+| LINDA      | WILLIAMS  |   4.99 |
+| LINDA      | WILLIAMS  |   5.99 |
+| LINDA      | WILLIAMS  |  10.99 |
+| LINDA      | WILLIAMS  |   7.99 |
+| LINDA      | WILLIAMS  |   6.99 |
+| LINDA      | WILLIAMS  |   4.99 |
+| LINDA      | WILLIAMS  |   4.99 |
+| LINDA      | WILLIAMS  |   2.99 |
+| LINDA      | WILLIAMS  |   1.99 |
+| LINDA      | WILLIAMS  |   3.99 |
+| LINDA      | WILLIAMS  |   2.99 |
+| LINDA      | WILLIAMS  |   4.99 |
+| LINDA      | WILLIAMS  |   5.99 |
+| LINDA      | WILLIAMS  |   4.99 |
+| LINDA      | WILLIAMS  |   8.99 |
+| LINDA      | WILLIAMS  |   2.99 |
+| LINDA      | WILLIAMS  |   8.99 |
+| LINDA      | WILLIAMS  |   0.99 |
+| LINDA      | WILLIAMS  |   2.99 |
+| BARBARA    | JONES     |   4.99 |
+| BARBARA    | JONES     |   0.99 |
+| BARBARA    | JONES     |   2.99 |
+| BARBARA    | JONES     |   0.99 |
+| BARBARA    | JONES     |   0.99 |
+| BARBARA    | JONES     |   5.99 |
+| BARBARA    | JONES     |   2.99 |
+| BARBARA    | JONES     |   2.99 |
+| BARBARA    | JONES     |   3.99 |
+| BARBARA    | JONES     |   5.99 |
+| BARBARA    | JONES     |   5.99 |
+| BARBARA    | JONES     |   0.99 |
+| BARBARA    | JONES     |   2.99 |
+| BARBARA    | JONES     |   4.99 |
+| BARBARA    | JONES     |   2.99 |
++------------+-----------+--------+
+100 rows in set (0.0050 sec)
+ MySQL  localhost:3306 ssl  sakila  SQL > SELECT B.first_name, B.last_name, A.amount FROM payment A INNER JOIN customer B ON A.customer_id = B.customer_id ORDER BY B.last_name, B.first_name LIMIT 100;
++------------+-----------+--------+
+| first_name | last_name | amount |
++------------+-----------+--------+
+| RAFAEL     | ABNEY     |   2.99 |
+| RAFAEL     | ABNEY     |   2.99 |
+| RAFAEL     | ABNEY     |   5.99 |
+| RAFAEL     | ABNEY     |   4.99 |
+| RAFAEL     | ABNEY     |   7.99 |
+| RAFAEL     | ABNEY     |   5.99 |
+| RAFAEL     | ABNEY     |   5.99 |
+| RAFAEL     | ABNEY     |   6.99 |
+| RAFAEL     | ABNEY     |   9.99 |
+| RAFAEL     | ABNEY     |   4.99 |
+| RAFAEL     | ABNEY     |   0.99 |
+| RAFAEL     | ABNEY     |   4.99 |
+| RAFAEL     | ABNEY     |   5.99 |
+| RAFAEL     | ABNEY     |   2.99 |
+| RAFAEL     | ABNEY     |   0.99 |
+| RAFAEL     | ABNEY     |   2.99 |
+| RAFAEL     | ABNEY     |   3.99 |
+| RAFAEL     | ABNEY     |   2.99 |
+| RAFAEL     | ABNEY     |   2.99 |
+| RAFAEL     | ABNEY     |   4.99 |
+| RAFAEL     | ABNEY     |   4.99 |
+| NATHANIEL  | ADAM      |   5.99 |
+| NATHANIEL  | ADAM      |   4.99 |
+| NATHANIEL  | ADAM      |   4.99 |
+| NATHANIEL  | ADAM      |   1.99 |
+| NATHANIEL  | ADAM      |   6.99 |
+| NATHANIEL  | ADAM      |   9.99 |
+| NATHANIEL  | ADAM      |   6.99 |
+| NATHANIEL  | ADAM      |   5.99 |
+| NATHANIEL  | ADAM      |   0.99 |
+| NATHANIEL  | ADAM      |   6.99 |
+| NATHANIEL  | ADAM      |   3.99 |
+| NATHANIEL  | ADAM      |   2.99 |
+| NATHANIEL  | ADAM      |   2.99 |
+| NATHANIEL  | ADAM      |   1.99 |
+| NATHANIEL  | ADAM      |   4.99 |
+| NATHANIEL  | ADAM      |   9.99 |
+| NATHANIEL  | ADAM      |   0.99 |
+| NATHANIEL  | ADAM      |   3.99 |
+| NATHANIEL  | ADAM      |   2.99 |
+| NATHANIEL  | ADAM      |   1.99 |
+| NATHANIEL  | ADAM      |   2.99 |
+| NATHANIEL  | ADAM      |   2.99 |
+| NATHANIEL  | ADAM      |   2.99 |
+| NATHANIEL  | ADAM      |   5.99 |
+| NATHANIEL  | ADAM      |   4.99 |
+| NATHANIEL  | ADAM      |   6.99 |
+| NATHANIEL  | ADAM      |   8.99 |
+| NATHANIEL  | ADAM      |   4.99 |
+| KATHLEEN   | ADAMS     |   0.99 |
+| KATHLEEN   | ADAMS     |   0.99 |
+| KATHLEEN   | ADAMS     |   0.99 |
+| KATHLEEN   | ADAMS     |   0.99 |
+| KATHLEEN   | ADAMS     |   4.99 |
+| KATHLEEN   | ADAMS     |   4.99 |
+| KATHLEEN   | ADAMS     |   0.99 |
+| KATHLEEN   | ADAMS     |   0.99 |
+| KATHLEEN   | ADAMS     |   6.99 |
+| KATHLEEN   | ADAMS     |   0.99 |
+| KATHLEEN   | ADAMS     |   6.99 |
+| KATHLEEN   | ADAMS     |   0.99 |
+| KATHLEEN   | ADAMS     |   2.99 |
+| KATHLEEN   | ADAMS     |   4.99 |
+| KATHLEEN   | ADAMS     |   2.99 |
+| KATHLEEN   | ADAMS     |   0.99 |
+| KATHLEEN   | ADAMS     |   2.99 |
+| KATHLEEN   | ADAMS     |   2.99 |
+| KATHLEEN   | ADAMS     |   0.99 |
+| KATHLEEN   | ADAMS     |   6.99 |
+| KATHLEEN   | ADAMS     |   4.99 |
+| KATHLEEN   | ADAMS     |   4.99 |
+| KATHLEEN   | ADAMS     |   2.99 |
+| KATHLEEN   | ADAMS     |   1.99 |
+| KATHLEEN   | ADAMS     |   4.99 |
+| KATHLEEN   | ADAMS     |   9.99 |
+| KATHLEEN   | ADAMS     |   4.99 |
+| DIANA      | ALEXANDER |   3.99 |
+| DIANA      | ALEXANDER |   7.99 |
+| DIANA      | ALEXANDER |   0.99 |
+| DIANA      | ALEXANDER |   0.99 |
+| DIANA      | ALEXANDER |   5.99 |
+| DIANA      | ALEXANDER |   0.99 |
+| DIANA      | ALEXANDER |   0.99 |
+| DIANA      | ALEXANDER |   2.99 |
+| DIANA      | ALEXANDER |   2.99 |
+| DIANA      | ALEXANDER |   4.99 |
+| DIANA      | ALEXANDER |   0.99 |
+| DIANA      | ALEXANDER |   4.99 |
+| DIANA      | ALEXANDER |   2.99 |
+| DIANA      | ALEXANDER |   4.99 |
+| DIANA      | ALEXANDER |   6.99 |
+| DIANA      | ALEXANDER |   3.99 |
+| DIANA      | ALEXANDER |   4.99 |
+| DIANA      | ALEXANDER |   3.99 |
+| DIANA      | ALEXANDER |   4.99 |
+| DIANA      | ALEXANDER |   4.99 |
+| DIANA      | ALEXANDER |   3.99 |
+| DIANA      | ALEXANDER |   4.99 |
+| DIANA      | ALEXANDER |   4.99 |
+| DIANA      | ALEXANDER |   0.99 |
++------------+-----------+--------+
+100 rows in set (0.0205 sec)
+ MySQL  localhost:3306 ssl  sakila  SQL > SELECT B.first_name, B.last_name, A.amount FROM payment A INNER JOIN customer B ON A.customer_id = B.customer_id GROUP BY A.customer_id LIMIT 100;
+ERROR: 1055 (42000): Expression #3 of SELECT list is not in GROUP BY clause and contains nonaggregated column 'sakila.A.amount' which is not functionally dependent on columns in GROUP BY clause; this is incompatible with sql_mode=only_full_group_by
+ MySQL  localhost:3306 ssl  sakila  SQL > SELECT B.first_name, B.last_name, SUM(A.amount) AS TOTAL FROM payment A INNER JOIN customer B ON A.customer_id = B.customer_id GROUP BY A.customer_id LIMIT 100;
++------------+------------+--------+
+| first_name | last_name  | TOTAL  |
++------------+------------+--------+
+| MARY       | SMITH      | 118.68 |
+| PATRICIA   | JOHNSON    | 128.73 |
+| LINDA      | WILLIAMS   | 135.74 |
+| BARBARA    | JONES      |  81.78 |
+| ELIZABETH  | BROWN      | 144.62 |
+| JENNIFER   | DAVIS      |  93.72 |
+| MARIA      | MILLER     | 151.67 |
+| SUSAN      | WILSON     |  92.76 |
+| MARGARET   | MOORE      |  89.77 |
+| DOROTHY    | TAYLOR     |  99.75 |
+| LISA       | ANDERSON   | 106.76 |
+| NANCY      | THOMAS     | 103.72 |
+| KAREN      | JACKSON    | 131.73 |
+| BETTY      | WHITE      | 117.72 |
+| HELEN      | HARRIS     | 134.68 |
+| SANDRA     | MARTIN     | 118.72 |
+| DONNA      | THOMPSON   |  98.79 |
+| CAROL      | GARCIA     |  91.78 |
+| RUTH       | MARTINEZ   | 125.76 |
+| SHARON     | ROBINSON   | 115.70 |
+| MICHELLE   | CLARK      | 155.65 |
+| LAURA      | RODRIGUEZ  | 113.78 |
+| SARAH      | LEWIS      | 119.70 |
+| KIMBERLY   | LEE        |  95.75 |
+| DEBORAH    | WALKER     | 115.71 |
+| JESSICA    | HALL       | 152.66 |
+| SHIRLEY    | ALLEN      | 126.69 |
+| CYNTHIA    | YOUNG      | 111.68 |
+| ANGELA     | HERNANDEZ  | 140.64 |
+| MELISSA    | KING       | 123.66 |
+| BRENDA     | WRIGHT     | 104.74 |
+| AMY        | LOPEZ      | 127.71 |
+| ANNA       | HILL       |  91.79 |
+| REBECCA    | SCOTT      |  89.76 |
+| VIRGINIA   | GREEN      | 129.68 |
+| KATHLEEN   | ADAMS      |  92.73 |
+| PAMELA     | BAKER      |  95.77 |
+| MARTHA     | GONZALEZ   | 127.66 |
+| DEBRA      | NELSON     | 141.71 |
+| AMANDA     | CARTER     | 110.73 |
+| STEPHANIE  | MITCHELL   | 118.75 |
+| CAROLYN    | PEREZ      | 117.70 |
+| CHRISTINE  | ROBERTS    |  99.76 |
+| MARIE      | TURNER     | 114.74 |
+| JANET      | PHILLIPS   | 127.73 |
+| CATHERINE  | CAMPBELL   | 142.66 |
+| FRANCES    | PARKER     | 108.78 |
+| ANN        | EVANS      |  76.83 |
+| JOYCE      | EDWARDS    | 130.72 |
+| DIANE      | COLLINS    | 169.65 |
+| ALICE      | STEWART    | 138.67 |
+| JULIE      | SANCHEZ    | 107.71 |
+| HEATHER    | MORRIS     | 115.70 |
+| TERESA     | ROGERS     | 128.71 |
+| DORIS      | REED       | 100.78 |
+| GLORIA     | COOK       | 135.70 |
+| EVELYN     | MORGAN     | 114.72 |
+| JEAN       | BELL       | 115.73 |
+| CHERYL     | MURPHY     | 133.73 |
+| MILDRED    | BAILEY     |  98.75 |
+| KATHERINE  | RIVERA     |  58.86 |
+| JOAN       | COOPER     |  84.77 |
+| ASHLEY     | RICHARDSON | 112.75 |
+| JUDITH     | COX        | 100.67 |
+| ROSE       | HOWARD     | 103.78 |
+| JANICE     | WARD       | 144.66 |
+| KELLY      | TORRES     |  99.78 |
+| NICOLE     | PETERSON   |  94.78 |
+| JUDY       | GRAY       |  96.75 |
+| CHRISTINA  | RAMIREZ    |  80.82 |
+| KATHY      | JAMES      | 129.70 |
+| THERESA    | WATSON     |  99.70 |
+| BEVERLY    | BROOKS     |  97.76 |
+| DENISE     | KELLY      | 103.73 |
+| TAMMY      | SANDERS    | 155.59 |
+| IRENE      | PRICE      |  77.77 |
+| JANE       | BENNETT    | 100.72 |
+| LORI       | WOOD       | 141.69 |
+| RACHEL     | BARNES     |  84.78 |
+| MARILYN    | ROSS       | 137.70 |
+| ANDREA     | HENDERSON  |  93.78 |
+| KATHRYN    | COLEMAN    | 130.74 |
+| LOUISE     | JENKINS    | 101.75 |
+| SARA       | PERRY      | 141.67 |
+| ANNE       | POWELL     |  87.77 |
+| JACQUELINE | LONG       | 148.67 |
+| WANDA      | PATTERSON  | 145.70 |
+| BONNIE     | HUGHES     |  87.79 |
+| JULIA      | FLORES     | 134.68 |
+| RUBY       | WASHINGTON | 110.72 |
+| LOIS       | BUTLER     | 113.65 |
+| TINA       | SIMMONS    | 133.72 |
+| PHYLLIS    | FOSTER     |  91.77 |
+| NORMA      | GONZALES   |  79.79 |
+| PAULA      | BRYANT     |  77.82 |
+| DIANA      | ALEXANDER  | 105.73 |
+| ANNIE      | RUSSELL    |  58.82 |
+| LILLIAN    | GRIFFIN    | 106.75 |
+| EMILY      | DIAZ       |  91.76 |
+| ROBIN      | HAYES      | 102.76 |
++------------+------------+--------+
+100 rows in set (0.0239 sec)
+ MySQL  localhost:3306 ssl  sakila  SQL > SELECT B.first_name, B.last_name, SUM(A.amount) AS TOTAL FROM payment A INNER JOIN customer B ON A.customer_id = B.customer_id GROUP BY A.customer_id ORDER BY TOTAL LIMIT 100;
++------------+-------------+-------+
+| first_name | last_name   | TOTAL |
++------------+-------------+-------+
+| CAROLINE   | BOWMAN      | 50.85 |
+| LEONA      | OBRIEN      | 50.86 |
+| BRIAN      | WYMAN       | 52.88 |
+| JOHNNY     | TURPIN      | 57.81 |
+| ANNIE      | RUSSELL     | 58.82 |
+| KATHERINE  | RIVERA      | 58.86 |
+| TIFFANY    | JORDAN      | 59.86 |
+| ANITA      | MORALES     | 62.85 |
+| MATTIE     | HOFFMAN     | 64.78 |
+| KIRK       | STCLAIR     | 64.81 |
+| LESTER     | KRAUS       | 65.84 |
+| ALBERTO    | HENNING     | 66.79 |
+| LLOYD      | DOWD        | 66.81 |
+| JOANN      | GARDNER     | 66.84 |
+| VERA       | MCCOY       | 67.82 |
+| JILL       | HAWKINS     | 68.79 |
+| PENNY      | NEAL        | 68.82 |
+| FLOYD      | GANDY       | 69.83 |
+| WAYNE      | TRUONG      | 70.81 |
+| IRMA       | PEARSON     | 70.82 |
+| SAMANTHA   | DUNCAN      | 71.77 |
+| LAUREN     | HUDSON      | 71.80 |
+| ANTHONY    | SCHWAB      | 71.80 |
+| EUGENE     | CULPEPPER   | 71.81 |
+| EDITH      | MCDONALD    | 71.81 |
+| TERRY      | GRISSOM     | 72.80 |
+| JONATHAN   | SCARBOROUGH | 72.82 |
+| FELIX      | GAFFNEY     | 73.76 |
+| JUAN       | FRALEY      | 73.77 |
+| TONY       | CARRANZA    | 73.79 |
+| JO         | FOWLER      | 73.80 |
+| HENRY      | BILLINGSLEY | 73.82 |
+| SHEILA     | WELLS       | 73.82 |
+| JEROME     | KENYON      | 73.84 |
+| FRANKLIN   | TROUTMAN    | 74.78 |
+| JEANETTE   | GREENE      | 74.80 |
+| ADRIAN     | CLARY       | 74.81 |
+| DWIGHT     | LOMBARDI    | 74.83 |
+| MARVIN     | YEE         | 75.79 |
+| DARRYL     | ASHCRAFT    | 76.77 |
+| IDA        | ANDREWS     | 76.77 |
+| PEARL      | GARZA       | 76.78 |
+| ANN        | EVANS       | 76.83 |
+| IRENE      | PRICE       | 77.77 |
+| NELSON     | CHRISTENSON | 77.80 |
+| PAULA      | BRYANT      | 77.82 |
+| GREGORY    | MAULDIN     | 78.77 |
+| HERBERT    | KRUGER      | 78.80 |
+| ANTONIO    | MEEK        | 78.84 |
+| RAY        | HOULE       | 79.78 |
+| NORMA      | GONZALES    | 79.79 |
+| JACOB      | LANCE       | 79.79 |
+| LUIS       | YANEZ       | 79.80 |
+| ALLAN      | CORNISH     | 79.81 |
+| NORMAN     | CURRIER     | 80.74 |
+| BOBBIE     | CRAIG       | 80.76 |
+| ROLAND     | SOUTH       | 80.77 |
+| SAMUEL     | MARLOW      | 80.79 |
+| EILEEN     | CARR        | 80.82 |
+| CHRISTINA  | RAMIREZ     | 80.82 |
+| MELINDA    | FERNANDEZ   | 80.83 |
+| CORY       | MEEHAN      | 81.76 |
+| BARBARA    | JONES       | 81.78 |
+| LYDIA      | BURKE       | 82.76 |
+| LANCE      | PEMBERTON   | 82.78 |
+| KIM        | CRUZ        | 82.79 |
+| WADE       | DELVALLE    | 83.78 |
+| ARMANDO    | GRUBER      | 83.79 |
+| ALICIA     | MILLS       | 83.79 |
+| AUSTIN     | CINTRON     | 83.81 |
+| EVA        | RAMOS       | 83.82 |
+| ROBERTA    | HARPER      | 84.77 |
+| JOAN       | COOPER      | 84.77 |
+| RACHEL     | BARNES      | 84.78 |
+| CHRIS      | BROTHERS    | 84.78 |
+| KENNETH    | GOODEN      | 84.83 |
+| ALLEN      | BUTTERFIELD | 85.79 |
+| ALFREDO    | MCADAMS     | 85.80 |
+| FELICIA    | SUTTON      | 86.72 |
+| LORRAINE   | STEPHENS    | 86.79 |
+| VANESSA    | SIMS        | 86.81 |
+| LEWIS      | LYMAN       | 86.81 |
+| COLLEEN    | BURTON      | 87.76 |
+| JON        | WILES       | 87.76 |
+| ANNE       | POWELL      | 87.77 |
+| BONNIE     | HUGHES      | 87.79 |
+| MAUREEN    | LITTLE      | 87.79 |
+| JARED      | ELY         | 87.81 |
+| KRISTEN    | CHAVEZ      | 87.82 |
+| BILLIE     | HORTON      | 88.74 |
+| FRED       | WHEAT       | 88.75 |
+| CHRISTIAN  | JUNG        | 88.76 |
+| BERNARD    | COLBY       | 88.78 |
+| TYLER      | WREN        | 88.79 |
+| TARA       | RYAN        | 88.80 |
+| VERNON     | CHAPA       | 88.82 |
+| JAY        | ROBB        | 89.74 |
+| KEITH      | RICO        | 89.74 |
+| ERNEST     | STEPP       | 89.75 |
+| CHAD       | CARBONE     | 89.75 |
++------------+-------------+-------+
+100 rows in set (0.0976 sec)
+ MySQL  localhost:3306 ssl  sakila  SQL > SHOW TABLES;
++----------------------------+
+| Tables_in_sakila           |
++----------------------------+
+| actor                      |
+| actor_info                 |
+| address                    |
+| category                   |
+| city                       |
+| country                    |
+| customer                   |
+| customer_list              |
+| film                       |
+| film_actor                 |
+| film_category              |
+| film_list                  |
+| film_text                  |
+| inventory                  |
+| language                   |
+| nicer_but_slower_film_list |
+| payment                    |
+| rental                     |
+| sales_by_film_category     |
+| sales_by_store             |
+| staff                      |
+| staff_list                 |
+| store                      |
++----------------------------+
+23 rows in set (0.0035 sec)
+ MySQL  localhost:3306 ssl  sakila  SQL > DESC rental;
++--------------+--------------------+------+-----+-------------------+-----------------------------------------------+
+| Field        | Type               | Null | Key | Default           | Extra                                         |
++--------------+--------------------+------+-----+-------------------+-----------------------------------------------+
+| rental_id    | int                | NO   | PRI | NULL              | auto_increment                                |
+| rental_date  | datetime           | NO   | MUL | NULL              |                                               |
+| inventory_id | mediumint unsigned | NO   | MUL | NULL              |                                               |
+| customer_id  | smallint unsigned  | NO   | MUL | NULL              |                                               |
+| return_date  | datetime           | YES  |     | NULL              |                                               |
+| staff_id     | tinyint unsigned   | NO   | MUL | NULL              |                                               |
+| last_update  | timestamp          | NO   |     | CURRENT_TIMESTAMP | DEFAULT_GENERATED on update CURRENT_TIMESTAMP |
++--------------+--------------------+------+-----+-------------------+-----------------------------------------------+
+7 rows in set (0.0030 sec)
+ MySQL  localhost:3306 ssl  sakila  SQL > DESC inventory;
++--------------+--------------------+------+-----+-------------------+-----------------------------------------------+
+| Field        | Type               | Null | Key | Default           | Extra                                         |
++--------------+--------------------+------+-----+-------------------+-----------------------------------------------+
+| inventory_id | mediumint unsigned | NO   | PRI | NULL              | auto_increment                                |
+| film_id      | smallint unsigned  | NO   | MUL | NULL              |                                               |
+| store_id     | tinyint unsigned   | NO   | MUL | NULL              |                                               |
+| last_update  | timestamp          | NO   |     | CURRENT_TIMESTAMP | DEFAULT_GENERATED on update CURRENT_TIMESTAMP |
++--------------+--------------------+------+-----+-------------------+-----------------------------------------------+
+4 rows in set (0.0031 sec)
+ MySQL  localhost:3306 ssl  sakila  SQL > DESC film;
++----------------------+---------------------------------------------------------------------+------+-----+-------------------+-----------------------------------------------+
+| Field                | Type                                                                | Null | Key | Default           | Extra                                         |
++----------------------+---------------------------------------------------------------------+------+-----+-------------------+-----------------------------------------------+
+| film_id              | smallint unsigned                                                   | NO   | PRI | NULL              | auto_increment                                |
+| title                | varchar(128)                                                        | NO   | MUL | NULL              |                                               |
+| description          | text                                                                | YES  |     | NULL              |                                               |
+| release_year         | year                                                                | YES  |     | NULL              |                                               |
+| language_id          | tinyint unsigned                                                    | NO   | MUL | NULL              |                                               |
+| original_language_id | tinyint unsigned                                                    | YES  | MUL | NULL              |                                               |
+| rental_duration      | tinyint unsigned                                                    | NO   |     | 3                 |                                               |
+| rental_rate          | decimal(4,2)                                                        | NO   |     | 4.99              |                                               |
+| length               | smallint unsigned                                                   | YES  |     | NULL              |                                               |
+| replacement_cost     | decimal(5,2)                                                        | NO   |     | 19.99             |                                               |
+| rating               | enum('G','PG','PG-13','R','NC-17')                                  | YES  |     | G                 |                                               |
+| special_features     | set('Trailers','Commentaries','Deleted Scenes','Behind the Scenes') | YES  |     | NULL              |                                               |
+| last_update          | timestamp                                                           | NO   |     | CURRENT_TIMESTAMP | DEFAULT_GENERATED on update CURRENT_TIMESTAMP |
++----------------------+---------------------------------------------------------------------+------+-----+-------------------+-----------------------------------------------+
+13 rows in set (0.0156 sec)
+ MySQL  localhost:3306 ssl  sakila  SQL > SELECT B.first_name, last_name, D.title FROM rental A
+                                       -> INNER JOIN customer B on A.customer
+                                       -> ;
+ERROR: 1054 (42S22): Unknown column 'D.title' in 'field list'
+ MySQL  localhost:3306 ssl  sakila  SQL > SELECT B.first_name, B.last_name, D.title FROM rental A
+                                       -> INNER JOIN customer B ON A.customer_id = B.customer_id
+                                       -> INNER JOIN inventory C ON A.inventory_id = C.inventory_id
+                                       -> INNER JOIN film D ON c.film_id = D.film_id
+                                       -> LIMIT 100;
++------------+-------------+------------------+
+| first_name | last_name   | title            |
++------------+-------------+------------------+
+| JOEL       | FRANCISCO   | ACADEMY DINOSAUR |
+| GABRIEL    | HARDER      | ACADEMY DINOSAUR |
+| DIANNE     | SHELTON     | ACADEMY DINOSAUR |
+| NORMAN     | CURRIER     | ACADEMY DINOSAUR |
+| BEATRICE   | ARNOLD      | ACADEMY DINOSAUR |
+| GERALDINE  | PERKINS     | ACADEMY DINOSAUR |
+| VIRGIL     | WOFFORD     | ACADEMY DINOSAUR |
+| WILLIE     | MARKHAM     | ACADEMY DINOSAUR |
+| DEBRA      | NELSON      | ACADEMY DINOSAUR |
+| DARREN     | WINDHAM     | ACADEMY DINOSAUR |
+| ROBERT     | BAUGHMAN    | ACADEMY DINOSAUR |
+| HENRY      | BILLINGSLEY | ACADEMY DINOSAUR |
+| SERGIO     | STANFIELD   | ACADEMY DINOSAUR |
+| FREDDIE    | DUGGAN      | ACADEMY DINOSAUR |
+| MARIE      | TURNER      | ACADEMY DINOSAUR |
+| MATTIE     | HOFFMAN     | ACADEMY DINOSAUR |
+| DWAYNE     | OLVERA      | ACADEMY DINOSAUR |
+| CARL       | ARTIS       | ACADEMY DINOSAUR |
+| NATHAN     | RUNYON      | ACADEMY DINOSAUR |
+| HECTOR     | POINDEXTER  | ACADEMY DINOSAUR |
+| TINA       | SIMMONS     | ACADEMY DINOSAUR |
+| SUSAN      | WILSON      | ACADEMY DINOSAUR |
+| REBECCA    | SCOTT       | ACADEMY DINOSAUR |
+| PENNY      | NEAL        | ACE GOLDFINGER   |
+| BRANDON    | HUEY        | ACE GOLDFINGER   |
+| LUCILLE    | HOLMES      | ACE GOLDFINGER   |
+| KATHRYN    | COLEMAN     | ACE GOLDFINGER   |
+| AMBER      | DIXON       | ACE GOLDFINGER   |
+| STACY      | CUNNINGHAM  | ACE GOLDFINGER   |
+| JESSIE     | MILAM       | ACE GOLDFINGER   |
+| PEARL      | GARZA       | ADAPTATION HOLES |
+| TRAVIS     | ESTEP       | ADAPTATION HOLES |
+| STELLA     | MORENO      | ADAPTATION HOLES |
+| CASSANDRA  | WALTERS     | ADAPTATION HOLES |
+| DEBORAH    | WALKER      | ADAPTATION HOLES |
+| ROBIN      | HAYES       | ADAPTATION HOLES |
+| OLGA       | JIMENEZ     | ADAPTATION HOLES |
+| MARY       | SMITH       | ADAPTATION HOLES |
+| ROSE       | HOWARD      | ADAPTATION HOLES |
+| JOANNE     | ROBERTSON   | ADAPTATION HOLES |
+| STEVEN     | CURLEY      | ADAPTATION HOLES |
+| MARION     | SNYDER      | ADAPTATION HOLES |
+| VIVIAN     | RUIZ        | AFFAIR PREJUDICE |
+| NINA       | SOTO        | AFFAIR PREJUDICE |
+| JORDAN     | ARCHULETA   | AFFAIR PREJUDICE |
+| DANIELLE   | DANIELS     | AFFAIR PREJUDICE |
+| SUE        | PETERS      | AFFAIR PREJUDICE |
+| MICHAEL    | SILVERMAN   | AFFAIR PREJUDICE |
+| JEFF       | EAST        | AFFAIR PREJUDICE |
+| MEGAN      | PALMER      | AFFAIR PREJUDICE |
+| ELEANOR    | HUNT        | AFFAIR PREJUDICE |
+| NATALIE    | MEYER       | AFFAIR PREJUDICE |
+| TOMMY      | COLLAZO     | AFFAIR PREJUDICE |
+| MINNIE     | ROMERO      | AFFAIR PREJUDICE |
+| CARMEN     | OWENS       | AFFAIR PREJUDICE |
+| DEANNA     | BYRD        | AFFAIR PREJUDICE |
+| KIMBERLY   | LEE         | AFFAIR PREJUDICE |
+| BEVERLY    | BROOKS      | AFFAIR PREJUDICE |
+| JIMMY      | SCHRADER    | AFFAIR PREJUDICE |
+| JANICE     | WARD        | AFFAIR PREJUDICE |
+| RUBEN      | GEARY       | AFFAIR PREJUDICE |
+| CARMEN     | OWENS       | AFFAIR PREJUDICE |
+| WALLACE    | SLONE       | AFFAIR PREJUDICE |
+| OSCAR      | AQUINO      | AFFAIR PREJUDICE |
+| JEROME     | KENYON      | AFFAIR PREJUDICE |
+| CONNIE     | WALLACE     | AFRICAN EGG      |
+| RICARDO    | MEADOR      | AFRICAN EGG      |
+| BARRY      | LOVELACE    | AFRICAN EGG      |
+| CASEY      | MENA        | AFRICAN EGG      |
+| JOSHUA     | MARK        | AFRICAN EGG      |
+| CURTIS     | IRBY        | AFRICAN EGG      |
+| NORA       | HERRERA     | AFRICAN EGG      |
+| AMY        | LOPEZ       | AFRICAN EGG      |
+| ELAINE     | STEVENS     | AFRICAN EGG      |
+| GILBERT    | SLEDGE      | AFRICAN EGG      |
+| JOYCE      | EDWARDS     | AFRICAN EGG      |
+| SETH       | HANNON      | AFRICAN EGG      |
+| CLARENCE   | GAMEZ       | AGENT TRUMAN     |
+| JANET      | PHILLIPS    | AGENT TRUMAN     |
+| LESLIE     | SEWARD      | AGENT TRUMAN     |
+| PERRY      | SWAFFORD    | AGENT TRUMAN     |
+| IDA        | ANDREWS     | AGENT TRUMAN     |
+| CATHERINE  | CAMPBELL    | AGENT TRUMAN     |
+| TERRY      | GRISSOM     | AGENT TRUMAN     |
+| BETTY      | WHITE       | AGENT TRUMAN     |
+| ALAN       | KAHN        | AGENT TRUMAN     |
+| ELIZABETH  | BROWN       | AGENT TRUMAN     |
+| TONYA      | CHAPMAN     | AGENT TRUMAN     |
+| TRACY      | COLE        | AGENT TRUMAN     |
+| DIANE      | COLLINS     | AGENT TRUMAN     |
+| CORY       | MEEHAN      | AGENT TRUMAN     |
+| MAURICE    | CRAWLEY     | AGENT TRUMAN     |
+| GINA       | WILLIAMSON  | AGENT TRUMAN     |
+| ANTHONY    | SCHWAB      | AGENT TRUMAN     |
+| CLINTON    | BUFORD      | AGENT TRUMAN     |
+| KRISTIN    | JOHNSTON    | AGENT TRUMAN     |
+| ROSEMARY   | SCHMIDT     | AGENT TRUMAN     |
+| MARTHA     | GONZALEZ    | AGENT TRUMAN     |
+| FRED       | WHEAT       | AIRPLANE SIERRA  |
+| DEAN       | SAUER       | AIRPLANE SIERRA  |
++------------+-------------+------------------+
+100 rows in set (0.0430 sec)
+ MySQL  localhost:3306 ssl  sakila  SQL > SHOW TABLES;
++----------------------------+
+| Tables_in_sakila           |
++----------------------------+
+| actor                      |
+| actor_info                 |
+| address                    |
+| category                   |
+| city                       |
+| country                    |
+| customer                   |
+| customer_list              |
+| film                       |
+| film_actor                 |
+| film_category              |
+| film_list                  |
+| film_text                  |
+| inventory                  |
+| language                   |
+| nicer_but_slower_film_list |
+| payment                    |
+| rental                     |
+| sales_by_film_category     |
+| sales_by_store             |
+| staff                      |
+| staff_list                 |
+| store                      |
++----------------------------+
+23 rows in set (0.0042 sec)
+ MySQL  localhost:3306 ssl  sakila  SQL > DESC film;
++----------------------+---------------------------------------------------------------------+------+-----+-------------------+-----------------------------------------------+
+| Field                | Type                                                                | Null | Key | Default           | Extra                                         |
++----------------------+---------------------------------------------------------------------+------+-----+-------------------+-----------------------------------------------+
+| film_id              | smallint unsigned                                                   | NO   | PRI | NULL              | auto_increment                                |
+| title                | varchar(128)                                                        | NO   | MUL | NULL              |                                               |
+| description          | text                                                                | YES  |     | NULL              |                                               |
+| release_year         | year                                                                | YES  |     | NULL              |                                               |
+| language_id          | tinyint unsigned                                                    | NO   | MUL | NULL              |                                               |
+| original_language_id | tinyint unsigned                                                    | YES  | MUL | NULL              |                                               |
+| rental_duration      | tinyint unsigned                                                    | NO   |     | 3                 |                                               |
+| rental_rate          | decimal(4,2)                                                        | NO   |     | 4.99              |                                               |
+| length               | smallint unsigned                                                   | YES  |     | NULL              |                                               |
+| replacement_cost     | decimal(5,2)                                                        | NO   |     | 19.99             |                                               |
+| rating               | enum('G','PG','PG-13','R','NC-17')                                  | YES  |     | G                 |                                               |
+| special_features     | set('Trailers','Commentaries','Deleted Scenes','Behind the Scenes') | YES  |     | NULL              |                                               |
+| last_update          | timestamp                                                           | NO   |     | CURRENT_TIMESTAMP | DEFAULT_GENERATED on update CURRENT_TIMESTAMP |
++----------------------+---------------------------------------------------------------------+------+-----+-------------------+-----------------------------------------------+
+13 rows in set (0.0144 sec)
+ MySQL  localhost:3306 ssl  sakila  SQL > DESC language;
++-------------+------------------+------+-----+-------------------+-----------------------------------------------+
+| Field       | Type             | Null | Key | Default           | Extra                                         |
++-------------+------------------+------+-----+-------------------+-----------------------------------------------+
+| language_id | tinyint unsigned | NO   | PRI | NULL              | auto_increment                                |
+| name        | char(20)         | NO   |     | NULL              |                                               |
+| last_update | timestamp        | NO   |     | CURRENT_TIMESTAMP | DEFAULT_GENERATED on update CURRENT_TIMESTAMP |
++-------------+------------------+------+-----+-------------------+-----------------------------------------------+
+3 rows in set (0.0643 sec)
+ MySQL  localhost:3306 ssl  sakila  SQL > DESC film_actor;
++-------------+-------------------+------+-----+-------------------+-----------------------------------------------+
+| Field       | Type              | Null | Key | Default           | Extra                                         |
++-------------+-------------------+------+-----+-------------------+-----------------------------------------------+
+| actor_id    | smallint unsigned | NO   | PRI | NULL              |                                               |
+| film_id     | smallint unsigned | NO   | PRI | NULL              |                                               |
+| last_update | timestamp         | NO   |     | CURRENT_TIMESTAMP | DEFAULT_GENERATED on update CURRENT_TIMESTAMP |
++-------------+-------------------+------+-----+-------------------+-----------------------------------------------+
+3 rows in set (0.0029 sec)
+ MySQL  localhost:3306 ssl  sakila  SQL > DESC actor;
++-------------+-------------------+------+-----+-------------------+-----------------------------------------------+
+| Field       | Type              | Null | Key | Default           | Extra                                         |
++-------------+-------------------+------+-----+-------------------+-----------------------------------------------+
+| actor_id    | smallint unsigned | NO   | PRI | NULL              | auto_increment                                |
+| first_name  | varchar(45)       | NO   |     | NULL              |                                               |
+| last_name   | varchar(45)       | NO   | MUL | NULL              |                                               |
+| last_update | timestamp         | NO   |     | CURRENT_TIMESTAMP | DEFAULT_GENERATED on update CURRENT_TIMESTAMP |
++-------------+-------------------+------+-----+-------------------+-----------------------------------------------+
+4 rows in set (0.0082 sec)
+ MySQL  localhost:3306 ssl  sakila  SQL > SELECT A.title, B.name, D.first_name, D.last_name FROM film A
+                                       -> INNER JOIN language B ON A.language_id = B.language_id
+                                       -> INNER JOIN film_actor C ON A.film_id = C.film_id
+                                       -> INNER JOIN actor D ON C.actor_id = D.actor_id
+                                       -> LIMIT 100;
++----------------------+---------+-------------+-------------+
+| title                | name    | first_name  | last_name   |
++----------------------+---------+-------------+-------------+
+| ZORRO ARK            | English | IAN         | TANDY       |
+| ZORRO ARK            | English | NICK        | DEGENERES   |
+| ZORRO ARK            | English | LISA        | MONROE      |
+| ZOOLANDER FICTION    | English | CARMEN      | HUNT        |
+| ZOOLANDER FICTION    | English | MARY        | TANDY       |
+| ZOOLANDER FICTION    | English | PENELOPE    | CRONYN      |
+| ZOOLANDER FICTION    | English | WHOOPI      | HURT        |
+| ZOOLANDER FICTION    | English | JADA        | RYDER       |
+| ZHIVAGO CORE         | English | UMA         | WOOD        |
+| ZHIVAGO CORE         | English | NICK        | STALLONE    |
+| ZHIVAGO CORE         | English | GARY        | PENN        |
+| ZHIVAGO CORE         | English | SALMA       | NOLTE       |
+| ZHIVAGO CORE         | English | KENNETH     | HOFFMAN     |
+| ZHIVAGO CORE         | English | WILLIAM     | HACKMAN     |
+| YOUTH KICK           | English | SANDRA      | KILMER      |
+| YOUTH KICK           | English | VAL         | BOLGER      |
+| YOUTH KICK           | English | SCARLETT    | BENING      |
+| YOUTH KICK           | English | IAN         | TANDY       |
+| YOUTH KICK           | English | MARY        | KEITEL      |
+| YOUNG LANGUAGE       | English | ED          | CHASE       |
+| YOUNG LANGUAGE       | English | JULIA       | MCQUEEN     |
+| YOUNG LANGUAGE       | English | JAMES       | PITT        |
+| YOUNG LANGUAGE       | English | CHRISTOPHER | WEST        |
+| YOUNG LANGUAGE       | English | MENA        | HOPPER      |
+| YENTL IDAHO          | English | REESE       | WEST        |
+| WYOMING STORM        | English | BETTE       | NICHOLSON   |
+| WYOMING STORM        | English | WOODY       | HOFFMAN     |
+| WYOMING STORM        | English | SIDNEY      | CROWE       |
+| WYOMING STORM        | English | HARRISON    | BALE        |
+| WYOMING STORM        | English | PENELOPE    | MONROE      |
+| WYOMING STORM        | English | JULIA       | ZELLWEGER   |
+| WRONG BEHAVIOR       | English | MILLA       | PECK        |
+| WRONG BEHAVIOR       | English | GARY        | PHOENIX     |
+| WRONG BEHAVIOR       | English | CARY        | MCCONAUGHEY |
+| WRONG BEHAVIOR       | English | SIDNEY      | CROWE       |
+| WRONG BEHAVIOR       | English | MORGAN      | MCDORMAND   |
+| WRONG BEHAVIOR       | English | ED          | MANSFIELD   |
+| WRONG BEHAVIOR       | English | MENA        | HOPPER      |
+| WRONG BEHAVIOR       | English | GREGORY     | GOODING     |
+| WRONG BEHAVIOR       | English | THORA       | TEMPLE      |
+| WRATH MILE           | English | SPENCER     | DEPP        |
+| WRATH MILE           | English | CATE        | HARRIS      |
+| WRATH MILE           | English | RUSSELL     | TEMPLE      |
+| WRATH MILE           | English | KENNETH     | HOFFMAN     |
+| WORST BANGER         | English | PARKER      | GOLDBERG    |
+| WORST BANGER         | English | KIRSTEN     | AKROYD      |
+| WORST BANGER         | English | SPENCER     | DEPP        |
+| WORST BANGER         | English | MATTHEW     | CARREY      |
+| WORLD LEATHERNECKS   | English | GARY        | PHOENIX     |
+| WORLD LEATHERNECKS   | English | PENELOPE    | PINKETT     |
+| WORLD LEATHERNECKS   | English | CHRISTIAN   | NEESON      |
+| WORLD LEATHERNECKS   | English | JAYNE       | NEESON      |
+| WORLD LEATHERNECKS   | English | CHRIS       | BRIDGES     |
+| WORLD LEATHERNECKS   | English | SIDNEY      | CROWE       |
+| WORLD LEATHERNECKS   | English | VIVIEN      | BASINGER    |
+| WORLD LEATHERNECKS   | English | DEBBIE      | AKROYD      |
+| WORKING MICROCOSMOS  | English | VAL         | BOLGER      |
+| WORKING MICROCOSMOS  | English | KENNETH     | TORN        |
+| WORKING MICROCOSMOS  | English | LUCILLE     | DEE         |
+| WORKING MICROCOSMOS  | English | GEOFFREY    | HESTON      |
+| WORKING MICROCOSMOS  | English | ROCK        | DUKAKIS     |
+| WORKER TARZAN        | English | ZERO        | CAGE        |
+| WORKER TARZAN        | English | PENELOPE    | PINKETT     |
+| WORKER TARZAN        | English | JAYNE       | NEESON      |
+| WORKER TARZAN        | English | SUSAN       | DAVIS       |
+| WORKER TARZAN        | English | RUSSELL     | BACALL      |
+| WORKER TARZAN        | English | JULIANNE    | DENCH       |
+| WORKER TARZAN        | English | MINNIE      | KILMER      |
+| WORKER TARZAN        | English | MERYL       | GIBSON      |
+| WORKER TARZAN        | English | ROCK        | DUKAKIS     |
+| WORDS HUNTER         | English | GENE        | WILLIS      |
+| WORDS HUNTER         | English | SUSAN       | DAVIS       |
+| WORDS HUNTER         | English | SCARLETT    | BENING      |
+| WORDS HUNTER         | English | ADAM        | HOPPER      |
+| WORDS HUNTER         | English | FAY         | WINSLET     |
+| WORDS HUNTER         | English | IAN         | TANDY       |
+| WONKA SEA            | English | JULIA       | MCQUEEN     |
+| WONKA SEA            | English | HENRY       | BERRY       |
+| WONDERLAND CHRISTMAS | English | CUBA        | OLIVIER     |
+| WONDERLAND CHRISTMAS | English | WOODY       | JOLIE       |
+| WONDERLAND CHRISTMAS | English | CHRIS       | BRIDGES     |
+| WONDERLAND CHRISTMAS | English | HARRISON    | BALE        |
+| WONDERLAND CHRISTMAS | English | HUMPHREY    | GARLAND     |
+| WONDERFUL DROP       | English | DUSTIN      | TAUTOU      |
+| WONDERFUL DROP       | English | SUSAN       | DAVIS       |
+| WONDERFUL DROP       | English | PENELOPE    | CRONYN      |
+| WONDERFUL DROP       | English | HUMPHREY    | WILLIS      |
+| WON DARES            | English | CHRISTIAN   | GABLE       |
+| WON DARES            | English | KIRSTEN     | PALTROW     |
+| WON DARES            | English | LISA        | MONROE      |
+| WON DARES            | English | RUSSELL     | CLOSE       |
+| WON DARES            | English | JULIA       | ZELLWEGER   |
+| WOMEN DORADO         | English | NICK        | STALLONE    |
+| WOMEN DORADO         | English | CHRISTOPHER | BERRY       |
+| WOMEN DORADO         | English | ELLEN       | PRESLEY     |
+| WOMEN DORADO         | English | JIM         | MOSTEL      |
+| WOMEN DORADO         | English | MICHAEL     | BENING      |
+| WOLVES DESIRE        | English | SANDRA      | KILMER      |
+| WOLVES DESIRE        | English | JAYNE       | NEESON      |
+| WOLVES DESIRE        | English | CAMERON     | WRAY        |
++----------------------+---------+-------------+-------------+
+100 rows in set (0.1057 sec)
+ MySQL  localhost:3306 ssl  sakila  SQL > SELECT A.title AS Titulo, B.name AS Lenguaje, D.first_name AS Nombre, D.last_name AS Apellido FROM film A
+                                       -> INNER JOIN language B ON A.language_id = B.language_id
+                                       -> INNER JOIN film_actor C ON A.film_id = C.film_id
+                                       -> INNER JOIN actor D ON C.actor_id = D.actor_id
+                                       -> LIMIT 100;
++------------------+----------+-------------+-------------+
+| Titulo           | Lenguaje | Nombre      | Apellido    |
++------------------+----------+-------------+-------------+
+| ACADEMY DINOSAUR | English  | PENELOPE    | GUINESS     |
+| ACADEMY DINOSAUR | English  | CHRISTIAN   | GABLE       |
+| ACADEMY DINOSAUR | English  | LUCILLE     | TRACY       |
+| ACADEMY DINOSAUR | English  | SANDRA      | PECK        |
+| ACADEMY DINOSAUR | English  | JOHNNY      | CAGE        |
+| ACADEMY DINOSAUR | English  | MENA        | TEMPLE      |
+| ACADEMY DINOSAUR | English  | WARREN      | NOLTE       |
+| ACADEMY DINOSAUR | English  | OPRAH       | KILMER      |
+| ACADEMY DINOSAUR | English  | ROCK        | DUKAKIS     |
+| ACADEMY DINOSAUR | English  | MARY        | KEITEL      |
+| ACE GOLDFINGER   | English  | BOB         | FAWCETT     |
+| ACE GOLDFINGER   | English  | MINNIE      | ZELLWEGER   |
+| ACE GOLDFINGER   | English  | SEAN        | GUINESS     |
+| ACE GOLDFINGER   | English  | CHRIS       | DEPP        |
+| ADAPTATION HOLES | English  | NICK        | WAHLBERG    |
+| ADAPTATION HOLES | English  | BOB         | FAWCETT     |
+| ADAPTATION HOLES | English  | CAMERON     | STREEP      |
+| ADAPTATION HOLES | English  | RAY         | JOHANSSON   |
+| ADAPTATION HOLES | English  | JULIANNE    | DENCH       |
+| AFFAIR PREJUDICE | English  | JODIE       | DEGENERES   |
+| AFFAIR PREJUDICE | English  | SCARLETT    | DAMON       |
+| AFFAIR PREJUDICE | English  | KENNETH     | PESCI       |
+| AFFAIR PREJUDICE | English  | FAY         | WINSLET     |
+| AFFAIR PREJUDICE | English  | OPRAH       | KILMER      |
+| AFRICAN EGG      | English  | GARY        | PHOENIX     |
+| AFRICAN EGG      | English  | DUSTIN      | TAUTOU      |
+| AFRICAN EGG      | English  | MATTHEW     | LEIGH       |
+| AFRICAN EGG      | English  | MATTHEW     | CARREY      |
+| AFRICAN EGG      | English  | THORA       | TEMPLE      |
+| AGENT TRUMAN     | English  | KIRSTEN     | PALTROW     |
+| AGENT TRUMAN     | English  | SANDRA      | KILMER      |
+| AGENT TRUMAN     | English  | JAYNE       | NEESON      |
+| AGENT TRUMAN     | English  | WARREN      | NOLTE       |
+| AGENT TRUMAN     | English  | MORGAN      | WILLIAMS    |
+| AGENT TRUMAN     | English  | KENNETH     | HOFFMAN     |
+| AGENT TRUMAN     | English  | REESE       | WEST        |
+| AIRPLANE SIERRA  | English  | JIM         | MOSTEL      |
+| AIRPLANE SIERRA  | English  | RICHARD     | PENN        |
+| AIRPLANE SIERRA  | English  | OPRAH       | KILMER      |
+| AIRPLANE SIERRA  | English  | MENA        | HOPPER      |
+| AIRPLANE SIERRA  | English  | MICHAEL     | BOLGER      |
+| AIRPORT POLLOCK  | English  | FAY         | KILMER      |
+| AIRPORT POLLOCK  | English  | GENE        | WILLIS      |
+| AIRPORT POLLOCK  | English  | SUSAN       | DAVIS       |
+| AIRPORT POLLOCK  | English  | LUCILLE     | DEE         |
+| ALABAMA DEVIL    | English  | CHRISTIAN   | GABLE       |
+| ALABAMA DEVIL    | English  | ELVIS       | MARX        |
+| ALABAMA DEVIL    | English  | RIP         | CRAWFORD    |
+| ALABAMA DEVIL    | English  | MENA        | TEMPLE      |
+| ALABAMA DEVIL    | English  | RIP         | WINSLET     |
+| ALABAMA DEVIL    | English  | WARREN      | NOLTE       |
+| ALABAMA DEVIL    | English  | GRETA       | KEITEL      |
+| ALABAMA DEVIL    | English  | WILLIAM     | HACKMAN     |
+| ALABAMA DEVIL    | English  | MERYL       | ALLEN       |
+| ALADDIN CALENDAR | English  | ALEC        | WAYNE       |
+| ALADDIN CALENDAR | English  | JUDY        | DEAN        |
+| ALADDIN CALENDAR | English  | VAL         | BOLGER      |
+| ALADDIN CALENDAR | English  | RAY         | JOHANSSON   |
+| ALADDIN CALENDAR | English  | RENEE       | TRACY       |
+| ALADDIN CALENDAR | English  | JADA        | RYDER       |
+| ALADDIN CALENDAR | English  | GRETA       | MALDEN      |
+| ALADDIN CALENDAR | English  | ROCK        | DUKAKIS     |
+| ALAMO VIDEOTAPE  | English  | JOHNNY      | CAGE        |
+| ALAMO VIDEOTAPE  | English  | SCARLETT    | DAMON       |
+| ALAMO VIDEOTAPE  | English  | SEAN        | GUINESS     |
+| ALAMO VIDEOTAPE  | English  | MICHAEL     | BENING      |
+| ALASKA PHANTOM   | English  | VAL         | BOLGER      |
+| ALASKA PHANTOM   | English  | BURT        | POSEY       |
+| ALASKA PHANTOM   | English  | SIDNEY      | CROWE       |
+| ALASKA PHANTOM   | English  | SYLVESTER   | DERN        |
+| ALASKA PHANTOM   | English  | ALBERT      | JOHANSSON   |
+| ALASKA PHANTOM   | English  | GENE        | MCKELLEN    |
+| ALASKA PHANTOM   | English  | JEFF        | SILVERSTONE |
+| ALI FOREVER      | English  | CARY        | MCCONAUGHEY |
+| ALI FOREVER      | English  | CHRISTOPHER | BERRY       |
+| ALI FOREVER      | English  | KENNETH     | TORN        |
+| ALI FOREVER      | English  | MORGAN      | MCDORMAND   |
+| ALI FOREVER      | English  | JON         | CHASE       |
+| ALICE FANTASIA   | English  | WOODY       | HOFFMAN     |
+| ALICE FANTASIA   | English  | MINNIE      | ZELLWEGER   |
+| ALICE FANTASIA   | English  | MORGAN      | WILLIAMS    |
+| ALICE FANTASIA   | English  | ROCK        | DUKAKIS     |
+| ALIEN CENTER     | English  | BURT        | DUKAKIS     |
+| ALIEN CENTER     | English  | KENNETH     | PALTROW     |
+| ALIEN CENTER     | English  | SIDNEY      | CROWE       |
+| ALIEN CENTER     | English  | RENEE       | TRACY       |
+| ALIEN CENTER     | English  | HUMPHREY    | WILLIS      |
+| ALIEN CENTER     | English  | MENA        | HOPPER      |
+| ALLEY EVOLUTION  | English  | KARL        | BERRY       |
+| ALLEY EVOLUTION  | English  | JUDE        | CRUISE      |
+| ALLEY EVOLUTION  | English  | ALBERT      | JOHANSSON   |
+| ALLEY EVOLUTION  | English  | GREGORY     | GOODING     |
+| ALLEY EVOLUTION  | English  | JOHN        | SUVARI      |
+| ALONE TRIP       | English  | ED          | CHASE       |
+| ALONE TRIP       | English  | KARL        | BERRY       |
+| ALONE TRIP       | English  | UMA         | WOOD        |
+| ALONE TRIP       | English  | WOODY       | JOLIE       |
+| ALONE TRIP       | English  | SPENCER     | DEPP        |
+| ALONE TRIP       | English  | CHRIS       | DEPP        |
+| ALONE TRIP       | English  | LAURENCE    | BULLOCK     |
++------------------+----------+-------------+-------------+
+100 rows in set (0.0152 sec)
+ MySQL  localhost:3306 ssl  sakila  SQL >
