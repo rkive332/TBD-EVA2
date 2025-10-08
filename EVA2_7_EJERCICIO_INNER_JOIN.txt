@@ -1,0 +1,2964 @@
+MySQL Shell 8.0.43
+
+Copyright (c) 2016, 2025, Oracle and/or its affiliates.
+Oracle is a registered trademark of Oracle Corporation and/or its affiliates.
+Other names may be trademarks of their respective owners.
+
+Type '\help' or '\?' for help; '\quit' to exit.
+ MySQL  JS > \sql
+Switching to SQL mode... Commands end with ;
+ MySQL  SQL > \c --mc root@localhost
+Creating a Classic session to 'root@localhost'
+Fetching global names for auto-completion... Press ^C to stop.
+Your MySQL connection id is 15
+Server version: 8.0.43 MySQL Community Server - GPL
+No default schema selected; type \use <schema> to set one.
+ MySQL  localhost:3306 ssl  SQL > USE sakila;
+Default schema set to `sakila`.
+Fetching global names, object names from `sakila` for auto-completion... Press ^C to stop.
+ MySQL  localhost:3306 ssl  sakila  SQL > SHOW TABLES;
++----------------------------+
+| Tables_in_sakila           |
++----------------------------+
+| actor                      |
+| actor_info                 |
+| address                    |
+| category                   |
+| city                       |
+| country                    |
+| customer                   |
+| customer_list              |
+| film                       |
+| film_actor                 |
+| film_category              |
+| film_list                  |
+| film_text                  |
+| inventory                  |
+| language                   |
+| nicer_but_slower_film_list |
+| payment                    |
+| rental                     |
+| sales_by_film_category     |
+| sales_by_store             |
+| staff                      |
+| staff_list                 |
+| store                      |
++----------------------------+
+23 rows in set (0.0021 sec)
+ MySQL  localhost:3306 ssl  sakila  SQL > DESC film;
++----------------------+---------------------------------------------------------------------+------+-----+-------------------+-----------------------------------------------+
+| Field                | Type                                                                | Null | Key | Default           | Extra                                         |
++----------------------+---------------------------------------------------------------------+------+-----+-------------------+-----------------------------------------------+
+| film_id              | smallint unsigned                                                   | NO   | PRI | NULL              | auto_increment                                |
+| title                | varchar(128)                                                        | NO   | MUL | NULL              |                                               |
+| description          | text                                                                | YES  |     | NULL              |                                               |
+| release_year         | year                                                                | YES  |     | NULL              |                                               |
+| language_id          | tinyint unsigned                                                    | NO   | MUL | NULL              |                                               |
+| original_language_id | tinyint unsigned                                                    | YES  | MUL | NULL              |                                               |
+| rental_duration      | tinyint unsigned                                                    | NO   |     | 3                 |                                               |
+| rental_rate          | decimal(4,2)                                                        | NO   |     | 4.99              |                                               |
+| length               | smallint unsigned                                                   | YES  |     | NULL              |                                               |
+| replacement_cost     | decimal(5,2)                                                        | NO   |     | 19.99             |                                               |
+| rating               | enum('G','PG','PG-13','R','NC-17')                                  | YES  |     | G                 |                                               |
+| special_features     | set('Trailers','Commentaries','Deleted Scenes','Behind the Scenes') | YES  |     | NULL              |                                               |
+| last_update          | timestamp                                                           | NO   |     | CURRENT_TIMESTAMP | DEFAULT_GENERATED on update CURRENT_TIMESTAMP |
++----------------------+---------------------------------------------------------------------+------+-----+-------------------+-----------------------------------------------+
+13 rows in set (0.0027 sec)
+ MySQL  localhost:3306 ssl  sakila  SQL > DESC category;
++-------------+------------------+------+-----+-------------------+-----------------------------------------------+
+| Field       | Type             | Null | Key | Default           | Extra                                         |
++-------------+------------------+------+-----+-------------------+-----------------------------------------------+
+| category_id | tinyint unsigned | NO   | PRI | NULL              | auto_increment                                |
+| name        | varchar(25)      | NO   |     | NULL              |                                               |
+| last_update | timestamp        | NO   |     | CURRENT_TIMESTAMP | DEFAULT_GENERATED on update CURRENT_TIMESTAMP |
++-------------+------------------+------+-----+-------------------+-----------------------------------------------+
+3 rows in set (0.0019 sec)
+ MySQL  localhost:3306 ssl  sakila  SQL > DESC film_category;
++-------------+-------------------+------+-----+-------------------+-----------------------------------------------+
+| Field       | Type              | Null | Key | Default           | Extra                                         |
++-------------+-------------------+------+-----+-------------------+-----------------------------------------------+
+| film_id     | smallint unsigned | NO   | PRI | NULL              |                                               |
+| category_id | tinyint unsigned  | NO   | PRI | NULL              |                                               |
+| last_update | timestamp         | NO   |     | CURRENT_TIMESTAMP | DEFAULT_GENERATED on update CURRENT_TIMESTAMP |
++-------------+-------------------+------+-----+-------------------+-----------------------------------------------+
+3 rows in set (0.0026 sec)
+ MySQL  localhost:3306 ssl  sakila  SQL > SELECT A.title AS Titulo, B.name AS Categoria
+                                       -> FROM film A
+                                       -> INNER JOIN film_category C ON A.film_id = C.film_id
+                                       -> INNER JOIN category B ON C.category_id = B.category_id
+                                       -> LIMIT 500;
++-------------------------+-------------+
+| Titulo                  | Categoria   |
++-------------------------+-------------+
+| AMADEUS HOLY            | Action      |
+| AMERICAN CIRCUS         | Action      |
+| ANTITRUST TOMATOES      | Action      |
+| ARK RIDGEMONT           | Action      |
+| BAREFOOT MANCHURIAN     | Action      |
+| BERETS AGENT            | Action      |
+| BRIDE INTRIGUE          | Action      |
+| BULL SHAWSHANK          | Action      |
+| CADDYSHACK JEDI         | Action      |
+| CAMPUS REMEMBER         | Action      |
+| CASUALTIES ENCINO       | Action      |
+| CELEBRITY HORN          | Action      |
+| CLUELESS BUCKET         | Action      |
+| CROW GREASE             | Action      |
+| DANCES NONE             | Action      |
+| DARKO DORADO            | Action      |
+| DARN FORRESTER          | Action      |
+| DEVIL DESIRE            | Action      |
+| DRAGON SQUAD            | Action      |
+| DREAM PICKUP            | Action      |
+| DRIFTER COMMANDMENTS    | Action      |
+| EASY GLADIATOR          | Action      |
+| ENTRAPMENT SATISFACTION | Action      |
+| EXCITEMENT EVE          | Action      |
+| FANTASY TROOPERS        | Action      |
+| FIREHOUSE VIETNAM       | Action      |
+| FOOL MOCKINGBIRD        | Action      |
+| FORREST SONS            | Action      |
+| GLASS DYING             | Action      |
+| GOSFORD DONNIE          | Action      |
+| GRAIL FRANKENSTEIN      | Action      |
+| HANDICAP BOONDOCK       | Action      |
+| HILLS NEIGHBORS         | Action      |
+| KISSING DOLLS           | Action      |
+| LAWRENCE LOVE           | Action      |
+| LORD ARIZONA            | Action      |
+| LUST LOCK               | Action      |
+| MAGNOLIA FORRESTER      | Action      |
+| MIDNIGHT WESTWARD       | Action      |
+| MINDS TRUMAN            | Action      |
+| MOCKINGBIRD HOLLYWOOD   | Action      |
+| MONTEZUMA COMMAND       | Action      |
+| PARK CITIZEN            | Action      |
+| PATRIOT ROMAN           | Action      |
+| PRIMARY GLASS           | Action      |
+| QUEST MUSSOLINI         | Action      |
+| REAR TRADING            | Action      |
+| RINGS HEARTBREAKERS     | Action      |
+| RUGRATS SHAKESPEARE     | Action      |
+| SHRUNK DIVINE           | Action      |
+| SIDE ARK                | Action      |
+| SKY MIRACLE             | Action      |
+| SOUTH WAIT              | Action      |
+| SPEAKEASY DATE          | Action      |
+| STAGECOACH ARMAGEDDON   | Action      |
+| STORY SIDE              | Action      |
+| SUSPECTS QUILLS         | Action      |
+| TRIP NEWTON             | Action      |
+| TRUMAN CRAZY            | Action      |
+| UPRISING UPTOWN         | Action      |
+| WATERFRONT DELIVERANCE  | Action      |
+| WEREWOLF LOLA           | Action      |
+| WOMEN DORADO            | Action      |
+| WORST BANGER            | Action      |
+| ALTER VICTORY           | Animation   |
+| ANACONDA CONFESSIONS    | Animation   |
+| ARGONAUTS TOWN          | Animation   |
+| BIKINI BORROWERS        | Animation   |
+| BLACKOUT PRIVATE        | Animation   |
+| BORROWERS BEDAZZLED     | Animation   |
+| CANYON STOCK            | Animation   |
+| CAROL TEXAS             | Animation   |
+| CHAMPION FLATLINERS     | Animation   |
+| CLASH FREDDY            | Animation   |
+| CLUB GRAFFITI           | Animation   |
+| CROSSROADS CASUALTIES   | Animation   |
+| DARES PLUTO             | Animation   |
+| DESIRE ALIEN            | Animation   |
+| DOGMA FAMILY            | Animation   |
+| DONNIE ALLEY            | Animation   |
+| DOORS PRESIDENT         | Animation   |
+| DOUBLE WRATH            | Animation   |
+| DUCK RACER              | Animation   |
+| EARLY HOME              | Animation   |
+| FALCON VOLUME           | Animation   |
+| FIGHT JAWBREAKER        | Animation   |
+| FLOATS GARDEN           | Animation   |
+| FLYING HOOK             | Animation   |
+| FORRESTER COMANCHEROS   | Animation   |
+| GANGS PRIDE             | Animation   |
+| GHOSTBUSTERS ELF        | Animation   |
+| HARPER DYING            | Animation   |
+| HOOK CHARIOTS           | Animation   |
+| HORN WORKING            | Animation   |
+| INCH JET                | Animation   |
+| INSECTS STONE           | Animation   |
+| INTENTIONS EMPIRE       | Animation   |
+| ISHTAR ROCKETEER        | Animation   |
+| JUGGLER HARDLY          | Animation   |
+| LAWLESS VISION          | Animation   |
+| LUKE MUMMY              | Animation   |
+| MASSAGE IMAGE           | Animation   |
+| MENAGERIE RUSHMORE      | Animation   |
+| MIRACLE VIRTUAL         | Animation   |
+| MISSION ZOOLANDER       | Animation   |
+| NASH CHOCOLAT           | Animation   |
+| OSCAR GOLD              | Animation   |
+| OZ LIAISONS             | Animation   |
+| PACKER MADIGAN          | Animation   |
+| POND SEATTLE            | Animation   |
+| POTLUCK MIXED           | Animation   |
+| POTTER CONNECTICUT      | Animation   |
+| PRIDE ALAMO             | Animation   |
+| PUNK DIVORCE            | Animation   |
+| ROOM ROMAN              | Animation   |
+| SLEEPLESS MONSOON       | Animation   |
+| SNOWMAN ROLLERCOASTER   | Animation   |
+| SONS INTERVIEW          | Animation   |
+| STORM HAPPINESS         | Animation   |
+| SUGAR WONKA             | Animation   |
+| SUNRISE LEAGUE          | Animation   |
+| TELEMARK HEARTBREAKERS  | Animation   |
+| THEORY MERMAID          | Animation   |
+| THIEF PELICAN           | Animation   |
+| TITANIC BOONDOCK        | Animation   |
+| TRACY CIDER             | Animation   |
+| TURN STAR               | Animation   |
+| WAIT CIDER              | Animation   |
+| WATCH TRACY             | Animation   |
+| WONKA SEA               | Animation   |
+| BACKLASH UNDEFEATED     | Children    |
+| BEAR GRACELAND          | Children    |
+| BENEATH RUSH            | Children    |
+| BETRAYED REAR           | Children    |
+| CABIN FLASH             | Children    |
+| CASPER DRAGONFLY        | Children    |
+| CHRISTMAS MOONSHINE     | Children    |
+| CIRCUS YOUTH            | Children    |
+| CLOCKWORK PARADISE      | Children    |
+| COMANCHEROS ENEMY       | Children    |
+| CROOKED FROGMEN         | Children    |
+| DAUGHTER MADIGAN        | Children    |
+| DOCTOR GRAIL            | Children    |
+| EMPIRE MALKOVICH        | Children    |
+| FARGO GANDHI            | Children    |
+| FOREVER CANDIDATE       | Children    |
+| FULL FLATLINERS         | Children    |
+| FURY MURDER             | Children    |
+| GHOST GROUNDHOG         | Children    |
+| GIANT TROOPERS          | Children    |
+| GORGEOUS BINGO          | Children    |
+| GRADUATE LORD           | Children    |
+| HALL CASSIDY            | Children    |
+| HEARTBREAKERS BRIGHT    | Children    |
+| HOLLYWOOD ANONYMOUS     | Children    |
+| HOLOCAUST HIGHBALL      | Children    |
+| IDOLS SNATCHERS         | Children    |
+| INVASION CYCLONE        | Children    |
+| JERSEY SASSY            | Children    |
+| JUMPING WRATH           | Children    |
+| LABYRINTH LEAGUE        | Children    |
+| LANGUAGE COWBOY         | Children    |
+| LEGALLY SECRETARY       | Children    |
+| MAGIC MALLRATS          | Children    |
+| MAKER GABLES            | Children    |
+| MICROCOSMOS PARADISE    | Children    |
+| MODEL FISH              | Children    |
+| MURDER ANTITRUST        | Children    |
+| NOON PAPI               | Children    |
+| POLISH BROOKLYN         | Children    |
+| ROBBERS JOON            | Children    |
+| SABRINA MIDNIGHT        | Children    |
+| SANTA PARIS             | Children    |
+| SCARFACE BANG           | Children    |
+| SHEPHERD MIDSUMMER      | Children    |
+| SISTER FREDDY           | Children    |
+| SPLENDOR PATTON         | Children    |
+| STRANGELOVE DESIRE      | Children    |
+| STRANGER STRANGERS      | Children    |
+| SUNDANCE INVASION       | Children    |
+| SWEETHEARTS SUSPECTS    | Children    |
+| TEQUILA PAST            | Children    |
+| TIES HUNGER             | Children    |
+| TOOTSIE PILOT           | Children    |
+| TWISTED PIRATES         | Children    |
+| UPTOWN YOUNG            | Children    |
+| WALLS ARTIST            | Children    |
+| WARLOCK WEREWOLF        | Children    |
+| WRONG BEHAVIOR          | Children    |
+| ZOOLANDER FICTION       | Children    |
+| ALICE FANTASIA          | Classics    |
+| ARIZONA BANG            | Classics    |
+| BEAST HUNCHBACK         | Classics    |
+| BOUND CHEAPER           | Classics    |
+| CANDIDATE PERDITION     | Classics    |
+| CENTER DINOSAUR         | Classics    |
+| COLOR PHILADELPHIA      | Classics    |
+| CONSPIRACY SPIRIT       | Classics    |
+| CORE SUIT               | Classics    |
+| CREEPERS KANE           | Classics    |
+| CRUELTY UNFORGIVEN      | Classics    |
+| DETECTIVE VISION        | Classics    |
+| DRACULA CRYSTAL         | Classics    |
+| DYNAMITE TARZAN         | Classics    |
+| EXTRAORDINARY CONQUERER | Classics    |
+| FROST HEAD              | Classics    |
+| GALAXY SWEETHEARTS      | Classics    |
+| GILBERT PELICAN         | Classics    |
+| GILMORE BOILED          | Classics    |
+| HOLY TADPOLE            | Classics    |
+| HOPE TOOTSIE            | Classics    |
+| HYDE DOCTOR             | Classics    |
+| IRON MOON               | Classics    |
+| ISLAND EXORCIST         | Classics    |
+| JEEPERS WEDDING         | Classics    |
+| JEOPARDY ENCINO         | Classics    |
+| JERK PAYCHECK           | Classics    |
+| JINGLE SAGEBRUSH        | Classics    |
+| LEAGUE HELLFIGHTERS     | Classics    |
+| LIGHTS DEER             | Classics    |
+| LOATHING LEGALLY        | Classics    |
+| LOVELY JINGLE           | Classics    |
+| LOVER TRUMAN            | Classics    |
+| MAGNIFICENT CHITTY      | Classics    |
+| MALKOVICH PET           | Classics    |
+| MILLION ACE             | Classics    |
+| MUSKETEERS WAIT         | Classics    |
+| OCTOBER SUBMARINE       | Classics    |
+| PAJAMA JAWBREAKER       | Classics    |
+| PATIENT SISTER          | Classics    |
+| PREJUDICE OLEANDER      | Classics    |
+| REQUIEM TYCOON          | Classics    |
+| RIGHT CRANES            | Classics    |
+| ROOTS REMEMBER          | Classics    |
+| SLING LUKE              | Classics    |
+| SNATCHERS MONTEZUMA     | Classics    |
+| SPIKING ELEMENT         | Classics    |
+| STEEL SANTA             | Classics    |
+| SUMMER SCARFACE         | Classics    |
+| TADPOLE PARK            | Classics    |
+| TIMBERLAND SKY          | Classics    |
+| TOMORROW HUSTLER        | Classics    |
+| TOWERS HURRICANE        | Classics    |
+| VOLUME HOUSE            | Classics    |
+| VOYAGE LEGALLY          | Classics    |
+| WASTELAND DIVINE        | Classics    |
+| WESTWARD SEABISCUIT     | Classics    |
+| AIRPLANE SIERRA         | Comedy      |
+| ANTHEM LUKE             | Comedy      |
+| BRINGING HYSTERICAL     | Comedy      |
+| CAPER MOTIONS           | Comedy      |
+| CAT CONEHEADS           | Comedy      |
+| CLOSER BANG             | Comedy      |
+| CONNECTION MICROCOSMOS  | Comedy      |
+| CONTROL ANTHEM          | Comedy      |
+| CRAZY HOME              | Comedy      |
+| DADDY PITTSBURGH        | Comedy      |
+| DOOM DANCING            | Comedy      |
+| DOWNHILL ENOUGH         | Comedy      |
+| DYING MAKER             | Comedy      |
+| ELEMENT FREDDY          | Comedy      |
+| FERRIS MOTHER           | Comedy      |
+| FIREBALL PHILADELPHIA   | Comedy      |
+| FLINTSTONES HAPPINESS   | Comedy      |
+| FRANKENSTEIN STRANGER   | Comedy      |
+| FREEDOM CLEOPATRA       | Comedy      |
+| GOLD RIVER              | Comedy      |
+| GROUNDHOG UNCUT         | Comedy      |
+| GUNFIGHT MOON           | Comedy      |
+| HATE HANDICAP           | Comedy      |
+| HEAVEN FREEDOM          | Comedy      |
+| HEDWIG ALTER            | Comedy      |
+| HURRICANE AFFAIR        | Comedy      |
+| HUSTLER PARTY           | Comedy      |
+| JAWS HARRY              | Comedy      |
+| KNOCK WARLOCK           | Comedy      |
+| LIFE TWISTED            | Comedy      |
+| LION UNCUT              | Comedy      |
+| LONELY ELEPHANT         | Comedy      |
+| MALLRATS UNITED         | Comedy      |
+| MEMENTO ZOOLANDER       | Comedy      |
+| MULAN MOON              | Comedy      |
+| MYSTIC TRUMAN           | Comedy      |
+| OPERATION OPERATION     | Comedy      |
+| PARADISE SABRINA        | Comedy      |
+| PARTY KNOCK             | Comedy      |
+| PERFECT GROOVE          | Comedy      |
+| PINOCCHIO SIMON         | Comedy      |
+| PURE RUNNER             | Comedy      |
+| RUSHMORE MERMAID        | Comedy      |
+| SADDLE ANTITRUST        | Comedy      |
+| SATURN NAME             | Comedy      |
+| SEARCHERS WAIT          | Comedy      |
+| SNATCH SLIPPER          | Comedy      |
+| STAGE WORLD             | Comedy      |
+| STRICTLY SCARFACE       | Comedy      |
+| SUBMARINE BED           | Comedy      |
+| SWEDEN SHINING          | Comedy      |
+| TRAINSPOTTING STRANGERS | Comedy      |
+| TRAMP OTHERS            | Comedy      |
+| VALLEY PACKER           | Comedy      |
+| VELVET TERMINATOR       | Comedy      |
+| VERTIGO NORTHWEST       | Comedy      |
+| WISDOM WORKER           | Comedy      |
+| ZORRO ARK               | Comedy      |
+| ACADEMY DINOSAUR        | Documentary |
+| ADAPTATION HOLES        | Documentary |
+| ARMY FLINTSTONES        | Documentary |
+| BEACH HEARTBREAKERS     | Documentary |
+| BED HIGHBALL            | Documentary |
+| BILL OTHERS             | Documentary |
+| BONNIE HOLOCAUST        | Documentary |
+| BROTHERHOOD BLANKET     | Documentary |
+| CAUSE DATE              | Documentary |
+| CHICKEN HELLFIGHTERS    | Documentary |
+| CIDER DESIRE            | Documentary |
+| CLERKS ANGELS           | Documentary |
+| COAST RAINBOW           | Documentary |
+| CUPBOARD SINNERS        | Documentary |
+| DANCING FEVER           | Documentary |
+| DEEP CRUSADE            | Documentary |
+| DELIVERANCE MULHOLLAND  | Documentary |
+| DOZEN LION              | Documentary |
+| DUFFEL APOCALYPSE       | Documentary |
+| EGG IGBY                | Documentary |
+| EXPENDABLE STALLION     | Documentary |
+| FRENCH HOLIDAY          | Documentary |
+| HALLOWEEN NUTS          | Documentary |
+| HARDLY ROBBERS          | Documentary |
+| HAWK CHILL              | Documentary |
+| HEAVYWEIGHTS BEAST      | Documentary |
+| HOMEWARD CIDER          | Documentary |
+| HUNTER ALTER            | Documentary |
+| INDEPENDENCE HOTEL      | Documentary |
+| INTOLERABLE INTENTIONS  | Documentary |
+| KILL BROTHERHOOD        | Documentary |
+| MADISON TRAP            | Documentary |
+| MAJESTIC FLOATS         | Documentary |
+| METAL ARMAGEDDON        | Documentary |
+| MIDSUMMER GROUNDHOG     | Documentary |
+| MIGHTY LUCK             | Documentary |
+| MOD SECRETARY           | Documentary |
+| MODERN DORADO           | Documentary |
+| NATIONAL STORY          | Documentary |
+| NEWSIES STORY           | Documentary |
+| NORTH TEQUILA           | Documentary |
+| NOTORIOUS REUNION       | Documentary |
+| PACIFIC AMISTAD         | Documentary |
+| PELICAN COMFORTS        | Documentary |
+| POCUS PULP              | Documentary |
+| PRINCESS GIANT          | Documentary |
+| QUILLS BULL             | Documentary |
+| RAIDERS ANTITRUST       | Documentary |
+| RAINBOW SHOCK           | Documentary |
+| ROAD ROXANNE            | Documentary |
+| SAGEBRUSH CLUELESS      | Documentary |
+| SECRET GROUNDHOG        | Documentary |
+| SHIP WONDERLAND         | Documentary |
+| SHOW LORD               | Documentary |
+| SMOKING BARBARELLA      | Documentary |
+| SPOILERS HELLFIGHTERS   | Documentary |
+| STREAK RIDGEMONT        | Documentary |
+| THIN SAGEBRUSH          | Documentary |
+| UNITED PILOT            | Documentary |
+| UNTOUCHABLES SUNRISE    | Documentary |
+| VILLAIN DESPERATE       | Documentary |
+| VIRGINIAN PLUTO         | Documentary |
+| WAGON JAWS              | Documentary |
+| WARS PLUTO              | Documentary |
+| WEDDING APOLLO          | Documentary |
+| WIFE TURN               | Documentary |
+| WRATH MILE              | Documentary |
+| YOUNG LANGUAGE          | Documentary |
+| APOLLO TEEN             | Drama       |
+| BEAUTY GREASE           | Drama       |
+| BEETHOVEN EXORCIST      | Drama       |
+| BLADE POLISH            | Drama       |
+| BRIGHT ENCOUNTERS       | Drama       |
+| BUNCH MINDS             | Drama       |
+| CHILL LUCK              | Drama       |
+| CHITTY LOCK             | Drama       |
+| CONEHEADS SMOOCHY       | Drama       |
+| CONFESSIONS MAGUIRE     | Drama       |
+| CONQUERER NUTS          | Drama       |
+| CRAFT OUTFIELD          | Drama       |
+| DALMATIONS SWEDEN       | Drama       |
+| DARKNESS WAR            | Drama       |
+| DECEIVER BETRAYED       | Drama       |
+| DESTINATION JERK        | Drama       |
+| DIARY PANIC             | Drama       |
+| EDGE KISSING            | Drama       |
+| ENCOUNTERS CURTAIN      | Drama       |
+| GOLDFINGER SENSIBILITY  | Drama       |
+| GONE TROUBLE            | Drama       |
+| GREEDY ROOTS            | Drama       |
+| HANGING DEEP            | Drama       |
+| HAROLD FRENCH           | Drama       |
+| HARRY IDAHO             | Drama       |
+| HOBBIT ALIEN            | Drama       |
+| HUNCHBACK IMPOSSIBLE    | Drama       |
+| JACKET FRISCO           | Drama       |
+| KWAI HOMEWARD           | Drama       |
+| LEBOWSKI SOLDIERS       | Drama       |
+| LIES TREATMENT          | Drama       |
+| LUCK OPUS               | Drama       |
+| MOB DUFFEL              | Drama       |
+| NECKLACE OUTBREAK       | Drama       |
+| NOTTING SPEAKEASY       | Drama       |
+| ORIENT CLOSER           | Drama       |
+| PATHS CONTROL           | Drama       |
+| PAYCHECK WAIT           | Drama       |
+| PITY BOUND              | Drama       |
+| QUEEN LUKE              | Drama       |
+| RACER EGG               | Drama       |
+| REUNION WITCHES         | Drama       |
+| ROCKY WAR               | Drama       |
+| SAINTS BRIDE            | Drama       |
+| SAVANNAH TOWN           | Drama       |
+| SCORPION APOLLO         | Drama       |
+| SEA VIRGIN              | Drama       |
+| SEATTLE EXPECATIONS     | Drama       |
+| SHOOTIST SUPERFLY       | Drama       |
+| SLACKER LIAISONS        | Drama       |
+| SOMETHING DUCK          | Drama       |
+| SPICE SORORITY          | Drama       |
+| TENENBAUMS COMMAND      | Drama       |
+| TORQUE BOUND            | Drama       |
+| TRANSLATION SUMMER      | Drama       |
+| TREATMENT JEKYLL        | Drama       |
+| UNFAITHFUL KILL         | Drama       |
+| VIETNAM SMOOCHY         | Drama       |
+| VIRGIN DAISY            | Drama       |
+| WARDROBE PHANTOM        | Drama       |
+| WEST LION               | Drama       |
+| WITCHES PANIC           | Drama       |
+| AFRICAN EGG             | Family      |
+| APACHE DIVINE           | Family      |
+| ATLANTIS CAUSE          | Family      |
+| BAKED CLEOPATRA         | Family      |
+| BANG KWAI               | Family      |
+| BEDAZZLED MARRIED       | Family      |
+| BILKO ANONYMOUS         | Family      |
+| BLANKET BEVERLY         | Family      |
+| BLOOD ARGONAUTS         | Family      |
+| BLUES INSTINCT          | Family      |
+| BRAVEHEART HUMAN        | Family      |
+| CHASING FIGHT           | Family      |
+| CHISUM BEHAVIOR         | Family      |
+| CHOCOLAT HARRY          | Family      |
+| CONFUSED CANDLES        | Family      |
+| CONVERSATION DOWNHILL   | Family      |
+| DATE SPEED              | Family      |
+| DINOSAUR SECRETARY      | Family      |
+| DUMBO LUST              | Family      |
+| EARRING INSTINCT        | Family      |
+| EFFECT GLADIATOR        | Family      |
+| FEUD FROGMEN            | Family      |
+| FINDING ANACONDA        | Family      |
+| GABLES METROPOLIS       | Family      |
+| GANDHI KWAI             | Family      |
+| GLADIATOR WESTWARD      | Family      |
+| GREASE YOUTH            | Family      |
+| HALF OUTFIELD           | Family      |
+| HOCUS FRIDA             | Family      |
+| HOMICIDE PEACH          | Family      |
+| HOUSE DYNAMITE          | Family      |
+| HUNTING MUSKETEERS      | Family      |
+| INDIAN LOVE             | Family      |
+| JASON TRAP              | Family      |
+| JEDI BENEATH            | Family      |
+| KILLER INNOCENT         | Family      |
+| KING EVOLUTION          | Family      |
+| LOLITA WORLD            | Family      |
+| LOUISIANA HARRY         | Family      |
+| MAGUIRE APACHE          | Family      |
+| MANCHURIAN CURTAIN      | Family      |
+| MOVIE SHAKESPEARE       | Family      |
+| MUSIC BOONDOCK          | Family      |
+| NATURAL STOCK           | Family      |
+| NETWORK PEAK            | Family      |
+| ODDS BOOGIE             | Family      |
+| OPPOSITE NECKLACE       | Family      |
+| PILOT HOOSIERS          | Family      |
+| PITTSBURGH HUNCHBACK    | Family      |
+| PRESIDENT BANG          | Family      |
+| PRIX UNDEFEATED         | Family      |
+| RAGE GAMES              | Family      |
+| RANGE MOONWALKER        | Family      |
+| REMEMBER DIARY          | Family      |
+| RESURRECTION SILVERADO  | Family      |
+| ROBBERY BRIGHT          | Family      |
+| RUSH GOODFELLAS         | Family      |
+| SECRETS PARADISE        | Family      |
+| SENSIBILITY REAR        | Family      |
+| SIEGE MADRE             | Family      |
+| SLUMS DUCK              | Family      |
+| SOUP WISDOM             | Family      |
+| SPARTACUS CHEAPER       | Family      |
+| SPINAL ROCKY            | Family      |
+| SPLASH GUMP             | Family      |
++-------------------------+-------------+
+500 rows in set (0.0042 sec)
+ MySQL  localhost:3306 ssl  sakila  SQL > SHOW TABLES;
++----------------------------+
+| Tables_in_sakila           |
++----------------------------+
+| actor                      |
+| actor_info                 |
+| address                    |
+| category                   |
+| city                       |
+| country                    |
+| customer                   |
+| customer_list              |
+| film                       |
+| film_actor                 |
+| film_category              |
+| film_list                  |
+| film_text                  |
+| inventory                  |
+| language                   |
+| nicer_but_slower_film_list |
+| payment                    |
+| rental                     |
+| sales_by_film_category     |
+| sales_by_store             |
+| staff                      |
+| staff_list                 |
+| store                      |
++----------------------------+
+23 rows in set (0.0021 sec)
+ MySQL  localhost:3306 ssl  sakila  SQL > DESC customer;
++-------------+-------------------+------+-----+-------------------+-----------------------------------------------+
+| Field       | Type              | Null | Key | Default           | Extra                                         |
++-------------+-------------------+------+-----+-------------------+-----------------------------------------------+
+| customer_id | smallint unsigned | NO   | PRI | NULL              | auto_increment                                |
+| store_id    | tinyint unsigned  | NO   | MUL | NULL              |                                               |
+| first_name  | varchar(45)       | NO   |     | NULL              |                                               |
+| last_name   | varchar(45)       | NO   | MUL | NULL              |                                               |
+| email       | varchar(50)       | YES  |     | NULL              |                                               |
+| address_id  | smallint unsigned | NO   | MUL | NULL              |                                               |
+| active      | tinyint(1)        | NO   |     | 1                 |                                               |
+| create_date | datetime          | NO   |     | NULL              |                                               |
+| last_update | timestamp         | YES  |     | CURRENT_TIMESTAMP | DEFAULT_GENERATED on update CURRENT_TIMESTAMP |
++-------------+-------------------+------+-----+-------------------+-----------------------------------------------+
+9 rows in set (0.0023 sec)
+ MySQL  localhost:3306 ssl  sakila  SQL > DESC rental;
++--------------+--------------------+------+-----+-------------------+-----------------------------------------------+
+| Field        | Type               | Null | Key | Default           | Extra                                         |
++--------------+--------------------+------+-----+-------------------+-----------------------------------------------+
+| rental_id    | int                | NO   | PRI | NULL              | auto_increment                                |
+| rental_date  | datetime           | NO   | MUL | NULL              |                                               |
+| inventory_id | mediumint unsigned | NO   | MUL | NULL              |                                               |
+| customer_id  | smallint unsigned  | NO   | MUL | NULL              |                                               |
+| return_date  | datetime           | YES  |     | NULL              |                                               |
+| staff_id     | tinyint unsigned   | NO   | MUL | NULL              |                                               |
+| last_update  | timestamp          | NO   |     | CURRENT_TIMESTAMP | DEFAULT_GENERATED on update CURRENT_TIMESTAMP |
++--------------+--------------------+------+-----+-------------------+-----------------------------------------------+
+7 rows in set (0.0025 sec)
+ MySQL  localhost:3306 ssl  sakila  SQL > SELECT A.first_name AS Nombre, A.last_name AS Apellido, COUNT(B.rental_id) AS PeliculasRentadas
+                                       -> FROM customer A
+                                       -> INNER JOIN rental B ON A.customer_id = B.customer_id
+                                       -> GROUP BY A.customer_id, A.first_name, A.last_name
+                                       -> LIMIT 500;
++-------------+-------------+-------------------+
+| Nombre      | Apellido    | PeliculasRentadas |
++-------------+-------------+-------------------+
+| MARY        | SMITH       |                32 |
+| PATRICIA    | JOHNSON     |                27 |
+| LINDA       | WILLIAMS    |                26 |
+| BARBARA     | JONES       |                22 |
+| ELIZABETH   | BROWN       |                38 |
+| JENNIFER    | DAVIS       |                28 |
+| MARIA       | MILLER      |                33 |
+| SUSAN       | WILSON      |                24 |
+| MARGARET    | MOORE       |                23 |
+| DOROTHY     | TAYLOR      |                25 |
+| LISA        | ANDERSON    |                24 |
+| NANCY       | THOMAS      |                28 |
+| KAREN       | JACKSON     |                27 |
+| BETTY       | WHITE       |                28 |
+| HELEN       | HARRIS      |                32 |
+| SANDRA      | MARTIN      |                28 |
+| DONNA       | THOMPSON    |                21 |
+| CAROL       | GARCIA      |                22 |
+| RUTH        | MARTINEZ    |                24 |
+| SHARON      | ROBINSON    |                30 |
+| MICHELLE    | CLARK       |                35 |
+| LAURA       | RODRIGUEZ   |                22 |
+| SARAH       | LEWIS       |                30 |
+| KIMBERLY    | LEE         |                25 |
+| DEBORAH     | WALKER      |                29 |
+| JESSICA     | HALL        |                34 |
+| SHIRLEY     | ALLEN       |                31 |
+| CYNTHIA     | YOUNG       |                32 |
+| ANGELA      | HERNANDEZ   |                36 |
+| MELISSA     | KING        |                34 |
+| BRENDA      | WRIGHT      |                26 |
+| AMY         | LOPEZ       |                29 |
+| ANNA        | HILL        |                21 |
+| REBECCA     | SCOTT       |                24 |
+| VIRGINIA    | GREEN       |                32 |
+| KATHLEEN    | ADAMS       |                27 |
+| PAMELA      | BAKER       |                23 |
+| MARTHA      | GONZALEZ    |                34 |
+| DEBRA       | NELSON      |                29 |
+| AMANDA      | CARTER      |                27 |
+| STEPHANIE   | MITCHELL    |                25 |
+| CAROLYN     | PEREZ       |                30 |
+| CHRISTINE   | ROBERTS     |                24 |
+| MARIE       | TURNER      |                26 |
+| JANET       | PHILLIPS    |                27 |
+| CATHERINE   | CAMPBELL    |                34 |
+| FRANCES     | PARKER      |                22 |
+| ANN         | EVANS       |                17 |
+| JOYCE       | EDWARDS     |                28 |
+| DIANE       | COLLINS     |                35 |
+| ALICE       | STEWART     |                33 |
+| JULIE       | SANCHEZ     |                29 |
+| HEATHER     | MORRIS      |                30 |
+| TERESA      | ROGERS      |                29 |
+| DORIS       | REED        |                22 |
+| GLORIA      | COOK        |                30 |
+| EVELYN      | MORGAN      |                28 |
+| JEAN        | BELL        |                27 |
+| CHERYL      | MURPHY      |                27 |
+| MILDRED     | BAILEY      |                25 |
+| KATHERINE   | RIVERA      |                14 |
+| JOAN        | COOPER      |                23 |
+| ASHLEY      | RICHARDSON  |                25 |
+| JUDITH      | COX         |                33 |
+| ROSE        | HOWARD      |                22 |
+| JANICE      | WARD        |                34 |
+| KELLY       | TORRES      |                22 |
+| NICOLE      | PETERSON    |                22 |
+| JUDY        | GRAY        |                25 |
+| CHRISTINA   | RAMIREZ     |                18 |
+| KATHY       | JAMES       |                30 |
+| THERESA     | WATSON      |                30 |
+| BEVERLY     | BROOKS      |                24 |
+| DENISE      | KELLY       |                27 |
+| TAMMY       | SANDERS     |                41 |
+| IRENE       | PRICE       |                23 |
+| JANE        | BENNETT     |                28 |
+| LORI        | WOOD        |                31 |
+| RACHEL      | BARNES      |                22 |
+| MARILYN     | ROSS        |                30 |
+| ANDREA      | HENDERSON   |                22 |
+| KATHRYN     | COLEMAN     |                26 |
+| LOUISE      | JENKINS     |                25 |
+| SARA        | PERRY       |                33 |
+| ANNE        | POWELL      |                23 |
+| JACQUELINE  | LONG        |                33 |
+| WANDA       | PATTERSON   |                30 |
+| BONNIE      | HUGHES      |                21 |
+| JULIA       | FLORES      |                32 |
+| RUBY        | WASHINGTON  |                28 |
+| LOIS        | BUTLER      |                35 |
+| TINA        | SIMMONS     |                28 |
+| PHYLLIS     | FOSTER      |                23 |
+| NORMA       | GONZALES    |                21 |
+| PAULA       | BRYANT      |                18 |
+| DIANA       | ALEXANDER   |                27 |
+| ANNIE       | RUSSELL     |                18 |
+| LILLIAN     | GRIFFIN     |                25 |
+| EMILY       | DIAZ        |                24 |
+| ROBIN       | HAYES       |                24 |
+| PEGGY       | MYERS       |                24 |
+| CRYSTAL     | FORD        |                33 |
+| GLADYS      | HAMILTON    |                31 |
+| RITA        | GRAHAM      |                24 |
+| DAWN        | SULLIVAN    |                26 |
+| CONNIE      | WALLACE     |                23 |
+| FLORENCE    | WOODS       |                30 |
+| TRACY       | COLE        |                30 |
+| EDNA        | WEST        |                26 |
+| TIFFANY     | JORDAN      |                14 |
+| CARMEN      | OWENS       |                26 |
+| ROSA        | REYNOLDS    |                30 |
+| CINDY       | FISHER      |                29 |
+| GRACE       | ELLIS       |                33 |
+| WENDY       | HARRISON    |                30 |
+| VICTORIA    | GIBSON      |                27 |
+| EDITH       | MCDONALD    |                19 |
+| KIM         | CRUZ        |                21 |
+| SHERRY      | MARSHALL    |                34 |
+| SYLVIA      | ORTIZ       |                32 |
+| JOSEPHINE   | GOMEZ       |                26 |
+| THELMA      | MURRAY      |                32 |
+| SHANNON     | FREEMAN     |                24 |
+| SHEILA      | WELLS       |                18 |
+| ETHEL       | WEBB        |                32 |
+| ELLEN       | SIMPSON     |                28 |
+| ELAINE      | STEVENS     |                24 |
+| MARJORIE    | TUCKER      |                32 |
+| CARRIE      | PORTER      |                34 |
+| CHARLOTTE   | HUNTER      |                24 |
+| MONICA      | HICKS       |                30 |
+| ESTHER      | CRAWFORD    |                28 |
+| PAULINE     | HENRY       |                27 |
+| EMMA        | BOYD        |                23 |
+| JUANITA     | MASON       |                30 |
+| ANITA       | MORALES     |                15 |
+| RHONDA      | KENNEDY     |                39 |
+| HAZEL       | WARREN      |                34 |
+| AMBER       | DIXON       |                27 |
+| EVA         | RAMOS       |                18 |
+| DEBBIE      | REYES       |                32 |
+| APRIL       | BURNS       |                26 |
+| LESLIE      | GORDON      |                22 |
+| CLARA       | SHAW        |                42 |
+| LUCILLE     | HOLMES      |                28 |
+| JAMIE       | RICE        |                29 |
+| JOANNE      | ROBERTSON   |                34 |
+| ELEANOR     | HUNT        |                46 |
+| VALERIE     | BLACK       |                26 |
+| DANIELLE    | DANIELS     |                25 |
+| MEGAN       | PALMER      |                27 |
+| ALICIA      | MILLS       |                21 |
+| SUZANNE     | NICHOLS     |                24 |
+| MICHELE     | GRANT       |                30 |
+| GAIL        | KNIGHT      |                25 |
+| BERTHA      | FERGUSON    |                25 |
+| DARLENE     | ROSE        |                31 |
+| VERONICA    | STONE       |                32 |
+| JILL        | HAWKINS     |                21 |
+| ERIN        | DUNN        |                27 |
+| GERALDINE   | PERKINS     |                30 |
+| LAUREN      | HUDSON      |                20 |
+| CATHY       | SPENCER     |                29 |
+| JOANN       | GARDNER     |                16 |
+| LORRAINE    | STEPHENS    |                21 |
+| LYNN        | PAYNE       |                28 |
+| SALLY       | PIERCE      |                32 |
+| REGINA      | BERRY       |                34 |
+| ERICA       | MATTHEWS    |                22 |
+| BEATRICE    | ARNOLD      |                26 |
+| DOLORES     | WAGNER      |                26 |
+| BERNICE     | WILLIS      |                33 |
+| AUDREY      | RAY         |                29 |
+| YVONNE      | WATKINS     |                21 |
+| ANNETTE     | OLSON       |                24 |
+| JUNE        | CARROLL     |                37 |
+| SAMANTHA    | DUNCAN      |                23 |
+| MARION      | SNYDER      |                39 |
+| DANA        | HART        |                29 |
+| STACY       | CUNNINGHAM  |                23 |
+| ANA         | BRADLEY     |                34 |
+| RENEE       | LANE        |                26 |
+| IDA         | ANDREWS     |                23 |
+| VIVIAN      | RUIZ        |                23 |
+| ROBERTA     | HARPER      |                23 |
+| HOLLY       | FOX         |                31 |
+| BRITTANY    | RILEY       |                28 |
+| MELANIE     | ARMSTRONG   |                25 |
+| LORETTA     | CARPENTER   |                22 |
+| YOLANDA     | WEAVER      |                27 |
+| JEANETTE    | GREENE      |                20 |
+| LAURIE      | LAWRENCE    |                23 |
+| KATIE       | ELLIOTT     |                25 |
+| KRISTEN     | CHAVEZ      |                18 |
+| VANESSA     | SIMS        |                19 |
+| ALMA        | AUSTIN      |                35 |
+| SUE         | PETERS      |                40 |
+| ELSIE       | KELLEY      |                37 |
+| BETH        | FRANKLIN    |                25 |
+| JEANNE      | LAWSON      |                27 |
+| VICKI       | FIELDS      |                25 |
+| CARLA       | GUTIERREZ   |                26 |
+| TARA        | RYAN        |                20 |
+| ROSEMARY    | SCHMIDT     |                35 |
+| EILEEN      | CARR        |                18 |
+| TERRI       | VASQUEZ     |                27 |
+| GERTRUDE    | CASTILLO    |                34 |
+| LUCY        | WHEELER     |                26 |
+| TONYA       | CHAPMAN     |                32 |
+| ELLA        | OLIVER      |                31 |
+| STACEY      | MONTGOMERY  |                34 |
+| WILMA       | RICHARDS    |                20 |
+| GINA        | WILLIAMSON  |                28 |
+| KRISTIN     | JOHNSTON    |                31 |
+| JESSIE      | BANKS       |                26 |
+| NATALIE     | MEYER       |                23 |
+| AGNES       | BISHOP      |                23 |
+| VERA        | MCCOY       |                18 |
+| WILLIE      | HOWELL      |                26 |
+| CHARLENE    | ALVAREZ     |                27 |
+| BESSIE      | MORRISON    |                28 |
+| DELORES     | HANSEN      |                21 |
+| MELINDA     | FERNANDEZ   |                17 |
+| PEARL       | GARZA       |                22 |
+| ARLENE      | HARVEY      |                26 |
+| MAUREEN     | LITTLE      |                21 |
+| COLLEEN     | BURTON      |                24 |
+| ALLISON     | STANLEY     |                27 |
+| TAMARA      | NGUYEN      |                25 |
+| JOY         | GEORGE      |                33 |
+| GEORGIA     | JACOBS      |                26 |
+| CONSTANCE   | REID        |                25 |
+| LILLIE      | KIM         |                23 |
+| CLAUDIA     | FULLER      |                26 |
+| JACKIE      | LYNCH       |                25 |
+| MARCIA      | DEAN        |                42 |
+| TANYA       | GILBERT     |                33 |
+| NELLIE      | GARRETT     |                21 |
+| MINNIE      | ROMERO      |                34 |
+| MARLENE     | WELCH       |                26 |
+| HEIDI       | LARSON      |                34 |
+| GLENDA      | FRAZIER     |                32 |
+| LYDIA       | BURKE       |                24 |
+| VIOLA       | HANSON      |                32 |
+| COURTNEY    | DAY         |                32 |
+| MARIAN      | MENDOZA     |                23 |
+| STELLA      | MORENO      |                22 |
+| CAROLINE    | BOWMAN      |                15 |
+| DORA        | MEDINA      |                23 |
+| JO          | FOWLER      |                20 |
+| VICKIE      | BREWER      |                31 |
+| MATTIE      | HOFFMAN     |                22 |
+| TERRY       | CARLSON     |                29 |
+| MAXINE      | SILVA       |                32 |
+| IRMA        | PEARSON     |                18 |
+| MABEL       | HOLLAND     |                30 |
+| MARSHA      | DOUGLAS     |                37 |
+| MYRTLE      | FLEMING     |                24 |
+| LENA        | JENSEN      |                32 |
+| CHRISTY     | VARGAS      |                31 |
+| DEANNA      | BYRD        |                26 |
+| PATSY       | DAVIDSON    |                28 |
+| HILDA       | HOPKINS     |                29 |
+| GWENDOLYN   | MAY         |                25 |
+| JENNIE      | TERRY       |                29 |
+| NORA        | HERRERA     |                28 |
+| MARGIE      | WADE        |                36 |
+| NINA        | SOTO        |                29 |
+| CASSANDRA   | WALTERS     |                30 |
+| LEAH        | CURTIS      |                25 |
+| PENNY       | NEAL        |                18 |
+| KAY         | CALDWELL    |                20 |
+| PRISCILLA   | LOWE        |                35 |
+| NAOMI       | JENNINGS    |                35 |
+| CAROLE      | BARNETT     |                30 |
+| BRANDY      | GRAVES      |                28 |
+| OLGA        | JIMENEZ     |                32 |
+| BILLIE      | HORTON      |                26 |
+| DIANNE      | SHELTON     |                31 |
+| TRACEY      | BARRETT     |                27 |
+| LEONA       | OBRIEN      |                14 |
+| JENNY       | CASTRO      |                27 |
+| FELICIA     | SUTTON      |                28 |
+| SONIA       | GREGORY     |                28 |
+| MIRIAM      | MCKINNEY    |                26 |
+| VELMA       | LUCAS       |                27 |
+| BECKY       | MILES       |                29 |
+| BOBBIE      | CRAIG       |                24 |
+| VIOLET      | RODRIQUEZ   |                30 |
+| KRISTINA    | CHAMBERS    |                28 |
+| TONI        | HOLT        |                23 |
+| MISTY       | LAMBERT     |                27 |
+| MAE         | FLETCHER    |                31 |
+| SHELLY      | WATTS       |                26 |
+| DAISY       | BATES       |                38 |
+| RAMONA      | HALE        |                30 |
+| SHERRI      | RHODES      |                33 |
+| ERIKA       | PENA        |                26 |
+| JAMES       | GANNON      |                30 |
+| JOHN        | FARNSWORTH  |                31 |
+| ROBERT      | BAUGHMAN    |                21 |
+| MICHAEL     | SILVERMAN   |                29 |
+| WILLIAM     | SATTERFIELD |                26 |
+| DAVID       | ROYAL       |                26 |
+| RICHARD     | MCCRARY     |                25 |
+| CHARLES     | KOWALSKI    |                32 |
+| JOSEPH      | JOY         |                30 |
+| THOMAS      | GRIGSBY     |                25 |
+| CHRISTOPHER | GRECO       |                31 |
+| DANIEL      | CABRAL      |                20 |
+| PAUL        | TROUT       |                23 |
+| MARK        | RINEHART    |                26 |
+| DONALD      | MAHON       |                23 |
+| GEORGE      | LINTON      |                33 |
+| KENNETH     | GOODEN      |                17 |
+| STEVEN      | CURLEY      |                29 |
+| EDWARD      | BAUGH       |                28 |
+| BRIAN       | WYMAN       |                12 |
+| RONALD      | WEINER      |                30 |
+| ANTHONY     | SCHWAB      |                20 |
+| KEVIN       | SCHULER     |                22 |
+| JASON       | MORRISSEY   |                28 |
+| MATTHEW     | MAHAN       |                31 |
+| GARY        | COY         |                25 |
+| TIMOTHY     | BUNN        |                22 |
+| JOSE        | ANDREW      |                25 |
+| LARRY       | THRASHER    |                26 |
+| JEFFREY     | SPEAR       |                23 |
+| FRANK       | WAGGONER    |                32 |
+| SCOTT       | SHELLEY     |                25 |
+| ERIC        | ROBERT      |                27 |
+| STEPHEN     | QUALLS      |                28 |
+| ANDREW      | PURDY       |                27 |
+| RAYMOND     | MCWHORTER   |                30 |
+| GREGORY     | MAULDIN     |                23 |
+| JOSHUA      | MARK        |                30 |
+| JERRY       | JORDON      |                29 |
+| DENNIS      | GILMAN      |                28 |
+| WALTER      | PERRYMAN    |                30 |
+| PATRICK     | NEWSOM      |                31 |
+| PETER       | MENARD      |                23 |
+| HAROLD      | MARTINO     |                32 |
+| DOUGLAS     | GRAF        |                25 |
+| HENRY       | BILLINGSLEY |                18 |
+| CARL        | ARTIS       |                23 |
+| ARTHUR      | SIMPKINS    |                32 |
+| RYAN        | SALISBURY   |                30 |
+| ROGER       | QUINTANILLA |                36 |
+| JOE         | GILLILAND   |                29 |
+| JUAN        | FRALEY      |                23 |
+| JACK        | FOUST       |                24 |
+| ALBERT      | CROUSE      |                23 |
+| JONATHAN    | SCARBOROUGH |                18 |
+| JUSTIN      | NGO         |                36 |
+| TERRY       | GRISSOM     |                20 |
+| GERALD      | FULTZ       |                30 |
+| KEITH       | RICO        |                26 |
+| SAMUEL      | MARLOW      |                21 |
+| WILLIE      | MARKHAM     |                25 |
+| RALPH       | MADRIGAL    |                34 |
+| LAWRENCE    | LAWTON      |                31 |
+| NICHOLAS    | BARFIELD    |                32 |
+| ROY         | WHITING     |                29 |
+| BENJAMIN    | VARNEY      |                23 |
+| BRUCE       | SCHWARZ     |                23 |
+| BRANDON     | HUEY        |                37 |
+| ADAM        | GOOCH       |                22 |
+| HARRY       | ARCE        |                35 |
+| FRED        | WHEAT       |                25 |
+| WAYNE       | TRUONG      |                19 |
+| BILLY       | POULIN      |                35 |
+| STEVE       | MACKENZIE   |                34 |
+| LOUIS       | LEONE       |                35 |
+| JEREMY      | HURTADO     |                28 |
+| AARON       | SELBY       |                24 |
+| RANDY       | GAITHER     |                28 |
+| HOWARD      | FORTNER     |                26 |
+| EUGENE      | CULPEPPER   |                19 |
+| CARLOS      | COUGHLIN    |                23 |
+| RUSSELL     | BRINSON     |                36 |
+| BOBBY       | BOUDREAU    |                35 |
+| VICTOR      | BARKLEY     |                24 |
+| MARTIN      | BALES       |                27 |
+| ERNEST      | STEPP       |                25 |
+| PHILLIP     | HOLM        |                26 |
+| TODD        | TAN         |                29 |
+| JESSE       | SCHILLING   |                26 |
+| CRAIG       | MORRELL     |                30 |
+| ALAN        | KAHN        |                26 |
+| SHAWN       | HEATON      |                33 |
+| CLARENCE    | GAMEZ       |                30 |
+| SEAN        | DOUGLASS    |                23 |
+| PHILIP      | CAUSEY      |                31 |
+| CHRIS       | BROTHERS    |                22 |
+| JOHNNY      | TURPIN      |                19 |
+| EARL        | SHANKS      |                27 |
+| JIMMY       | SCHRADER    |                29 |
+| ANTONIO     | MEEK        |                16 |
+| DANNY       | ISOM        |                21 |
+| BRYAN       | HARDISON    |                28 |
+| TONY        | CARRANZA    |                21 |
+| LUIS        | YANEZ       |                20 |
+| MIKE        | WAY         |                35 |
+| STANLEY     | SCROGGINS   |                30 |
+| LEONARD     | SCHOFIELD   |                32 |
+| NATHAN      | RUNYON      |                32 |
+| DALE        | RATCLIFF    |                27 |
+| MANUEL      | MURRELL     |                30 |
+| RODNEY      | MOELLER     |                23 |
+| CURTIS      | IRBY        |                38 |
+| NORMAN      | CURRIER     |                26 |
+| ALLEN       | BUTTERFIELD |                21 |
+| MARVIN      | YEE         |                21 |
+| VINCENT     | RALSTON     |                25 |
+| GLENN       | PULLEN      |                23 |
+| JEFFERY     | PINSON      |                31 |
+| TRAVIS      | ESTEP       |                25 |
+| JEFF        | EAST        |                30 |
+| CHAD        | CARBONE     |                25 |
+| JACOB       | LANCE       |                21 |
+| LEE         | HAWKS       |                27 |
+| MELVIN      | ELLINGTON   |                26 |
+| ALFRED      | CASILLAS    |                26 |
+| KYLE        | SPURLOCK    |                30 |
+| FRANCIS     | SIKES       |                26 |
+| BRADLEY     | MOTLEY      |                27 |
+| JESUS       | MCCARTNEY   |                24 |
+| HERBERT     | KRUGER      |                20 |
+| FREDERICK   | ISBELL      |                21 |
+| RAY         | HOULE       |                22 |
+| JOEL        | FRANCISCO   |                23 |
+| EDWIN       | BURK        |                23 |
+| DON         | BONE        |                25 |
+| EDDIE       | TOMLIN      |                27 |
+| RICKY       | SHELBY      |                25 |
+| TROY        | QUIGLEY     |                30 |
+| RANDALL     | NEUMANN     |                23 |
+| BARRY       | LOVELACE    |                33 |
+| ALEXANDER   | FENNELL     |                36 |
+| BERNARD     | COLBY       |                22 |
+| MARIO       | CHEATHAM    |                28 |
+| LEROY       | BUSTAMANTE  |                32 |
+| FRANCISCO   | SKIDMORE    |                22 |
+| MARCUS      | HIDALGO     |                30 |
+| MICHEAL     | FORMAN      |                26 |
+| THEODORE    | CULP        |                31 |
+| CLIFFORD    | BOWENS      |                29 |
+| MIGUEL      | BETANCOURT  |                29 |
+| OSCAR       | AQUINO      |                20 |
+| JAY         | ROBB        |                26 |
+| JIM         | REA         |                33 |
+| TOM         | MILNER      |                32 |
+| CALVIN      | MARTEL      |                23 |
+| ALEX        | GRESHAM     |                33 |
+| JON         | WILES       |                24 |
+| RONNIE      | RICKETTS    |                25 |
+| BILL        | GAVIN       |                28 |
+| LLOYD       | DOWD        |                19 |
+| TOMMY       | COLLAZO     |                38 |
+| LEON        | BOSTIC      |                25 |
+| DEREK       | BLAKELY     |                28 |
+| WARREN      | SHERROD     |                33 |
+| DARRELL     | POWER       |                25 |
+| JEROME      | KENYON      |                16 |
+| FLOYD       | GANDY       |                17 |
+| LEO         | EBERT       |                23 |
+| ALVIN       | DELOACH     |                29 |
+| TIM         | CARY        |                39 |
+| WESLEY      | BULL        |                40 |
+| GORDON      | ALLARD      |                32 |
+| DEAN        | SAUER       |                27 |
+| GREG        | ROBINS      |                30 |
+| JORGE       | OLIVARES    |                34 |
+| DUSTIN      | GILLETTE    |                26 |
+| PEDRO       | CHESTNUT    |                24 |
+| DERRICK     | BOURQUE     |                22 |
+| DAN         | PAINE       |                22 |
+| LEWIS       | LYMAN       |                19 |
+| ZACHARY     | HITE        |                31 |
+| COREY       | HAUSER      |                22 |
+| HERMAN      | DEVORE      |                29 |
+| MAURICE     | CRAWLEY     |                29 |
+| VERNON      | CHAPA       |                18 |
+| ROBERTO     | VU          |                30 |
+| CLYDE       | TOBIAS      |                29 |
+| GLEN        | TALBERT     |                26 |
+| HECTOR      | POINDEXTER  |                26 |
+| SHANE       | MILLARD     |                22 |
+| RICARDO     | MEADOR      |                21 |
+| SAM         | MCDUFFIE    |                24 |
+| RICK        | MATTOX      |                27 |
+| LESTER      | KRAUS       |                16 |
+| BRENT       | HARKINS     |                23 |
+| RAMON       | CHOATE      |                31 |
+| CHARLIE     | BESS        |                26 |
+| TYLER       | WREN        |                21 |
+| GILBERT     | SLEDGE      |                28 |
+| GENE        | SANBORN     |                27 |
+| MARC        | OUTLAW      |                30 |
+| REGINALD    | KINDER      |                28 |
++-------------+-------------+-------------------+
+500 rows in set (0.0502 sec)
+ MySQL  localhost:3306 ssl  sakila  SQL > SHOW TABLES;
++----------------------------+
+| Tables_in_sakila           |
++----------------------------+
+| actor                      |
+| actor_info                 |
+| address                    |
+| category                   |
+| city                       |
+| country                    |
+| customer                   |
+| customer_list              |
+| film                       |
+| film_actor                 |
+| film_category              |
+| film_list                  |
+| film_text                  |
+| inventory                  |
+| language                   |
+| nicer_but_slower_film_list |
+| payment                    |
+| rental                     |
+| sales_by_film_category     |
+| sales_by_store             |
+| staff                      |
+| staff_list                 |
+| store                      |
++----------------------------+
+23 rows in set (0.0027 sec)
+ MySQL  localhost:3306 ssl  sakila  SQL > DESC customer;
++-------------+-------------------+------+-----+-------------------+-----------------------------------------------+
+| Field       | Type              | Null | Key | Default           | Extra                                         |
++-------------+-------------------+------+-----+-------------------+-----------------------------------------------+
+| customer_id | smallint unsigned | NO   | PRI | NULL              | auto_increment                                |
+| store_id    | tinyint unsigned  | NO   | MUL | NULL              |                                               |
+| first_name  | varchar(45)       | NO   |     | NULL              |                                               |
+| last_name   | varchar(45)       | NO   | MUL | NULL              |                                               |
+| email       | varchar(50)       | YES  |     | NULL              |                                               |
+| address_id  | smallint unsigned | NO   | MUL | NULL              |                                               |
+| active      | tinyint(1)        | NO   |     | 1                 |                                               |
+| create_date | datetime          | NO   |     | NULL              |                                               |
+| last_update | timestamp         | YES  |     | CURRENT_TIMESTAMP | DEFAULT_GENERATED on update CURRENT_TIMESTAMP |
++-------------+-------------------+------+-----+-------------------+-----------------------------------------------+
+9 rows in set (0.0026 sec)
+ MySQL  localhost:3306 ssl  sakila  SQL > DESC rental;
++--------------+--------------------+------+-----+-------------------+-----------------------------------------------+
+| Field        | Type               | Null | Key | Default           | Extra                                         |
++--------------+--------------------+------+-----+-------------------+-----------------------------------------------+
+| rental_id    | int                | NO   | PRI | NULL              | auto_increment                                |
+| rental_date  | datetime           | NO   | MUL | NULL              |                                               |
+| inventory_id | mediumint unsigned | NO   | MUL | NULL              |                                               |
+| customer_id  | smallint unsigned  | NO   | MUL | NULL              |                                               |
+| return_date  | datetime           | YES  |     | NULL              |                                               |
+| staff_id     | tinyint unsigned   | NO   | MUL | NULL              |                                               |
+| last_update  | timestamp          | NO   |     | CURRENT_TIMESTAMP | DEFAULT_GENERATED on update CURRENT_TIMESTAMP |
++--------------+--------------------+------+-----+-------------------+-----------------------------------------------+
+7 rows in set (0.0018 sec)
+ MySQL  localhost:3306 ssl  sakila  SQL > DESC inventory;
++--------------+--------------------+------+-----+-------------------+-----------------------------------------------+
+| Field        | Type               | Null | Key | Default           | Extra                                         |
++--------------+--------------------+------+-----+-------------------+-----------------------------------------------+
+| inventory_id | mediumint unsigned | NO   | PRI | NULL              | auto_increment                                |
+| film_id      | smallint unsigned  | NO   | MUL | NULL              |                                               |
+| store_id     | tinyint unsigned   | NO   | MUL | NULL              |                                               |
+| last_update  | timestamp          | NO   |     | CURRENT_TIMESTAMP | DEFAULT_GENERATED on update CURRENT_TIMESTAMP |
++--------------+--------------------+------+-----+-------------------+-----------------------------------------------+
+4 rows in set (0.0023 sec)
+ MySQL  localhost:3306 ssl  sakila  SQL > DESC film;
++----------------------+---------------------------------------------------------------------+------+-----+-------------------+-----------------------------------------------+
+| Field                | Type                                                                | Null | Key | Default           | Extra                                         |
++----------------------+---------------------------------------------------------------------+------+-----+-------------------+-----------------------------------------------+
+| film_id              | smallint unsigned                                                   | NO   | PRI | NULL              | auto_increment                                |
+| title                | varchar(128)                                                        | NO   | MUL | NULL              |                                               |
+| description          | text                                                                | YES  |     | NULL              |                                               |
+| release_year         | year                                                                | YES  |     | NULL              |                                               |
+| language_id          | tinyint unsigned                                                    | NO   | MUL | NULL              |                                               |
+| original_language_id | tinyint unsigned                                                    | YES  | MUL | NULL              |                                               |
+| rental_duration      | tinyint unsigned                                                    | NO   |     | 3                 |                                               |
+| rental_rate          | decimal(4,2)                                                        | NO   |     | 4.99              |                                               |
+| length               | smallint unsigned                                                   | YES  |     | NULL              |                                               |
+| replacement_cost     | decimal(5,2)                                                        | NO   |     | 19.99             |                                               |
+| rating               | enum('G','PG','PG-13','R','NC-17')                                  | YES  |     | G                 |                                               |
+| special_features     | set('Trailers','Commentaries','Deleted Scenes','Behind the Scenes') | YES  |     | NULL              |                                               |
+| last_update          | timestamp                                                           | NO   |     | CURRENT_TIMESTAMP | DEFAULT_GENERATED on update CURRENT_TIMESTAMP |
++----------------------+---------------------------------------------------------------------+------+-----+-------------------+-----------------------------------------------+
+13 rows in set (0.0027 sec)
+ MySQL  localhost:3306 ssl  sakila  SQL > SELECT A.first_name AS Nombre, A.last_name AS Apellido, D.title AS PeliculaRentada
+                                       -> FROM customer A
+                                       -> INNER JOIN rental B ON A.customer_id = B.customer_id
+                                       -> INNER JOIN inventory C ON B.inventory_id = C.inventory_id
+                                       -> INNER JOIN film D ON C.film_id = D.film_id
+                                       -> LIMIT 500;
++------------+-------------+----------------------+
+| Nombre     | Apellido    | PeliculaRentada      |
++------------+-------------+----------------------+
+| JOEL       | FRANCISCO   | ACADEMY DINOSAUR     |
+| GABRIEL    | HARDER      | ACADEMY DINOSAUR     |
+| DIANNE     | SHELTON     | ACADEMY DINOSAUR     |
+| NORMAN     | CURRIER     | ACADEMY DINOSAUR     |
+| BEATRICE   | ARNOLD      | ACADEMY DINOSAUR     |
+| GERALDINE  | PERKINS     | ACADEMY DINOSAUR     |
+| VIRGIL     | WOFFORD     | ACADEMY DINOSAUR     |
+| WILLIE     | MARKHAM     | ACADEMY DINOSAUR     |
+| DEBRA      | NELSON      | ACADEMY DINOSAUR     |
+| DARREN     | WINDHAM     | ACADEMY DINOSAUR     |
+| ROBERT     | BAUGHMAN    | ACADEMY DINOSAUR     |
+| HENRY      | BILLINGSLEY | ACADEMY DINOSAUR     |
+| SERGIO     | STANFIELD   | ACADEMY DINOSAUR     |
+| FREDDIE    | DUGGAN      | ACADEMY DINOSAUR     |
+| MARIE      | TURNER      | ACADEMY DINOSAUR     |
+| MATTIE     | HOFFMAN     | ACADEMY DINOSAUR     |
+| DWAYNE     | OLVERA      | ACADEMY DINOSAUR     |
+| CARL       | ARTIS       | ACADEMY DINOSAUR     |
+| NATHAN     | RUNYON      | ACADEMY DINOSAUR     |
+| HECTOR     | POINDEXTER  | ACADEMY DINOSAUR     |
+| TINA       | SIMMONS     | ACADEMY DINOSAUR     |
+| SUSAN      | WILSON      | ACADEMY DINOSAUR     |
+| REBECCA    | SCOTT       | ACADEMY DINOSAUR     |
+| PENNY      | NEAL        | ACE GOLDFINGER       |
+| BRANDON    | HUEY        | ACE GOLDFINGER       |
+| LUCILLE    | HOLMES      | ACE GOLDFINGER       |
+| KATHRYN    | COLEMAN     | ACE GOLDFINGER       |
+| AMBER      | DIXON       | ACE GOLDFINGER       |
+| STACY      | CUNNINGHAM  | ACE GOLDFINGER       |
+| JESSIE     | MILAM       | ACE GOLDFINGER       |
+| PEARL      | GARZA       | ADAPTATION HOLES     |
+| TRAVIS     | ESTEP       | ADAPTATION HOLES     |
+| STELLA     | MORENO      | ADAPTATION HOLES     |
+| CASSANDRA  | WALTERS     | ADAPTATION HOLES     |
+| DEBORAH    | WALKER      | ADAPTATION HOLES     |
+| ROBIN      | HAYES       | ADAPTATION HOLES     |
+| OLGA       | JIMENEZ     | ADAPTATION HOLES     |
+| MARY       | SMITH       | ADAPTATION HOLES     |
+| ROSE       | HOWARD      | ADAPTATION HOLES     |
+| JOANNE     | ROBERTSON   | ADAPTATION HOLES     |
+| STEVEN     | CURLEY      | ADAPTATION HOLES     |
+| MARION     | SNYDER      | ADAPTATION HOLES     |
+| VIVIAN     | RUIZ        | AFFAIR PREJUDICE     |
+| NINA       | SOTO        | AFFAIR PREJUDICE     |
+| JORDAN     | ARCHULETA   | AFFAIR PREJUDICE     |
+| DANIELLE   | DANIELS     | AFFAIR PREJUDICE     |
+| SUE        | PETERS      | AFFAIR PREJUDICE     |
+| MICHAEL    | SILVERMAN   | AFFAIR PREJUDICE     |
+| JEFF       | EAST        | AFFAIR PREJUDICE     |
+| MEGAN      | PALMER      | AFFAIR PREJUDICE     |
+| ELEANOR    | HUNT        | AFFAIR PREJUDICE     |
+| NATALIE    | MEYER       | AFFAIR PREJUDICE     |
+| TOMMY      | COLLAZO     | AFFAIR PREJUDICE     |
+| MINNIE     | ROMERO      | AFFAIR PREJUDICE     |
+| CARMEN     | OWENS       | AFFAIR PREJUDICE     |
+| DEANNA     | BYRD        | AFFAIR PREJUDICE     |
+| KIMBERLY   | LEE         | AFFAIR PREJUDICE     |
+| BEVERLY    | BROOKS      | AFFAIR PREJUDICE     |
+| JIMMY      | SCHRADER    | AFFAIR PREJUDICE     |
+| JANICE     | WARD        | AFFAIR PREJUDICE     |
+| RUBEN      | GEARY       | AFFAIR PREJUDICE     |
+| CARMEN     | OWENS       | AFFAIR PREJUDICE     |
+| WALLACE    | SLONE       | AFFAIR PREJUDICE     |
+| OSCAR      | AQUINO      | AFFAIR PREJUDICE     |
+| JEROME     | KENYON      | AFFAIR PREJUDICE     |
+| CONNIE     | WALLACE     | AFRICAN EGG          |
+| RICARDO    | MEADOR      | AFRICAN EGG          |
+| BARRY      | LOVELACE    | AFRICAN EGG          |
+| CASEY      | MENA        | AFRICAN EGG          |
+| JOSHUA     | MARK        | AFRICAN EGG          |
+| CURTIS     | IRBY        | AFRICAN EGG          |
+| NORA       | HERRERA     | AFRICAN EGG          |
+| AMY        | LOPEZ       | AFRICAN EGG          |
+| ELAINE     | STEVENS     | AFRICAN EGG          |
+| GILBERT    | SLEDGE      | AFRICAN EGG          |
+| JOYCE      | EDWARDS     | AFRICAN EGG          |
+| SETH       | HANNON      | AFRICAN EGG          |
+| CLARENCE   | GAMEZ       | AGENT TRUMAN         |
+| JANET      | PHILLIPS    | AGENT TRUMAN         |
+| LESLIE     | SEWARD      | AGENT TRUMAN         |
+| PERRY      | SWAFFORD    | AGENT TRUMAN         |
+| IDA        | ANDREWS     | AGENT TRUMAN         |
+| CATHERINE  | CAMPBELL    | AGENT TRUMAN         |
+| TERRY      | GRISSOM     | AGENT TRUMAN         |
+| BETTY      | WHITE       | AGENT TRUMAN         |
+| ALAN       | KAHN        | AGENT TRUMAN         |
+| ELIZABETH  | BROWN       | AGENT TRUMAN         |
+| TONYA      | CHAPMAN     | AGENT TRUMAN         |
+| TRACY      | COLE        | AGENT TRUMAN         |
+| DIANE      | COLLINS     | AGENT TRUMAN         |
+| CORY       | MEEHAN      | AGENT TRUMAN         |
+| MAURICE    | CRAWLEY     | AGENT TRUMAN         |
+| GINA       | WILLIAMSON  | AGENT TRUMAN         |
+| ANTHONY    | SCHWAB      | AGENT TRUMAN         |
+| CLINTON    | BUFORD      | AGENT TRUMAN         |
+| KRISTIN    | JOHNSTON    | AGENT TRUMAN         |
+| ROSEMARY   | SCHMIDT     | AGENT TRUMAN         |
+| MARTHA     | GONZALEZ    | AGENT TRUMAN         |
+| FRED       | WHEAT       | AIRPLANE SIERRA      |
+| DEAN       | SAUER       | AIRPLANE SIERRA      |
+| CRAIG      | MORRELL     | AIRPLANE SIERRA      |
+| PRISCILLA  | LOWE        | AIRPLANE SIERRA      |
+| WANDA      | PATTERSON   | AIRPLANE SIERRA      |
+| ANDREA     | HENDERSON   | AIRPLANE SIERRA      |
+| JAMIE      | WAUGH       | AIRPLANE SIERRA      |
+| MICHELE    | GRANT       | AIRPLANE SIERRA      |
+| VIVIAN     | RUIZ        | AIRPLANE SIERRA      |
+| JESSE      | SCHILLING   | AIRPLANE SIERRA      |
+| PHYLLIS    | FOSTER      | AIRPLANE SIERRA      |
+| FREDERICK  | ISBELL      | AIRPLANE SIERRA      |
+| TERESA     | ROGERS      | AIRPLANE SIERRA      |
+| CARLA      | GUTIERREZ   | AIRPLANE SIERRA      |
+| DANIEL     | CABRAL      | AIRPLANE SIERRA      |
+| BRUCE      | SCHWARZ     | AIRPORT POLLOCK      |
+| EVELYN     | MORGAN      | AIRPORT POLLOCK      |
+| NINA       | SOTO        | AIRPORT POLLOCK      |
+| LYNN       | PAYNE       | AIRPORT POLLOCK      |
+| CAROLE     | BARNETT     | AIRPORT POLLOCK      |
+| WILLIAM    | SATTERFIELD | AIRPORT POLLOCK      |
+| ALBERT     | CROUSE      | AIRPORT POLLOCK      |
+| DIANA      | ALEXANDER   | AIRPORT POLLOCK      |
+| THERESA    | WATSON      | AIRPORT POLLOCK      |
+| CLARA      | SHAW        | AIRPORT POLLOCK      |
+| FRANCIS    | SIKES       | AIRPORT POLLOCK      |
+| STEPHEN    | QUALLS      | AIRPORT POLLOCK      |
+| DUANE      | TUBBS       | AIRPORT POLLOCK      |
+| VICTORIA   | GIBSON      | AIRPORT POLLOCK      |
+| PATSY      | DAVIDSON    | AIRPORT POLLOCK      |
+| MIGUEL     | BETANCOURT  | AIRPORT POLLOCK      |
+| DEBBIE     | REYES       | AIRPORT POLLOCK      |
+| RUBEN      | GEARY       | AIRPORT POLLOCK      |
+| RICHARD    | MCCRARY     | ALABAMA DEVIL        |
+| RICK       | MATTOX      | ALABAMA DEVIL        |
+| VERONICA   | STONE       | ALABAMA DEVIL        |
+| EDGAR      | RHOADS      | ALABAMA DEVIL        |
+| STEVE      | MACKENZIE   | ALABAMA DEVIL        |
+| KRISTIN    | JOHNSTON    | ALABAMA DEVIL        |
+| KURT       | EMMONS      | ALABAMA DEVIL        |
+| FRANKLIN   | TROUTMAN    | ALABAMA DEVIL        |
+| TAMMY      | SANDERS     | ALABAMA DEVIL        |
+| DARRELL    | POWER       | ALABAMA DEVIL        |
+| MAUREEN    | LITTLE      | ALABAMA DEVIL        |
+| MIRIAM     | MCKINNEY    | ALABAMA DEVIL        |
+| JULIA      | FLORES      | ALADDIN CALENDAR     |
+| GORDON     | ALLARD      | ALADDIN CALENDAR     |
+| IVAN       | CROMWELL    | ALADDIN CALENDAR     |
+| LENA       | JENSEN      | ALADDIN CALENDAR     |
+| SYLVIA     | ORTIZ       | ALADDIN CALENDAR     |
+| DORIS      | REED        | ALADDIN CALENDAR     |
+| SAMUEL     | MARLOW      | ALADDIN CALENDAR     |
+| RODNEY     | MOELLER     | ALADDIN CALENDAR     |
+| WAYNE      | TRUONG      | ALADDIN CALENDAR     |
+| CLARENCE   | GAMEZ       | ALADDIN CALENDAR     |
+| HERMAN     | DEVORE      | ALADDIN CALENDAR     |
+| CAROL      | GARCIA      | ALADDIN CALENDAR     |
+| DOROTHY    | TAYLOR      | ALADDIN CALENDAR     |
+| SAM        | MCDUFFIE    | ALADDIN CALENDAR     |
+| ADAM       | GOOCH       | ALADDIN CALENDAR     |
+| JENNIE     | TERRY       | ALADDIN CALENDAR     |
+| MATHEW     | BOLIN       | ALADDIN CALENDAR     |
+| BRUCE      | SCHWARZ     | ALADDIN CALENDAR     |
+| PHYLLIS    | FOSTER      | ALADDIN CALENDAR     |
+| KATIE      | ELLIOTT     | ALADDIN CALENDAR     |
+| VELMA      | LUCAS       | ALADDIN CALENDAR     |
+| DAN        | PAINE       | ALADDIN CALENDAR     |
+| STELLA     | MORENO      | ALADDIN CALENDAR     |
+| GARY       | COY         | ALAMO VIDEOTAPE      |
+| DENISE     | KELLY       | ALAMO VIDEOTAPE      |
+| VIOLA      | HANSON      | ALAMO VIDEOTAPE      |
+| TRACEY     | BARRETT     | ALAMO VIDEOTAPE      |
+| MARILYN    | ROSS        | ALAMO VIDEOTAPE      |
+| JACK       | FOUST       | ALAMO VIDEOTAPE      |
+| LOUIS      | LEONE       | ALAMO VIDEOTAPE      |
+| GRACE      | ELLIS       | ALAMO VIDEOTAPE      |
+| MARVIN     | YEE         | ALAMO VIDEOTAPE      |
+| JESSIE     | BANKS       | ALAMO VIDEOTAPE      |
+| VICTORIA   | GIBSON      | ALAMO VIDEOTAPE      |
+| KENNETH    | GOODEN      | ALAMO VIDEOTAPE      |
+| LEE        | HAWKS       | ALAMO VIDEOTAPE      |
+| BARBARA    | JONES       | ALAMO VIDEOTAPE      |
+| GLORIA     | COOK        | ALAMO VIDEOTAPE      |
+| RALPH      | MADRIGAL    | ALAMO VIDEOTAPE      |
+| RUBY       | WASHINGTON  | ALAMO VIDEOTAPE      |
+| DUSTIN     | GILLETTE    | ALAMO VIDEOTAPE      |
+| KIM        | CRUZ        | ALAMO VIDEOTAPE      |
+| TED        | BREAUX      | ALAMO VIDEOTAPE      |
+| ALLAN      | CORNISH     | ALAMO VIDEOTAPE      |
+| VIOLA      | HANSON      | ALAMO VIDEOTAPE      |
+| LILLIE     | KIM         | ALAMO VIDEOTAPE      |
+| REGINA     | BERRY       | ALAMO VIDEOTAPE      |
+| TED        | BREAUX      | ALASKA PHANTOM       |
+| MELVIN     | ELLINGTON   | ALASKA PHANTOM       |
+| JAMIE      | RICE        | ALASKA PHANTOM       |
+| BERNARD    | COLBY       | ALASKA PHANTOM       |
+| KELLY      | TORRES      | ALASKA PHANTOM       |
+| ELIZABETH  | BROWN       | ALASKA PHANTOM       |
+| BYRON      | BOX         | ALASKA PHANTOM       |
+| JOHNNY     | TURPIN      | ALASKA PHANTOM       |
+| CHRISTINA  | RAMIREZ     | ALASKA PHANTOM       |
+| DIANE      | COLLINS     | ALASKA PHANTOM       |
+| CLIFFORD   | BOWENS      | ALASKA PHANTOM       |
+| WENDY      | HARRISON    | ALASKA PHANTOM       |
+| MARIAN     | MENDOZA     | ALASKA PHANTOM       |
+| MICHAEL    | SILVERMAN   | ALASKA PHANTOM       |
+| JORGE      | OLIVARES    | ALASKA PHANTOM       |
+| BERNARD    | COLBY       | ALASKA PHANTOM       |
+| ERIN       | DUNN        | ALASKA PHANTOM       |
+| JOAN       | COOPER      | ALASKA PHANTOM       |
+| TIMOTHY    | BUNN        | ALASKA PHANTOM       |
+| MELINDA    | FERNANDEZ   | ALASKA PHANTOM       |
+| BYRON      | BOX         | ALASKA PHANTOM       |
+| CAROLE     | BARNETT     | ALASKA PHANTOM       |
+| AMBER      | DIXON       | ALASKA PHANTOM       |
+| TONYA      | CHAPMAN     | ALASKA PHANTOM       |
+| ANN        | EVANS       | ALASKA PHANTOM       |
+| TERRANCE   | ROUSH       | ALASKA PHANTOM       |
+| SUZANNE    | NICHOLS     | ALI FOREVER          |
+| DOROTHY    | TAYLOR      | ALI FOREVER          |
+| ALVIN      | DELOACH     | ALI FOREVER          |
+| WESLEY     | BULL        | ALI FOREVER          |
+| JESSE      | SCHILLING   | ALI FOREVER          |
+| MISTY      | LAMBERT     | ALI FOREVER          |
+| EVELYN     | MORGAN      | ALI FOREVER          |
+| ARTHUR     | SIMPKINS    | ALI FOREVER          |
+| TRACY      | COLE        | ALI FOREVER          |
+| CARMEN     | OWENS       | ALIEN CENTER         |
+| CHARLIE    | BESS        | ALIEN CENTER         |
+| HEIDI      | LARSON      | ALIEN CENTER         |
+| ROGER      | QUINTANILLA | ALIEN CENTER         |
+| KELLY      | KNOTT       | ALIEN CENTER         |
+| MICHEAL    | FORMAN      | ALIEN CENTER         |
+| MARGIE     | WADE        | ALIEN CENTER         |
+| ALAN       | KAHN        | ALIEN CENTER         |
+| ANA        | BRADLEY     | ALIEN CENTER         |
+| JACQUELINE | LONG        | ALIEN CENTER         |
+| JIM        | REA         | ALIEN CENTER         |
+| CURTIS     | IRBY        | ALIEN CENTER         |
+| HEATHER    | MORRIS      | ALIEN CENTER         |
+| ROBERTA    | HARPER      | ALIEN CENTER         |
+| JEFF       | EAST        | ALIEN CENTER         |
+| BYRON      | BOX         | ALIEN CENTER         |
+| FRANCES    | PARKER      | ALIEN CENTER         |
+| MARIA      | MILLER      | ALIEN CENTER         |
+| JEROME     | KENYON      | ALIEN CENTER         |
+| CINDY      | FISHER      | ALIEN CENTER         |
+| ANTONIO    | MEEK        | ALIEN CENTER         |
+| ANDY       | VANHORN     | ALIEN CENTER         |
+| DEBORAH    | WALKER      | ALLEY EVOLUTION      |
+| VIRGIL     | WOFFORD     | ALLEY EVOLUTION      |
+| DOUGLAS    | GRAF        | ALLEY EVOLUTION      |
+| KIRK       | STCLAIR     | ALLEY EVOLUTION      |
+| ELLA       | OLIVER      | ALLEY EVOLUTION      |
+| LEAH       | CURTIS      | ALLEY EVOLUTION      |
+| HARRY      | ARCE        | ALLEY EVOLUTION      |
+| ROSA       | REYNOLDS    | ALLEY EVOLUTION      |
+| FERNANDO   | CHURCHILL   | ALLEY EVOLUTION      |
+| JENNY      | CASTRO      | ALLEY EVOLUTION      |
+| DEANNA     | BYRD        | ALLEY EVOLUTION      |
+| JAVIER     | ELROD       | ALLEY EVOLUTION      |
+| DOROTHY    | TAYLOR      | ALLEY EVOLUTION      |
+| ROBERTA    | HARPER      | ALLEY EVOLUTION      |
+| GREGORY    | MAULDIN     | ALONE TRIP           |
+| MARCIA     | DEAN        | ALONE TRIP           |
+| BILLY      | POULIN      | ALONE TRIP           |
+| HARVEY     | GUAJARDO    | ALONE TRIP           |
+| MELISSA    | KING        | ALONE TRIP           |
+| HERMAN     | DEVORE      | ALONE TRIP           |
+| JAMIE      | RICE        | ALONE TRIP           |
+| HERBERT    | KRUGER      | ALONE TRIP           |
+| WANDA      | PATTERSON   | ALONE TRIP           |
+| KATHLEEN   | ADAMS       | ALONE TRIP           |
+| WILLIE     | MARKHAM     | ALONE TRIP           |
+| RALPH      | MADRIGAL    | ALONE TRIP           |
+| JOANN      | GARDNER     | ALONE TRIP           |
+| JAVIER     | ELROD       | ALONE TRIP           |
+| DEANNA     | BYRD        | ALONE TRIP           |
+| LORRAINE   | STEPHENS    | ALONE TRIP           |
+| TRACY      | COLE        | ALONE TRIP           |
+| TODD       | TAN         | ALONE TRIP           |
+| HARVEY     | GUAJARDO    | ALTER VICTORY        |
+| NORMAN     | CURRIER     | ALTER VICTORY        |
+| BARRY      | LOVELACE    | ALTER VICTORY        |
+| LOIS       | BUTLER      | ALTER VICTORY        |
+| ANNA       | HILL        | ALTER VICTORY        |
+| DONALD     | MAHON       | ALTER VICTORY        |
+| BRADLEY    | MOTLEY      | ALTER VICTORY        |
+| OSCAR      | AQUINO      | ALTER VICTORY        |
+| JOANNE     | ROBERTSON   | ALTER VICTORY        |
+| PHILIP     | CAUSEY      | ALTER VICTORY        |
+| JORDAN     | ARCHULETA   | ALTER VICTORY        |
+| MICHAEL    | SILVERMAN   | ALTER VICTORY        |
+| LEROY      | BUSTAMANTE  | ALTER VICTORY        |
+| SEAN       | DOUGLASS    | ALTER VICTORY        |
+| BEN        | EASTER      | ALTER VICTORY        |
+| NATHAN     | RUNYON      | ALTER VICTORY        |
+| ANGELA     | HERNANDEZ   | ALTER VICTORY        |
+| ETHEL      | WEBB        | ALTER VICTORY        |
+| RUBY       | WASHINGTON  | ALTER VICTORY        |
+| CLYDE      | TOBIAS      | ALTER VICTORY        |
+| ELIZABETH  | BROWN       | ALTER VICTORY        |
+| TIM        | CARY        | ALTER VICTORY        |
+| JANE       | BENNETT     | AMADEUS HOLY         |
+| DEBRA      | NELSON      | AMADEUS HOLY         |
+| REBECCA    | SCOTT       | AMADEUS HOLY         |
+| MAXINE     | SILVA       | AMADEUS HOLY         |
+| BRANDY     | GRAVES      | AMADEUS HOLY         |
+| JESSICA    | HALL        | AMADEUS HOLY         |
+| JULIA      | FLORES      | AMADEUS HOLY         |
+| VERNON     | CHAPA       | AMADEUS HOLY         |
+| KATHLEEN   | ADAMS       | AMADEUS HOLY         |
+| HECTOR     | POINDEXTER  | AMADEUS HOLY         |
+| SAMANTHA   | DUNCAN      | AMADEUS HOLY         |
+| NATHANIEL  | ADAM        | AMADEUS HOLY         |
+| SHERRY     | MARSHALL    | AMADEUS HOLY         |
+| BARBARA    | JONES       | AMADEUS HOLY         |
+| EDUARDO    | HIATT       | AMADEUS HOLY         |
+| HAZEL      | WARREN      | AMADEUS HOLY         |
+| CECIL      | VINES       | AMADEUS HOLY         |
+| SUZANNE    | NICHOLS     | AMADEUS HOLY         |
+| CLIFFORD   | BOWENS      | AMADEUS HOLY         |
+| EVERETT    | BANDA       | AMADEUS HOLY         |
+| JENNIFER   | DAVIS       | AMADEUS HOLY         |
+| DOLORES    | WAGNER      | AMELIE HELLFIGHTERS  |
+| ESTHER     | CRAWFORD    | AMELIE HELLFIGHTERS  |
+| RUBY       | WASHINGTON  | AMELIE HELLFIGHTERS  |
+| FERNANDO   | CHURCHILL   | AMELIE HELLFIGHTERS  |
+| GLEN       | TALBERT     | AMELIE HELLFIGHTERS  |
+| REGINALD   | KINDER      | AMELIE HELLFIGHTERS  |
+| CODY       | NOLEN       | AMELIE HELLFIGHTERS  |
+| TAMARA     | NGUYEN      | AMELIE HELLFIGHTERS  |
+| DAWN       | SULLIVAN    | AMELIE HELLFIGHTERS  |
+| JAMIE      | RICE        | AMELIE HELLFIGHTERS  |
+| FRANCES    | PARKER      | AMERICAN CIRCUS      |
+| ERIKA      | PENA        | AMERICAN CIRCUS      |
+| BILLY      | POULIN      | AMERICAN CIRCUS      |
+| MELANIE    | ARMSTRONG   | AMERICAN CIRCUS      |
+| JOE        | GILLILAND   | AMERICAN CIRCUS      |
+| DAVID      | ROYAL       | AMERICAN CIRCUS      |
+| SYLVIA     | ORTIZ       | AMERICAN CIRCUS      |
+| ELEANOR    | HUNT        | AMERICAN CIRCUS      |
+| MICHAEL    | SILVERMAN   | AMERICAN CIRCUS      |
+| ERIKA      | PENA        | AMERICAN CIRCUS      |
+| CLAUDE     | HERZOG      | AMERICAN CIRCUS      |
+| TAMMY      | SANDERS     | AMERICAN CIRCUS      |
+| JULIO      | NOLAND      | AMERICAN CIRCUS      |
+| JIM        | REA         | AMERICAN CIRCUS      |
+| FRANCES    | PARKER      | AMERICAN CIRCUS      |
+| TIM        | CARY        | AMERICAN CIRCUS      |
+| ALEXANDER  | FENNELL     | AMERICAN CIRCUS      |
+| BRIAN      | WYMAN       | AMERICAN CIRCUS      |
+| AMANDA     | CARTER      | AMERICAN CIRCUS      |
+| MARIE      | TURNER      | AMERICAN CIRCUS      |
+| VICKIE     | BREWER      | AMERICAN CIRCUS      |
+| ALICIA     | MILLS       | AMERICAN CIRCUS      |
+| CHERYL     | MURPHY      | AMISTAD MIDSUMMER    |
+| WALTER     | PERRYMAN    | AMISTAD MIDSUMMER    |
+| MARY       | SMITH       | AMISTAD MIDSUMMER    |
+| MARJORIE   | TUCKER      | AMISTAD MIDSUMMER    |
+| ANGELA     | HERNANDEZ   | AMISTAD MIDSUMMER    |
+| CRAIG      | MORRELL     | AMISTAD MIDSUMMER    |
+| JORDAN     | ARCHULETA   | AMISTAD MIDSUMMER    |
+| DONNA      | THOMPSON    | AMISTAD MIDSUMMER    |
+| ZACHARY    | HITE        | AMISTAD MIDSUMMER    |
+| RHONDA     | KENNEDY     | AMISTAD MIDSUMMER    |
+| IAN        | STILL       | AMISTAD MIDSUMMER    |
+| TERRY      | CARLSON     | AMISTAD MIDSUMMER    |
+| ELIZABETH  | BROWN       | AMISTAD MIDSUMMER    |
+| MILTON     | HOWLAND     | AMISTAD MIDSUMMER    |
+| VELMA      | LUCAS       | AMISTAD MIDSUMMER    |
+| JOE        | GILLILAND   | AMISTAD MIDSUMMER    |
+| ROSEMARY   | SCHMIDT     | AMISTAD MIDSUMMER    |
+| RALPH      | MADRIGAL    | AMISTAD MIDSUMMER    |
+| CHARLENE   | ALVAREZ     | AMISTAD MIDSUMMER    |
+| DAISY      | BATES       | AMISTAD MIDSUMMER    |
+| VIVIAN     | RUIZ        | AMISTAD MIDSUMMER    |
+| BRYAN      | HARDISON    | ANACONDA CONFESSIONS |
+| CLARA      | SHAW        | ANACONDA CONFESSIONS |
+| JEREMY     | HURTADO     | ANACONDA CONFESSIONS |
+| GEORGIA    | JACOBS      | ANACONDA CONFESSIONS |
+| LINDA      | WILLIAMS    | ANACONDA CONFESSIONS |
+| FRANCIS    | SIKES       | ANACONDA CONFESSIONS |
+| ROBIN      | HAYES       | ANACONDA CONFESSIONS |
+| MIRIAM     | MCKINNEY    | ANACONDA CONFESSIONS |
+| CARMEN     | OWENS       | ANACONDA CONFESSIONS |
+| KYLE       | SPURLOCK    | ANACONDA CONFESSIONS |
+| TONI       | HOLT        | ANACONDA CONFESSIONS |
+| JOANN      | GARDNER     | ANACONDA CONFESSIONS |
+| HOWARD     | FORTNER     | ANACONDA CONFESSIONS |
+| MARCIA     | DEAN        | ANACONDA CONFESSIONS |
+| AGNES      | BISHOP      | ANACONDA CONFESSIONS |
+| HOLLY      | FOX         | ANACONDA CONFESSIONS |
+| MORRIS     | MCCARTER    | ANACONDA CONFESSIONS |
+| PAMELA     | BAKER       | ANACONDA CONFESSIONS |
+| NATHAN     | RUNYON      | ANACONDA CONFESSIONS |
+| BERNICE    | WILLIS      | ANACONDA CONFESSIONS |
+| ESTHER     | CRAWFORD    | ANACONDA CONFESSIONS |
+| JOAN       | COOPER      | ANALYZE HOOSIERS     |
+| REBECCA    | SCOTT       | ANALYZE HOOSIERS     |
+| JAMIE      | WAUGH       | ANALYZE HOOSIERS     |
+| TIM        | CARY        | ANALYZE HOOSIERS     |
+| BETTY      | WHITE       | ANALYZE HOOSIERS     |
+| MARCUS     | HIDALGO     | ANALYZE HOOSIERS     |
+| MICHELE    | GRANT       | ANALYZE HOOSIERS     |
+| SERGIO     | STANFIELD   | ANALYZE HOOSIERS     |
+| ARLENE     | HARVEY      | ANALYZE HOOSIERS     |
+| EILEEN     | CARR        | ANALYZE HOOSIERS     |
+| BOB        | PFEIFFER    | ANALYZE HOOSIERS     |
+| MIKE       | WAY         | ANALYZE HOOSIERS     |
+| ROSEMARY   | SCHMIDT     | ANALYZE HOOSIERS     |
+| NATHANIEL  | ADAM        | ANALYZE HOOSIERS     |
+| JENNIE     | TERRY       | ANGELS LIFE          |
+| GILBERT    | SLEDGE      | ANGELS LIFE          |
+| VERONICA   | STONE       | ANGELS LIFE          |
+| HOWARD     | FORTNER     | ANGELS LIFE          |
+| CATHY      | SPENCER     | ANGELS LIFE          |
+| DEBBIE     | REYES       | ANGELS LIFE          |
+| JIMMIE     | EGGLESTON   | ANGELS LIFE          |
+| LARRY      | THRASHER    | ANGELS LIFE          |
+| JOANNE     | ROBERTSON   | ANGELS LIFE          |
+| ARLENE     | HARVEY      | ANGELS LIFE          |
+| PHILIP     | CAUSEY      | ANGELS LIFE          |
+| FRANCIS    | SIKES       | ANGELS LIFE          |
+| JOSHUA     | MARK        | ANGELS LIFE          |
+| JUAN       | FRALEY      | ANGELS LIFE          |
+| DIANA      | ALEXANDER   | ANGELS LIFE          |
+| PRISCILLA  | LOWE        | ANGELS LIFE          |
+| CATHY      | SPENCER     | ANGELS LIFE          |
+| GENE       | SANBORN     | ANGELS LIFE          |
+| RALPH      | MADRIGAL    | ANGELS LIFE          |
+| MISTY      | LAMBERT     | ANGELS LIFE          |
+| WILLARD    | LUMPKIN     | ANGELS LIFE          |
+| HEATHER    | MORRIS      | ANGELS LIFE          |
+| MARIAN     | MENDOZA     | ANNIE IDENTITY       |
+| PHILLIP    | HOLM        | ANNIE IDENTITY       |
+| IDA        | ANDREWS     | ANNIE IDENTITY       |
+| SIDNEY     | BURLESON    | ANNIE IDENTITY       |
+| MICHELE    | GRANT       | ANNIE IDENTITY       |
+| JOYCE      | EDWARDS     | ANNIE IDENTITY       |
+| PETER      | MENARD      | ANNIE IDENTITY       |
+| CHARLENE   | ALVAREZ     | ANNIE IDENTITY       |
+| TERRANCE   | ROUSH       | ANNIE IDENTITY       |
+| LEWIS      | LYMAN       | ANNIE IDENTITY       |
+| TINA       | SIMMONS     | ANNIE IDENTITY       |
+| JO         | FOWLER      | ANNIE IDENTITY       |
+| CLYDE      | TOBIAS      | ANNIE IDENTITY       |
+| BARBARA    | JONES       | ANNIE IDENTITY       |
+| GERALDINE  | PERKINS     | ANNIE IDENTITY       |
+| ELMER      | NOE         | ANNIE IDENTITY       |
+| BILLY      | POULIN      | ANNIE IDENTITY       |
+| GUY        | BROWNLEE    | ANNIE IDENTITY       |
+| LONNIE     | TIRADO      | ANNIE IDENTITY       |
+| FELIX      | GAFFNEY     | ANNIE IDENTITY       |
+| CONSTANCE  | REID        | ANNIE IDENTITY       |
+| ERIC       | ROBERT      | ANNIE IDENTITY       |
+| ALEX       | GRESHAM     | ANONYMOUS HUMAN      |
+| TERESA     | ROGERS      | ANONYMOUS HUMAN      |
+| RANDALL    | NEUMANN     | ANONYMOUS HUMAN      |
+| KATHERINE  | RIVERA      | ANONYMOUS HUMAN      |
+| CURTIS     | IRBY        | ANONYMOUS HUMAN      |
+| RACHEL     | BARNES      | ANONYMOUS HUMAN      |
+| BYRON      | BOX         | ANONYMOUS HUMAN      |
+| SARAH      | LEWIS       | ANONYMOUS HUMAN      |
+| DONALD     | MAHON       | ANONYMOUS HUMAN      |
+| SHANNON    | FREEMAN     | ANONYMOUS HUMAN      |
+| STEPHEN    | QUALLS      | ANONYMOUS HUMAN      |
+| PATRICIA   | JOHNSON     | ANONYMOUS HUMAN      |
+| VIOLET     | RODRIQUEZ   | ANONYMOUS HUMAN      |
+| MARGIE     | WADE        | ANTHEM LUKE          |
+| RONALD     | WEINER      | ANTHEM LUKE          |
+| STELLA     | MORENO      | ANTHEM LUKE          |
+| JORGE      | OLIVARES    | ANTHEM LUKE          |
+| GLEN       | TALBERT     | ANTHEM LUKE          |
+| DARLENE    | ROSE        | ANTHEM LUKE          |
+| JEANNE     | LAWSON      | ANTHEM LUKE          |
+| SUE        | PETERS      | ANTHEM LUKE          |
+| JAMIE      | WAUGH       | ANTHEM LUKE          |
+| EDDIE      | TOMLIN      | ANTHEM LUKE          |
+| THEODORE   | CULP        | ANTHEM LUKE          |
+| ALVIN      | DELOACH     | ANTHEM LUKE          |
+| HAROLD     | MARTINO     | ANTHEM LUKE          |
+| DANA       | HART        | ANTHEM LUKE          |
+| DEBBIE     | REYES       | ANTHEM LUKE          |
+| MIGUEL     | BETANCOURT  | ANTITRUST TOMATOES   |
+| VIOLA      | HANSON      | ANTITRUST TOMATOES   |
+| STACEY     | MONTGOMERY  | ANTITRUST TOMATOES   |
+| MILTON     | HOWLAND     | ANTITRUST TOMATOES   |
+| STACY      | CUNNINGHAM  | ANTITRUST TOMATOES   |
+| JEANETTE   | GREENE      | ANTITRUST TOMATOES   |
+| MISTY      | LAMBERT     | ANTITRUST TOMATOES   |
+| RONNIE     | RICKETTS    | ANTITRUST TOMATOES   |
+| ERIK       | GUILLEN     | ANTITRUST TOMATOES   |
+| JANICE     | WARD        | ANTITRUST TOMATOES   |
+| JANE       | BENNETT     | ANYTHING SAVANNAH    |
+| FRANKLIN   | TROUTMAN    | ANYTHING SAVANNAH    |
+| EDITH      | MCDONALD    | ANYTHING SAVANNAH    |
+| NEIL       | RENNER      | ANYTHING SAVANNAH    |
+| VICKIE     | BREWER      | ANYTHING SAVANNAH    |
+| DOUGLAS    | GRAF        | ANYTHING SAVANNAH    |
+| SALVADOR   | TEEL        | ANYTHING SAVANNAH    |
+| JACOB      | LANCE       | ANYTHING SAVANNAH    |
++------------+-------------+----------------------+
+500 rows in set (0.0055 sec)
+ MySQL  localhost:3306 ssl  sakila  SQL > SHOW TABLES;
++----------------------------+
+| Tables_in_sakila           |
++----------------------------+
+| actor                      |
+| actor_info                 |
+| address                    |
+| category                   |
+| city                       |
+| country                    |
+| customer                   |
+| customer_list              |
+| film                       |
+| film_actor                 |
+| film_category              |
+| film_list                  |
+| film_text                  |
+| inventory                  |
+| language                   |
+| nicer_but_slower_film_list |
+| payment                    |
+| rental                     |
+| sales_by_film_category     |
+| sales_by_store             |
+| staff                      |
+| staff_list                 |
+| store                      |
++----------------------------+
+23 rows in set (0.0027 sec)
+ MySQL  localhost:3306 ssl  sakila  SQL > DESC store;
++------------------+-------------------+------+-----+-------------------+-----------------------------------------------+
+| Field            | Type              | Null | Key | Default           | Extra                                         |
++------------------+-------------------+------+-----+-------------------+-----------------------------------------------+
+| store_id         | tinyint unsigned  | NO   | PRI | NULL              | auto_increment                                |
+| manager_staff_id | tinyint unsigned  | NO   | UNI | NULL              |                                               |
+| address_id       | smallint unsigned | NO   | MUL | NULL              |                                               |
+| last_update      | timestamp         | NO   |     | CURRENT_TIMESTAMP | DEFAULT_GENERATED on update CURRENT_TIMESTAMP |
++------------------+-------------------+------+-----+-------------------+-----------------------------------------------+
+4 rows in set (0.0024 sec)
+ MySQL  localhost:3306 ssl  sakila  SQL > DESC inventory;
++--------------+--------------------+------+-----+-------------------+-----------------------------------------------+
+| Field        | Type               | Null | Key | Default           | Extra                                         |
++--------------+--------------------+------+-----+-------------------+-----------------------------------------------+
+| inventory_id | mediumint unsigned | NO   | PRI | NULL              | auto_increment                                |
+| film_id      | smallint unsigned  | NO   | MUL | NULL              |                                               |
+| store_id     | tinyint unsigned   | NO   | MUL | NULL              |                                               |
+| last_update  | timestamp          | NO   |     | CURRENT_TIMESTAMP | DEFAULT_GENERATED on update CURRENT_TIMESTAMP |
++--------------+--------------------+------+-----+-------------------+-----------------------------------------------+
+4 rows in set (0.0021 sec)
+ MySQL  localhost:3306 ssl  sakila  SQL > DESC film;
++----------------------+---------------------------------------------------------------------+------+-----+-------------------+-----------------------------------------------+
+| Field                | Type                                                                | Null | Key | Default           | Extra                                         |
++----------------------+---------------------------------------------------------------------+------+-----+-------------------+-----------------------------------------------+
+| film_id              | smallint unsigned                                                   | NO   | PRI | NULL              | auto_increment                                |
+| title                | varchar(128)                                                        | NO   | MUL | NULL              |                                               |
+| description          | text                                                                | YES  |     | NULL              |                                               |
+| release_year         | year                                                                | YES  |     | NULL              |                                               |
+| language_id          | tinyint unsigned                                                    | NO   | MUL | NULL              |                                               |
+| original_language_id | tinyint unsigned                                                    | YES  | MUL | NULL              |                                               |
+| rental_duration      | tinyint unsigned                                                    | NO   |     | 3                 |                                               |
+| rental_rate          | decimal(4,2)                                                        | NO   |     | 4.99              |                                               |
+| length               | smallint unsigned                                                   | YES  |     | NULL              |                                               |
+| replacement_cost     | decimal(5,2)                                                        | NO   |     | 19.99             |                                               |
+| rating               | enum('G','PG','PG-13','R','NC-17')                                  | YES  |     | G                 |                                               |
+| special_features     | set('Trailers','Commentaries','Deleted Scenes','Behind the Scenes') | YES  |     | NULL              |                                               |
+| last_update          | timestamp                                                           | NO   |     | CURRENT_TIMESTAMP | DEFAULT_GENERATED on update CURRENT_TIMESTAMP |
++----------------------+---------------------------------------------------------------------+------+-----+-------------------+-----------------------------------------------+
+13 rows in set (0.0027 sec)
+ MySQL  localhost:3306 ssl  sakila  SQL > SELECT A.store_id AS IdTiendas, COUNT(B.inventory_id) AS TotalPeliculas
+                                       -> FROM store A
+                                       -> INNER JOIN inventory B ON A.store_id = B.store_id
+                                       -> GROUP BY A.store_id;
++-----------+----------------+
+| IdTiendas | TotalPeliculas |
++-----------+----------------+
+|         1 |           2270 |
+|         2 |           2311 |
++-----------+----------------+
+2 rows in set (0.0035 sec)
+ MySQL  localhost:3306 ssl  sakila  SQL > SELECT A.store_id AS IdTienda, C.title AS TituloPelicula, COUNT(B.inventory_id) AS TotalPeliculas
+                                       -> FROM store A
+                                       -> INNER JOIN inventory B ON A.store_id = B.store_id
+                                       -> INNER JOIN film C ON B.film_id = C.film_id
+                                       -> GROUP BY A.store_id, C.title
+                                       -> LIMIT 500;
++----------+-----------------------------+----------------+
+| IdTienda | TituloPelicula              | TotalPeliculas |
++----------+-----------------------------+----------------+
+|        2 | ACADEMY DINOSAUR            |              4 |
+|        1 | ACADEMY DINOSAUR            |              4 |
+|        2 | ACE GOLDFINGER              |              3 |
+|        2 | ADAPTATION HOLES            |              4 |
+|        2 | AFFAIR PREJUDICE            |              3 |
+|        1 | AFFAIR PREJUDICE            |              4 |
+|        2 | AFRICAN EGG                 |              3 |
+|        2 | AGENT TRUMAN                |              3 |
+|        1 | AGENT TRUMAN                |              3 |
+|        2 | AIRPLANE SIERRA             |              3 |
+|        1 | AIRPLANE SIERRA             |              2 |
+|        2 | AIRPORT POLLOCK             |              4 |
+|        2 | ALABAMA DEVIL               |              2 |
+|        1 | ALABAMA DEVIL               |              3 |
+|        2 | ALADDIN CALENDAR            |              3 |
+|        1 | ALADDIN CALENDAR            |              4 |
+|        2 | ALAMO VIDEOTAPE             |              3 |
+|        1 | ALAMO VIDEOTAPE             |              4 |
+|        2 | ALASKA PHANTOM              |              4 |
+|        1 | ALASKA PHANTOM              |              3 |
+|        2 | ALI FOREVER                 |              4 |
+|        2 | ALIEN CENTER                |              4 |
+|        1 | ALIEN CENTER                |              2 |
+|        2 | ALLEY EVOLUTION             |              2 |
+|        1 | ALLEY EVOLUTION             |              2 |
+|        2 | ALONE TRIP                  |              3 |
+|        1 | ALONE TRIP                  |              3 |
+|        2 | ALTER VICTORY               |              3 |
+|        1 | ALTER VICTORY               |              3 |
+|        2 | AMADEUS HOLY                |              2 |
+|        1 | AMADEUS HOLY                |              4 |
+|        1 | AMELIE HELLFIGHTERS         |              3 |
+|        2 | AMERICAN CIRCUS             |              4 |
+|        1 | AMERICAN CIRCUS             |              2 |
+|        2 | AMISTAD MIDSUMMER           |              3 |
+|        1 | AMISTAD MIDSUMMER           |              4 |
+|        2 | ANACONDA CONFESSIONS        |              2 |
+|        1 | ANACONDA CONFESSIONS        |              3 |
+|        1 | ANALYZE HOOSIERS            |              4 |
+|        2 | ANGELS LIFE                 |              2 |
+|        1 | ANGELS LIFE                 |              4 |
+|        2 | ANNIE IDENTITY              |              3 |
+|        1 | ANNIE IDENTITY              |              2 |
+|        1 | ANONYMOUS HUMAN             |              4 |
+|        1 | ANTHEM LUKE                 |              3 |
+|        1 | ANTITRUST TOMATOES          |              2 |
+|        1 | ANYTHING SAVANNAH           |              2 |
+|        2 | APACHE DIVINE               |              4 |
+|        1 | APACHE DIVINE               |              4 |
+|        2 | APOCALYPSE FLAMINGOS        |              2 |
+|        2 | ARABIA DOGMA                |              4 |
+|        2 | ARACHNOPHOBIA ROLLERCOASTER |              3 |
+|        1 | ARACHNOPHOBIA ROLLERCOASTER |              4 |
+|        2 | ARIZONA BANG                |              3 |
+|        1 | ARIZONA BANG                |              4 |
+|        2 | ARMAGEDDON LOST             |              4 |
+|        1 | ARMAGEDDON LOST             |              3 |
+|        2 | ARMY FLINTSTONES            |              4 |
+|        2 | ARTIST COLDBLOODED          |              4 |
+|        2 | ATLANTIS CAUSE              |              4 |
+|        1 | ATLANTIS CAUSE              |              3 |
+|        2 | ATTACKS HATE                |              3 |
+|        1 | ATTACKS HATE                |              2 |
+|        2 | ATTRACTION NEWTON           |              2 |
+|        1 | ATTRACTION NEWTON           |              4 |
+|        2 | AUTUMN CROW                 |              3 |
+|        2 | BABY HALL                   |              2 |
+|        2 | BACKLASH UNDEFEATED         |              2 |
+|        1 | BACKLASH UNDEFEATED         |              2 |
+|        2 | BADMAN DAWN                 |              3 |
+|        1 | BADMAN DAWN                 |              3 |
+|        2 | BAKED CLEOPATRA             |              2 |
+|        1 | BAKED CLEOPATRA             |              3 |
+|        2 | BALLOON HOMEWARD            |              4 |
+|        1 | BALLOON HOMEWARD            |              2 |
+|        2 | BALLROOM MOCKINGBIRD        |              2 |
+|        1 | BANG KWAI                   |              2 |
+|        2 | BANGER PINOCCHIO            |              2 |
+|        1 | BANGER PINOCCHIO            |              3 |
+|        2 | BARBARELLA STREETCAR        |              2 |
+|        1 | BARBARELLA STREETCAR        |              4 |
+|        2 | BAREFOOT MANCHURIAN         |              2 |
+|        1 | BAREFOOT MANCHURIAN         |              3 |
+|        2 | BASIC EASY                  |              3 |
+|        1 | BASIC EASY                  |              4 |
+|        2 | BEACH HEARTBREAKERS         |              4 |
+|        2 | BEAR GRACELAND              |              2 |
+|        1 | BEAR GRACELAND              |              3 |
+|        1 | BEAST HUNCHBACK             |              3 |
+|        2 | BEAUTY GREASE               |              2 |
+|        1 | BEAUTY GREASE               |              4 |
+|        2 | BED HIGHBALL                |              2 |
+|        2 | BEDAZZLED MARRIED           |              2 |
+|        1 | BEDAZZLED MARRIED           |              2 |
+|        2 | BEETHOVEN EXORCIST          |              3 |
+|        2 | BEHAVIOR RUNAWAY            |              4 |
+|        1 | BENEATH RUSH                |              3 |
+|        2 | BERETS AGENT                |              4 |
+|        1 | BERETS AGENT                |              2 |
+|        2 | BETRAYED REAR               |              2 |
+|        1 | BETRAYED REAR               |              2 |
+|        2 | BEVERLY OUTLAW              |              4 |
+|        1 | BEVERLY OUTLAW              |              4 |
+|        2 | BIKINI BORROWERS            |              2 |
+|        1 | BIKINI BORROWERS            |              2 |
+|        2 | BILKO ANONYMOUS             |              4 |
+|        2 | BILL OTHERS                 |              2 |
+|        1 | BILL OTHERS                 |              4 |
+|        2 | BINGO TALENTED              |              4 |
+|        1 | BINGO TALENTED              |              4 |
+|        2 | BIRCH ANTITRUST             |              2 |
+|        1 | BIRCH ANTITRUST             |              3 |
+|        2 | BIRD INDEPENDENCE           |              3 |
+|        1 | BIRDCAGE CASPER             |              3 |
+|        2 | BIRDS PERDITION             |              2 |
+|        1 | BIRDS PERDITION             |              4 |
+|        2 | BLACKOUT PRIVATE            |              4 |
+|        1 | BLACKOUT PRIVATE            |              3 |
+|        2 | BLADE POLISH                |              3 |
+|        1 | BLADE POLISH                |              3 |
+|        1 | BLANKET BEVERLY             |              4 |
+|        1 | BLINDNESS GUN               |              4 |
+|        1 | BLOOD ARGONAUTS             |              2 |
+|        2 | BLUES INSTINCT              |              2 |
+|        1 | BLUES INSTINCT              |              3 |
+|        1 | BOILED DARES                |              4 |
+|        2 | BONNIE HOLOCAUST            |              4 |
+|        2 | BOOGIE AMELIE               |              4 |
+|        1 | BOOGIE AMELIE               |              4 |
+|        2 | BORN SPINAL                 |              4 |
+|        2 | BORROWERS BEDAZZLED         |              3 |
+|        1 | BORROWERS BEDAZZLED         |              3 |
+|        2 | BOULEVARD MOB               |              3 |
+|        1 | BOULEVARD MOB               |              3 |
+|        2 | BOUND CHEAPER               |              4 |
+|        1 | BOUND CHEAPER               |              4 |
+|        2 | BOWFINGER GABLES            |              2 |
+|        1 | BOWFINGER GABLES            |              2 |
+|        2 | BRANNIGAN SUNRISE           |              3 |
+|        1 | BRAVEHEART HUMAN            |              2 |
+|        2 | BREAKFAST GOLDFINGER        |              3 |
+|        1 | BREAKFAST GOLDFINGER        |              2 |
+|        1 | BREAKING HOME               |              3 |
+|        2 | BRIDE INTRIGUE              |              2 |
+|        1 | BRIDE INTRIGUE              |              4 |
+|        1 | BRIGHT ENCOUNTERS           |              3 |
+|        2 | BRINGING HYSTERICAL         |              3 |
+|        1 | BRINGING HYSTERICAL         |              3 |
+|        2 | BROOKLYN DESERT             |              2 |
+|        1 | BROOKLYN DESERT             |              4 |
+|        2 | BROTHERHOOD BLANKET         |              2 |
+|        1 | BROTHERHOOD BLANKET         |              4 |
+|        2 | BUBBLE GROSSE               |              2 |
+|        2 | BUCKET BROTHERHOOD          |              4 |
+|        1 | BUCKET BROTHERHOOD          |              4 |
+|        2 | BUGSY SONG                  |              3 |
+|        2 | BULL SHAWSHANK              |              3 |
+|        1 | BULL SHAWSHANK              |              2 |
+|        1 | BULWORTH COMMANDMENTS       |              2 |
+|        2 | BUNCH MINDS                 |              2 |
+|        2 | BUTTERFLY CHOCOLAT          |              4 |
+|        1 | BUTTERFLY CHOCOLAT          |              4 |
+|        1 | CABIN FLASH                 |              4 |
+|        2 | CADDYSHACK JEDI             |              4 |
+|        2 | CALENDAR GUNFIGHT           |              3 |
+|        1 | CALENDAR GUNFIGHT           |              4 |
+|        2 | CALIFORNIA BIRDS            |              4 |
+|        2 | CAMELOT VACATION            |              3 |
+|        1 | CAMELOT VACATION            |              4 |
+|        2 | CAMPUS REMEMBER             |              4 |
+|        1 | CAMPUS REMEMBER             |              3 |
+|        2 | CANDIDATE PERDITION         |              4 |
+|        1 | CANDIDATE PERDITION         |              2 |
+|        2 | CANDLES GRAPES              |              2 |
+|        1 | CANDLES GRAPES              |              4 |
+|        2 | CANYON STOCK                |              2 |
+|        1 | CANYON STOCK                |              4 |
+|        2 | CAPER MOTIONS               |              4 |
+|        1 | CAPER MOTIONS               |              3 |
+|        1 | CARIBBEAN LIBERTY           |              3 |
+|        2 | CAROL TEXAS                 |              3 |
+|        1 | CAROL TEXAS                 |              3 |
+|        2 | CARRIE BUNCH                |              3 |
+|        1 | CARRIE BUNCH                |              4 |
+|        2 | CASABLANCA SUPER            |              3 |
+|        1 | CASABLANCA SUPER            |              2 |
+|        2 | CASPER DRAGONFLY            |              3 |
+|        2 | CASSIDY WYOMING             |              2 |
+|        2 | CASUALTIES ENCINO           |              3 |
+|        2 | CAT CONEHEADS               |              4 |
+|        1 | CAT CONEHEADS               |              4 |
+|        2 | CAUSE DATE                  |              3 |
+|        1 | CAUSE DATE                  |              3 |
+|        2 | CELEBRITY HORN              |              4 |
+|        1 | CELEBRITY HORN              |              2 |
+|        2 | CENTER DINOSAUR             |              2 |
+|        1 | CENTER DINOSAUR             |              4 |
+|        2 | CHAINSAW UPTOWN             |              2 |
+|        1 | CHAINSAW UPTOWN             |              4 |
+|        2 | CHAMBER ITALIAN             |              2 |
+|        1 | CHAMBER ITALIAN             |              2 |
+|        2 | CHAMPION FLATLINERS         |              3 |
+|        2 | CHANCE RESURRECTION         |              4 |
+|        1 | CHANCE RESURRECTION         |              3 |
+|        1 | CHAPLIN LICENSE             |              3 |
+|        2 | CHARADE DUFFEL              |              4 |
+|        2 | CHARIOTS CONSPIRACY         |              3 |
+|        1 | CHARIOTS CONSPIRACY         |              2 |
+|        2 | CHASING FIGHT               |              2 |
+|        1 | CHASING FIGHT               |              4 |
+|        2 | CHEAPER CLYDE               |              3 |
+|        1 | CHEAPER CLYDE               |              2 |
+|        2 | CHICAGO NORTH               |              2 |
+|        1 | CHICAGO NORTH               |              3 |
+|        2 | CHICKEN HELLFIGHTERS        |              2 |
+|        1 | CHICKEN HELLFIGHTERS        |              3 |
+|        2 | CHILL LUCK                  |              3 |
+|        1 | CHILL LUCK                  |              4 |
+|        2 | CHISUM BEHAVIOR             |              3 |
+|        1 | CHITTY LOCK                 |              3 |
+|        2 | CHOCOLAT HARRY              |              3 |
+|        1 | CHOCOLAT HARRY              |              3 |
+|        2 | CHRISTMAS MOONSHINE         |              3 |
+|        1 | CHRISTMAS MOONSHINE         |              3 |
+|        2 | CIDER DESIRE                |              4 |
+|        1 | CIDER DESIRE                |              2 |
+|        2 | CINCINATTI WHISPERER        |              2 |
+|        1 | CINCINATTI WHISPERER        |              2 |
+|        1 | CIRCUS YOUTH                |              4 |
+|        1 | CITIZEN SHREK               |              4 |
+|        2 | CLASH FREDDY                |              4 |
+|        1 | CLASH FREDDY                |              3 |
+|        2 | CLEOPATRA DEVIL             |              3 |
+|        1 | CLEOPATRA DEVIL             |              2 |
+|        2 | CLERKS ANGELS               |              2 |
+|        2 | CLOCKWORK PARADISE          |              3 |
+|        2 | CLONES PINOCCHIO            |              3 |
+|        1 | CLONES PINOCCHIO            |              2 |
+|        2 | CLOSER BANG                 |              3 |
+|        1 | CLOSER BANG                 |              4 |
+|        2 | CLUB GRAFFITI               |              3 |
+|        1 | CLUB GRAFFITI               |              2 |
+|        1 | CLUE GRAIL                  |              2 |
+|        2 | CLUELESS BUCKET             |              4 |
+|        1 | CLUELESS BUCKET             |              3 |
+|        2 | CLYDE THEORY                |              3 |
+|        2 | COAST RAINBOW               |              3 |
+|        1 | COAST RAINBOW               |              2 |
+|        2 | COLDBLOODED DARLING         |              2 |
+|        1 | COLDBLOODED DARLING         |              3 |
+|        2 | COLOR PHILADELPHIA          |              2 |
+|        1 | COLOR PHILADELPHIA          |              4 |
+|        2 | COMA HEAD                   |              3 |
+|        1 | COMA HEAD                   |              4 |
+|        1 | COMANCHEROS ENEMY           |              2 |
+|        2 | COMFORTS RUSH               |              2 |
+|        1 | COMFORTS RUSH               |              2 |
+|        2 | COMMAND DARLING             |              4 |
+|        1 | COMMAND DARLING             |              2 |
+|        2 | CONEHEADS SMOOCHY           |              3 |
+|        1 | CONEHEADS SMOOCHY           |              4 |
+|        2 | CONFESSIONS MAGUIRE         |              2 |
+|        1 | CONFESSIONS MAGUIRE         |              3 |
+|        2 | CONFIDENTIAL INTERVIEW      |              4 |
+|        1 | CONFIDENTIAL INTERVIEW      |              4 |
+|        2 | CONFUSED CANDLES            |              3 |
+|        1 | CONFUSED CANDLES            |              2 |
+|        2 | CONGENIALITY QUEST          |              4 |
+|        1 | CONGENIALITY QUEST          |              2 |
+|        2 | CONNECTICUT TRAMP           |              3 |
+|        1 | CONNECTION MICROCOSMOS      |              2 |
+|        1 | CONQUERER NUTS              |              4 |
+|        2 | CONSPIRACY SPIRIT           |              2 |
+|        2 | CONTACT ANONYMOUS           |              4 |
+|        1 | CONTACT ANONYMOUS           |              3 |
+|        1 | CONTROL ANTHEM              |              2 |
+|        2 | CONVERSATION DOWNHILL       |              3 |
+|        1 | CONVERSATION DOWNHILL       |              3 |
+|        2 | CORE SUIT                   |              3 |
+|        1 | CORE SUIT                   |              2 |
+|        1 | COWBOY DOOM                 |              2 |
+|        2 | CRAFT OUTFIELD              |              2 |
+|        1 | CRAFT OUTFIELD              |              2 |
+|        2 | CRANES RESERVOIR            |              3 |
+|        1 | CRAZY HOME                  |              3 |
+|        2 | CREATURES SHAKESPEARE       |              4 |
+|        1 | CREATURES SHAKESPEARE       |              2 |
+|        2 | CREEPERS KANE               |              4 |
+|        2 | CROOKED FROGMEN             |              3 |
+|        1 | CROOKED FROGMEN             |              3 |
+|        2 | CROSSROADS CASUALTIES       |              4 |
+|        1 | CROSSROADS CASUALTIES       |              4 |
+|        2 | CROW GREASE                 |              2 |
+|        1 | CROW GREASE                 |              2 |
+|        1 | CRUELTY UNFORGIVEN          |              2 |
+|        1 | CRUSADE HONEY               |              2 |
+|        2 | CUPBOARD SINNERS            |              4 |
+|        1 | CUPBOARD SINNERS            |              4 |
+|        2 | CURTAIN VIDEOTAPE           |              4 |
+|        1 | CURTAIN VIDEOTAPE           |              4 |
+|        1 | CYCLONE FAMILY              |              4 |
+|        1 | DADDY PITTSBURGH            |              3 |
+|        2 | DAISY MENAGERIE             |              4 |
+|        2 | DALMATIONS SWEDEN           |              2 |
+|        1 | DALMATIONS SWEDEN           |              4 |
+|        1 | DANCES NONE                 |              4 |
+|        2 | DANCING FEVER               |              4 |
+|        1 | DANCING FEVER               |              4 |
+|        1 | DANGEROUS UPTOWN            |              4 |
+|        1 | DARES PLUTO                 |              3 |
+|        1 | DARKNESS WAR                |              4 |
+|        2 | DARKO DORADO                |              3 |
+|        1 | DARLING BREAKING            |              2 |
+|        2 | DARN FORRESTER              |              2 |
+|        1 | DARN FORRESTER              |              3 |
+|        1 | DATE SPEED                  |              4 |
+|        2 | DAUGHTER MADIGAN            |              4 |
+|        2 | DAWN POND                   |              3 |
+|        1 | DAWN POND                   |              3 |
+|        2 | DAY UNFAITHFUL              |              3 |
+|        1 | DAY UNFAITHFUL              |              2 |
+|        2 | DECEIVER BETRAYED           |              3 |
+|        1 | DECEIVER BETRAYED           |              4 |
+|        1 | DEEP CRUSADE                |              4 |
+|        2 | DEER VIRGINIAN              |              4 |
+|        1 | DEER VIRGINIAN              |              4 |
+|        2 | DESERT POSEIDON             |              4 |
+|        1 | DESERT POSEIDON             |              2 |
+|        2 | DESIRE ALIEN                |              2 |
+|        1 | DESPERATE TRAINSPOTTING     |              2 |
+|        1 | DESTINATION JERK            |              3 |
+|        2 | DESTINY SATURDAY            |              3 |
+|        1 | DESTINY SATURDAY            |              2 |
+|        2 | DETAILS PACKER              |              2 |
+|        1 | DETAILS PACKER              |              3 |
+|        2 | DETECTIVE VISION            |              4 |
+|        1 | DETECTIVE VISION            |              3 |
+|        2 | DEVIL DESIRE                |              2 |
+|        1 | DEVIL DESIRE                |              2 |
+|        1 | DIARY PANIC                 |              2 |
+|        2 | DINOSAUR SECRETARY          |              4 |
+|        1 | DINOSAUR SECRETARY          |              4 |
+|        2 | DIRTY ACE                   |              2 |
+|        1 | DIRTY ACE                   |              3 |
+|        2 | DISCIPLE MOTHER             |              2 |
+|        1 | DISCIPLE MOTHER             |              4 |
+|        2 | DISTURBING SCARFACE         |              3 |
+|        1 | DISTURBING SCARFACE         |              4 |
+|        2 | DIVIDE MONSTER              |              4 |
+|        1 | DIVIDE MONSTER              |              2 |
+|        2 | DIVINE RESURRECTION         |              4 |
+|        1 | DIVORCE SHINING             |              2 |
+|        1 | DOCTOR GRAIL                |              2 |
+|        2 | DOGMA FAMILY                |              4 |
+|        1 | DOGMA FAMILY                |              4 |
+|        2 | DOLLS RAGE                  |              3 |
+|        1 | DONNIE ALLEY                |              4 |
+|        2 | DOOM DANCING                |              3 |
+|        1 | DOOM DANCING                |              2 |
+|        2 | DOORS PRESIDENT             |              4 |
+|        1 | DOORS PRESIDENT             |              2 |
+|        2 | DORADO NOTTING              |              3 |
+|        1 | DORADO NOTTING              |              4 |
+|        2 | DOUBLE WRATH                |              4 |
+|        1 | DOUBLE WRATH                |              3 |
+|        2 | DOUBTFIRE LABYRINTH         |              3 |
+|        2 | DOWNHILL ENOUGH             |              4 |
+|        1 | DOWNHILL ENOUGH             |              3 |
+|        2 | DOZEN LION                  |              2 |
+|        2 | DRACULA CRYSTAL             |              4 |
+|        1 | DRACULA CRYSTAL             |              2 |
+|        2 | DRAGON SQUAD                |              4 |
+|        2 | DRAGONFLY STRANGERS         |              3 |
+|        1 | DRAGONFLY STRANGERS         |              2 |
+|        2 | DREAM PICKUP                |              3 |
+|        1 | DREAM PICKUP                |              3 |
+|        2 | DRIFTER COMMANDMENTS        |              2 |
+|        1 | DRIFTER COMMANDMENTS        |              4 |
+|        2 | DRIVER ANNIE                |              3 |
+|        1 | DRIVER ANNIE                |              2 |
+|        2 | DRIVING POLISH              |              2 |
+|        1 | DRIVING POLISH              |              4 |
+|        2 | DROP WATERFRONT             |              3 |
+|        2 | DRUMLINE CYCLONE            |              3 |
+|        2 | DRUMS DYNAMITE              |              4 |
+|        1 | DUCK RACER                  |              2 |
+|        2 | DUDE BLINDNESS              |              4 |
+|        1 | DUFFEL APOCALYPSE           |              2 |
+|        2 | DUMBO LUST                  |              2 |
+|        2 | DURHAM PANKY                |              3 |
+|        1 | DURHAM PANKY                |              4 |
+|        2 | DWARFS ALTER                |              2 |
+|        1 | DYING MAKER                 |              4 |
+|        2 | DYNAMITE TARZAN             |              4 |
+|        1 | DYNAMITE TARZAN             |              4 |
+|        2 | EAGLES PANKY                |              2 |
+|        1 | EAGLES PANKY                |              4 |
+|        2 | EARLY HOME                  |              2 |
+|        2 | EARRING INSTINCT            |              4 |
+|        1 | EARRING INSTINCT            |              2 |
+|        2 | EARTH VISION                |              4 |
+|        1 | EARTH VISION                |              3 |
+|        2 | EASY GLADIATOR              |              2 |
+|        1 | EASY GLADIATOR              |              3 |
+|        1 | EDGE KISSING                |              4 |
+|        2 | EFFECT GLADIATOR            |              3 |
+|        1 | EFFECT GLADIATOR            |              4 |
+|        2 | EGG IGBY                    |              4 |
+|        1 | EGG IGBY                    |              3 |
+|        2 | EGYPT TENENBAUMS            |              2 |
+|        1 | EGYPT TENENBAUMS            |              3 |
+|        1 | ELEMENT FREDDY              |              4 |
+|        1 | ELEPHANT TROJAN             |              3 |
+|        1 | ELF MURDER                  |              2 |
+|        1 | ELIZABETH SHANE             |              2 |
+|        2 | EMPIRE MALKOVICH            |              2 |
+|        1 | EMPIRE MALKOVICH            |              4 |
+|        2 | ENCINO ELF                  |              4 |
+|        1 | ENCINO ELF                  |              2 |
+|        2 | ENCOUNTERS CURTAIN          |              3 |
+|        1 | ENCOUNTERS CURTAIN          |              3 |
+|        1 | ENDING CROWDS               |              3 |
+|        2 | ENEMY ODDS                  |              4 |
+|        1 | ENEMY ODDS                  |              3 |
+|        2 | ENGLISH BULWORTH            |              4 |
+|        1 | ENGLISH BULWORTH            |              3 |
+|        2 | ENOUGH RAGING               |              3 |
+|        1 | ENOUGH RAGING               |              2 |
+|        2 | ENTRAPMENT SATISFACTION     |              2 |
+|        1 | ENTRAPMENT SATISFACTION     |              2 |
+|        2 | ESCAPE METROPOLIS           |              4 |
+|        1 | ESCAPE METROPOLIS           |              2 |
+|        1 | EVE RESURRECTION            |              2 |
+|        1 | EVERYONE CRAFT              |              3 |
+|        1 | EVOLUTION ALTER             |              4 |
+|        2 | EXCITEMENT EVE              |              3 |
+|        1 | EXCITEMENT EVE              |              3 |
+|        2 | EXORCIST STING              |              3 |
+|        1 | EXORCIST STING              |              2 |
+|        2 | EXPECATIONS NATURAL         |              3 |
+|        1 | EXPECATIONS NATURAL         |              2 |
+|        2 | EXPENDABLE STALLION         |              4 |
+|        1 | EXPENDABLE STALLION         |              4 |
+|        1 | EXPRESS LONELY              |              4 |
+|        2 | EXTRAORDINARY CONQUERER     |              2 |
+|        2 | EYES DRIVING                |              3 |
+|        1 | EYES DRIVING                |              2 |
+|        1 | FACTORY DRAGON              |              4 |
+|        2 | FALCON VOLUME               |              4 |
+|        1 | FALCON VOLUME               |              2 |
+|        2 | FAMILY SWEET                |              4 |
+|        1 | FAMILY SWEET                |              4 |
+|        2 | FANTASIA PARK               |              4 |
+|        1 | FANTASIA PARK               |              2 |
+|        2 | FANTASY TROOPERS            |              2 |
+|        1 | FANTASY TROOPERS            |              4 |
+|        2 | FARGO GANDHI                |              2 |
+|        1 | FARGO GANDHI                |              4 |
+|        2 | FATAL HAUNTED               |              3 |
+|        1 | FATAL HAUNTED               |              4 |
+|        1 | FEATHERS METAL              |              3 |
+|        2 | FELLOWSHIP AUTUMN           |              3 |
+|        1 | FELLOWSHIP AUTUMN           |              3 |
+|        2 | FERRIS MOTHER               |              2 |
+|        1 | FERRIS MOTHER               |              2 |
+|        2 | FEUD FROGMEN                |              4 |
+|        1 | FEUD FROGMEN                |              2 |
+|        1 | FEVER EMPIRE                |              2 |
+|        2 | FICTION CHRISTMAS           |              4 |
+|        1 | FICTION CHRISTMAS           |              3 |
+|        2 | FIDDLER LOST                |              3 |
+|        2 | FIDELITY DEVIL              |              2 |
+|        1 | FIDELITY DEVIL              |              4 |
+|        2 | FIGHT JAWBREAKER            |              4 |
+|        1 | FIGHT JAWBREAKER            |              2 |
+|        2 | FINDING ANACONDA            |              3 |
+|        2 | FIRE WOLVES                 |              2 |
+|        2 | FIREBALL PHILADELPHIA       |              3 |
+|        1 | FIREBALL PHILADELPHIA       |              4 |
+|        2 | FISH OPUS                   |              4 |
+|        1 | FISH OPUS                   |              3 |
+|        2 | FLAMINGOS CONNECTICUT       |              4 |
+|        1 | FLAMINGOS CONNECTICUT       |              3 |
+|        1 | FLASH WARS                  |              4 |
+|        2 | FLATLINERS KILLER           |              2 |
+|        1 | FLATLINERS KILLER           |              4 |
+|        2 | FLIGHT LIES                 |              4 |
+|        2 | FLINTSTONES HAPPINESS       |              2 |
+|        1 | FLINTSTONES HAPPINESS       |              3 |
+|        2 | FLYING HOOK                 |              4 |
+|        1 | FLYING HOOK                 |              2 |
+|        2 | FOOL MOCKINGBIRD            |              2 |
+|        1 | FOOL MOCKINGBIRD            |              4 |
+|        2 | FOREVER CANDIDATE           |              4 |
+|        2 | FORREST SONS                |              3 |
+|        1 | FORREST SONS                |              3 |
+|        2 | FORRESTER COMANCHEROS       |              3 |
+|        1 | FORRESTER COMANCHEROS       |              4 |
+|        2 | FORWARD TEMPLE              |              4 |
+|        1 | FORWARD TEMPLE              |              4 |
++----------+-----------------------------+----------------+
+500 rows in set (0.0262 sec)
+ MySQL  localhost:3306 ssl  sakila  SQL > SHOW TABLES;
++----------------------------+
+| Tables_in_sakila           |
++----------------------------+
+| actor                      |
+| actor_info                 |
+| address                    |
+| category                   |
+| city                       |
+| country                    |
+| customer                   |
+| customer_list              |
+| film                       |
+| film_actor                 |
+| film_category              |
+| film_list                  |
+| film_text                  |
+| inventory                  |
+| language                   |
+| nicer_but_slower_film_list |
+| payment                    |
+| rental                     |
+| sales_by_film_category     |
+| sales_by_store             |
+| staff                      |
+| staff_list                 |
+| store                      |
++----------------------------+
+23 rows in set (0.0023 sec)
+ MySQL  localhost:3306 ssl  sakila  SQL > DESC customer;
++-------------+-------------------+------+-----+-------------------+-----------------------------------------------+
+| Field       | Type              | Null | Key | Default           | Extra                                         |
++-------------+-------------------+------+-----+-------------------+-----------------------------------------------+
+| customer_id | smallint unsigned | NO   | PRI | NULL              | auto_increment                                |
+| store_id    | tinyint unsigned  | NO   | MUL | NULL              |                                               |
+| first_name  | varchar(45)       | NO   |     | NULL              |                                               |
+| last_name   | varchar(45)       | NO   | MUL | NULL              |                                               |
+| email       | varchar(50)       | YES  |     | NULL              |                                               |
+| address_id  | smallint unsigned | NO   | MUL | NULL              |                                               |
+| active      | tinyint(1)        | NO   |     | 1                 |                                               |
+| create_date | datetime          | NO   |     | NULL              |                                               |
+| last_update | timestamp         | YES  |     | CURRENT_TIMESTAMP | DEFAULT_GENERATED on update CURRENT_TIMESTAMP |
++-------------+-------------------+------+-----+-------------------+-----------------------------------------------+
+9 rows in set (0.0023 sec)
+ MySQL  localhost:3306 ssl  sakila  SQL > DESC film;
++----------------------+---------------------------------------------------------------------+------+-----+-------------------+-----------------------------------------------+
+| Field                | Type                                                                | Null | Key | Default           | Extra                                         |
++----------------------+---------------------------------------------------------------------+------+-----+-------------------+-----------------------------------------------+
+| film_id              | smallint unsigned                                                   | NO   | PRI | NULL              | auto_increment                                |
+| title                | varchar(128)                                                        | NO   | MUL | NULL              |                                               |
+| description          | text                                                                | YES  |     | NULL              |                                               |
+| release_year         | year                                                                | YES  |     | NULL              |                                               |
+| language_id          | tinyint unsigned                                                    | NO   | MUL | NULL              |                                               |
+| original_language_id | tinyint unsigned                                                    | YES  | MUL | NULL              |                                               |
+| rental_duration      | tinyint unsigned                                                    | NO   |     | 3                 |                                               |
+| rental_rate          | decimal(4,2)                                                        | NO   |     | 4.99              |                                               |
+| length               | smallint unsigned                                                   | YES  |     | NULL              |                                               |
+| replacement_cost     | decimal(5,2)                                                        | NO   |     | 19.99             |                                               |
+| rating               | enum('G','PG','PG-13','R','NC-17')                                  | YES  |     | G                 |                                               |
+| special_features     | set('Trailers','Commentaries','Deleted Scenes','Behind the Scenes') | YES  |     | NULL              |                                               |
+| last_update          | timestamp                                                           | NO   |     | CURRENT_TIMESTAMP | DEFAULT_GENERATED on update CURRENT_TIMESTAMP |
++----------------------+---------------------------------------------------------------------+------+-----+-------------------+-----------------------------------------------+
+13 rows in set (0.0028 sec)
+ MySQL  localhost:3306 ssl  sakila  SQL > DESC rental;
++--------------+--------------------+------+-----+-------------------+-----------------------------------------------+
+| Field        | Type               | Null | Key | Default           | Extra                                         |
++--------------+--------------------+------+-----+-------------------+-----------------------------------------------+
+| rental_id    | int                | NO   | PRI | NULL              | auto_increment                                |
+| rental_date  | datetime           | NO   | MUL | NULL              |                                               |
+| inventory_id | mediumint unsigned | NO   | MUL | NULL              |                                               |
+| customer_id  | smallint unsigned  | NO   | MUL | NULL              |                                               |
+| return_date  | datetime           | YES  |     | NULL              |                                               |
+| staff_id     | tinyint unsigned   | NO   | MUL | NULL              |                                               |
+| last_update  | timestamp          | NO   |     | CURRENT_TIMESTAMP | DEFAULT_GENERATED on update CURRENT_TIMESTAMP |
++--------------+--------------------+------+-----+-------------------+-----------------------------------------------+
+7 rows in set (0.0023 sec)
+ MySQL  localhost:3306 ssl  sakila  SQL > DESC staff;
++-------------+-------------------+------+-----+-------------------+-----------------------------------------------+
+| Field       | Type              | Null | Key | Default           | Extra                                         |
++-------------+-------------------+------+-----+-------------------+-----------------------------------------------+
+| staff_id    | tinyint unsigned  | NO   | PRI | NULL              | auto_increment                                |
+| first_name  | varchar(45)       | NO   |     | NULL              |                                               |
+| last_name   | varchar(45)       | NO   |     | NULL              |                                               |
+| address_id  | smallint unsigned | NO   | MUL | NULL              |                                               |
+| picture     | blob              | YES  |     | NULL              |                                               |
+| email       | varchar(50)       | YES  |     | NULL              |                                               |
+| store_id    | tinyint unsigned  | NO   | MUL | NULL              |                                               |
+| active      | tinyint(1)        | NO   |     | 1                 |                                               |
+| username    | varchar(16)       | NO   |     | NULL              |                                               |
+| password    | varchar(40)       | YES  |     | NULL              |                                               |
+| last_update | timestamp         | NO   |     | CURRENT_TIMESTAMP | DEFAULT_GENERATED on update CURRENT_TIMESTAMP |
++-------------+-------------------+------+-----+-------------------+-----------------------------------------------+
+11 rows in set (0.0020 sec)
+ MySQL  localhost:3306 ssl  sakila  SQL > DESC inventory;
++--------------+--------------------+------+-----+-------------------+-----------------------------------------------+
+| Field        | Type               | Null | Key | Default           | Extra                                         |
++--------------+--------------------+------+-----+-------------------+-----------------------------------------------+
+| inventory_id | mediumint unsigned | NO   | PRI | NULL              | auto_increment                                |
+| film_id      | smallint unsigned  | NO   | MUL | NULL              |                                               |
+| store_id     | tinyint unsigned   | NO   | MUL | NULL              |                                               |
+| last_update  | timestamp          | NO   |     | CURRENT_TIMESTAMP | DEFAULT_GENERATED on update CURRENT_TIMESTAMP |
++--------------+--------------------+------+-----+-------------------+-----------------------------------------------+
+4 rows in set (0.0026 sec)
+ MySQL  localhost:3306 ssl  sakila  SQL > SELECT A.first_name AS NombreCliente, B.title As TituloPelicula, C.rental_date AS FechaDeRenta, D.first_name AS NombreEmpleado
+                                       -> FROM rental C
+                                       -> INNER JOIN customer A ON C.customer_id = A.customer_id
+                                       -> INNER JOIN staff D ON C.staff_id = D.staff_id
+                                       -> INNER JOIN inventory E ON C.inventory_id = E.inventory_id
+                                       -> INNER JOIN film B ON E.film_id = B.film_id
+                                       -> LIMIT 500;
++---------------+----------------------+---------------------+----------------+
+| NombreCliente | TituloPelicula       | FechaDeRenta        | NombreEmpleado |
++---------------+----------------------+---------------------+----------------+
+| BRANDY        | HUMAN GRAFFITI       | 2005-08-17 17:28:01 | Mike           |
+| RAMONA        | HUMAN GRAFFITI       | 2005-07-30 14:15:02 | Mike           |
+| ARTHUR        | HUMAN GRAFFITI       | 2005-08-02 06:52:54 | Mike           |
+| BYRON         | HUMAN GRAFFITI       | 2005-07-12 12:37:00 | Mike           |
+| JEREMY        | HUMAN GRAFFITI       | 2005-07-10 03:46:47 | Mike           |
+| KIM           | HUMAN GRAFFITI       | 2005-07-30 00:22:31 | Mike           |
+| CAROLE        | HUMAN GRAFFITI       | 2005-07-08 21:26:11 | Mike           |
+| CHARLIE       | HOUSE DYNAMITE       | 2005-08-23 20:16:27 | Mike           |
+| CODY          | HOUSE DYNAMITE       | 2005-07-29 11:35:46 | Mike           |
+| GREG          | HOUSE DYNAMITE       | 2005-08-21 17:38:37 | Mike           |
+| ROBIN         | HOUSE DYNAMITE       | 2005-07-07 11:35:08 | Mike           |
+| DAVE          | HOUSE DYNAMITE       | 2005-08-22 06:30:28 | Mike           |
+| ANDREW        | HOUSE DYNAMITE       | 2005-06-20 17:40:12 | Mike           |
+| JIM           | HOUSE DYNAMITE       | 2005-08-20 08:20:19 | Mike           |
+| JOYCE         | HOUSE DYNAMITE       | 2005-07-10 00:09:45 | Mike           |
+| MARCUS        | HOUSE DYNAMITE       | 2005-06-19 02:51:04 | Mike           |
+| MAXINE        | HOUSE DYNAMITE       | 2005-08-19 12:06:42 | Mike           |
+| BESSIE        | HOUSE DYNAMITE       | 2005-07-27 05:06:34 | Mike           |
+| LAURA         | HOURS RAGE           | 2005-08-19 00:42:24 | Mike           |
+| HAZEL         | HOURS RAGE           | 2005-08-21 03:40:11 | Mike           |
+| ANDREW        | HOURS RAGE           | 2005-07-27 10:30:41 | Mike           |
+| DEBRA         | HOURS RAGE           | 2005-07-11 03:21:05 | Mike           |
+| CARL          | HOURS RAGE           | 2005-06-16 01:58:35 | Mike           |
+| LYNN          | HOURS RAGE           | 2005-08-22 16:49:02 | Mike           |
+| THERESA       | HOURS RAGE           | 2005-05-30 01:17:25 | Mike           |
+| GENE          | HOURS RAGE           | 2005-08-02 21:07:06 | Mike           |
+| PEDRO         | HOTEL HAPPINESS      | 2005-08-22 19:23:58 | Mike           |
+| ALLISON       | HOTEL HAPPINESS      | 2005-05-28 00:24:58 | Mike           |
+| ERIK          | HOTEL HAPPINESS      | 2005-08-19 07:53:58 | Mike           |
+| HELEN         | HOTEL HAPPINESS      | 2005-06-20 05:15:37 | Mike           |
+| GAIL          | HORROR REIGN         | 2005-08-22 04:48:44 | Mike           |
+| JASON         | HORROR REIGN         | 2005-07-12 11:50:56 | Mike           |
+| TROY          | HORROR REIGN         | 2005-08-23 13:10:16 | Mike           |
+| TARA          | HORROR REIGN         | 2005-07-28 16:35:16 | Mike           |
+| JORGE         | HORROR REIGN         | 2005-08-21 03:51:52 | Mike           |
+| ALVIN         | HORROR REIGN         | 2005-07-28 23:59:02 | Mike           |
+| APRIL         | HORROR REIGN         | 2005-07-08 01:51:32 | Mike           |
+| DIANE         | HORROR REIGN         | 2005-05-29 16:44:11 | Mike           |
+| FREDDIE       | HORROR REIGN         | 2005-08-02 12:34:27 | Mike           |
+| EDNA          | HORROR REIGN         | 2005-06-19 12:12:30 | Mike           |
+| HILDA         | HORROR REIGN         | 2005-08-01 10:03:20 | Mike           |
+| RHONDA        | HORROR REIGN         | 2005-06-18 20:24:23 | Mike           |
+| TONI          | HORROR REIGN         | 2005-05-29 09:26:34 | Mike           |
+| MARK          | HORROR REIGN         | 2005-08-21 09:19:49 | Mike           |
+| FLORENCE      | HORROR REIGN         | 2005-07-11 08:25:22 | Mike           |
+| DAN           | HORROR REIGN         | 2005-08-21 15:59:27 | Mike           |
+| VANESSA       | HORROR REIGN         | 2005-07-29 08:42:04 | Mike           |
+| EDITH         | HORN WORKING         | 2005-08-22 02:26:47 | Mike           |
+| DEREK         | HORN WORKING         | 2005-07-28 02:24:23 | Mike           |
+| REGINA        | HORN WORKING         | 2005-08-18 14:28:00 | Mike           |
+| BESSIE        | HORN WORKING         | 2005-07-30 22:20:04 | Mike           |
+| MARTIN        | HORN WORKING         | 2005-06-18 05:05:18 | Mike           |
+| BETTY         | HORN WORKING         | 2005-08-18 19:16:47 | Mike           |
+| KIMBERLY      | HORN WORKING         | 2005-05-31 10:22:54 | Mike           |
+| JESSIE        | HORN WORKING         | 2005-06-20 04:09:04 | Mike           |
+| JUNE          | HORN WORKING         | 2005-07-27 09:19:05 | Mike           |
+| EDDIE         | HORN WORKING         | 2005-06-18 17:51:46 | Mike           |
+| DARRELL       | HOPE TOOTSIE         | 2005-07-30 20:22:17 | Mike           |
+| CONNIE        | HOPE TOOTSIE         | 2005-07-07 14:52:12 | Mike           |
+| VERA          | HOPE TOOTSIE         | 2005-07-30 05:28:40 | Mike           |
+| VIOLA         | HOPE TOOTSIE         | 2005-07-10 15:05:42 | Mike           |
+| BILLY         | HOPE TOOTSIE         | 2005-06-20 22:31:54 | Mike           |
+| JORDAN        | HOPE TOOTSIE         | 2005-08-22 00:24:37 | Mike           |
+| HAZEL         | HOPE TOOTSIE         | 2005-07-28 06:10:55 | Mike           |
+| VANESSA       | HOPE TOOTSIE         | 2005-08-17 10:59:00 | Mike           |
+| KATIE         | HOPE TOOTSIE         | 2005-08-20 03:07:47 | Mike           |
+| CAROLYN       | HOPE TOOTSIE         | 2005-07-31 19:23:00 | Mike           |
+| CARMEN        | HOPE TOOTSIE         | 2005-06-17 09:30:05 | Mike           |
+| BRYAN         | HOOSIERS BIRDCAGE    | 2005-08-17 03:12:04 | Mike           |
+| ERICA         | HOOSIERS BIRDCAGE    | 2005-08-17 06:39:59 | Mike           |
+| MARSHA        | HOOSIERS BIRDCAGE    | 2005-07-28 20:59:04 | Mike           |
+| CONSTANCE     | HOOSIERS BIRDCAGE    | 2005-06-19 21:34:54 | Mike           |
+| TERESA        | HOOK CHARIOTS        | 2005-08-19 02:57:37 | Mike           |
+| HARRY         | HOOK CHARIOTS        | 2005-07-07 04:34:09 | Mike           |
+| CATHERINE     | HOOK CHARIOTS        | 2005-08-23 10:35:51 | Mike           |
+| JULIA         | HOOK CHARIOTS        | 2005-07-30 04:06:25 | Mike           |
+| KATHY         | HOOK CHARIOTS        | 2005-07-11 02:08:55 | Mike           |
+| ALMA          | HOOK CHARIOTS        | 2005-07-29 01:20:16 | Mike           |
+| VIRGIL        | HOOK CHARIOTS        | 2005-07-07 11:36:20 | Mike           |
+| DWIGHT        | HOOK CHARIOTS        | 2005-06-21 02:30:37 | Mike           |
+| RAMONA        | HONEY TIES           | 2005-08-20 19:29:44 | Mike           |
+| CHARLIE       | HONEY TIES           | 2005-07-31 09:09:22 | Mike           |
+| DARYL         | HONEY TIES           | 2005-07-30 04:53:23 | Mike           |
+| JAMES         | HONEY TIES           | 2005-07-06 00:00:03 | Mike           |
+| ARMANDO       | HONEY TIES           | 2005-05-26 05:29:49 | Mike           |
+| ETHEL         | HONEY TIES           | 2005-07-28 10:27:46 | Mike           |
+| VIOLET        | HONEY TIES           | 2005-08-19 15:23:41 | Mike           |
+| RONNIE        | HONEY TIES           | 2005-08-01 11:44:13 | Mike           |
+| RHONDA        | HONEY TIES           | 2005-07-06 09:10:37 | Mike           |
+| ELLEN         | HOMICIDE PEACH       | 2005-08-21 16:52:29 | Mike           |
+| HELEN         | HOMICIDE PEACH       | 2005-08-18 04:39:10 | Mike           |
+| TOMMY         | HOMICIDE PEACH       | 2005-07-30 01:00:17 | Mike           |
+| CHRISTIAN     | HOMICIDE PEACH       | 2005-07-27 05:41:20 | Mike           |
+| NELSON        | HOMICIDE PEACH       | 2005-06-17 15:07:30 | Mike           |
+| DARLENE       | HOMICIDE PEACH       | 2005-08-20 10:11:07 | Mike           |
+| PATRICK       | HOMICIDE PEACH       | 2005-08-01 17:11:52 | Mike           |
+| DAISY         | HOMICIDE PEACH       | 2005-06-17 07:14:15 | Mike           |
+| MELINDA       | HOMICIDE PEACH       | 2005-05-28 03:57:28 | Mike           |
+| SARA          | HOMICIDE PEACH       | 2005-08-19 11:27:43 | Mike           |
+| LAURIE        | HOMICIDE PEACH       | 2005-07-31 11:59:32 | Mike           |
+| CURTIS        | HOMICIDE PEACH       | 2005-07-09 08:28:40 | Mike           |
+| JAMES         | HOMICIDE PEACH       | 2005-06-21 06:36:59 | Mike           |
+| CLAYTON       | HOMICIDE PEACH       | 2005-08-22 01:45:18 | Mike           |
+| CHARLENE      | HOMICIDE PEACH       | 2005-07-31 20:47:14 | Mike           |
+| NORMAN        | HOMICIDE PEACH       | 2005-07-06 20:52:09 | Mike           |
+| CAROLE        | HOMICIDE PEACH       | 2005-06-21 11:30:47 | Mike           |
+| FELICIA       | HOMEWARD CIDER       | 2005-07-08 19:27:50 | Mike           |
+| BYRON         | HOMEWARD CIDER       | 2005-08-01 04:04:37 | Mike           |
+| DWAYNE        | HOMEWARD CIDER       | 2005-08-21 13:07:24 | Mike           |
+| ETHEL         | HOMEWARD CIDER       | 2005-07-29 07:19:16 | Mike           |
+| IAN           | HOMEWARD CIDER       | 2005-07-12 00:16:19 | Mike           |
+| ANNE          | HOMEWARD CIDER       | 2005-06-19 18:53:05 | Mike           |
+| EARL          | HOMEWARD CIDER       | 2005-07-31 21:31:49 | Mike           |
+| WILLIE        | HOMEWARD CIDER       | 2005-06-18 17:12:01 | Mike           |
+| ALBERT        | HOME PITY            | 2005-08-17 11:05:53 | Mike           |
+| BRUCE         | HOME PITY            | 2005-06-17 10:22:13 | Mike           |
+| DARLENE       | HOME PITY            | 2005-08-18 11:33:34 | Mike           |
+| TERESA        | HOME PITY            | 2005-06-19 09:57:56 | Mike           |
+| MITCHELL      | HOME PITY            | 2005-08-21 09:39:50 | Mike           |
+| TED           | HOME PITY            | 2005-08-02 03:48:13 | Mike           |
+| JACOB         | HOME PITY            | 2005-07-09 05:25:20 | Mike           |
+| DWAYNE        | HOME PITY            | 2005-06-18 06:38:22 | Mike           |
+| TANYA         | HOLY TADPOLE         | 2005-06-20 14:13:00 | Mike           |
+| MORRIS        | HOLY TADPOLE         | 2005-07-31 16:10:36 | Mike           |
+| ARNOLD        | HOLY TADPOLE         | 2005-07-10 22:14:30 | Mike           |
+| BOBBY         | HOLY TADPOLE         | 2005-06-15 16:31:08 | Mike           |
+| JAMIE         | HOLOCAUST HIGHBALL   | 2005-08-22 21:36:51 | Mike           |
+| MARCIA        | HOLOCAUST HIGHBALL   | 2005-07-27 10:46:37 | Mike           |
+| JORGE         | HOLOCAUST HIGHBALL   | 2005-08-02 16:58:56 | Mike           |
+| TAMMY         | HOLOCAUST HIGHBALL   | 2005-08-18 03:26:42 | Mike           |
+| GREGORY       | HOLOCAUST HIGHBALL   | 2005-07-30 21:18:37 | Mike           |
+| MARION        | HOLOCAUST HIGHBALL   | 2005-08-01 13:05:52 | Mike           |
+| SAMANTHA      | HOLOCAUST HIGHBALL   | 2005-08-22 03:55:02 | Mike           |
+| ELAINE        | HOLOCAUST HIGHBALL   | 2005-06-18 16:58:58 | Mike           |
+| MARSHA        | HOLLYWOOD ANONYMOUS  | 2005-08-21 01:10:29 | Mike           |
+| LANCE         | HOLLYWOOD ANONYMOUS  | 2005-08-19 14:24:48 | Mike           |
+| VALERIE       | HOLLYWOOD ANONYMOUS  | 2005-07-08 18:09:12 | Mike           |
+| SHERRI        | HOLLYWOOD ANONYMOUS  | 2005-08-20 15:39:42 | Mike           |
+| WILLARD       | HOLLYWOOD ANONYMOUS  | 2005-07-12 18:42:55 | Mike           |
+| TRACY         | HOLLOW JEOPARDY      | 2005-07-29 12:18:40 | Mike           |
+| MARVIN        | HOLLOW JEOPARDY      | 2005-07-06 12:52:49 | Mike           |
+| ALAN          | HOLLOW JEOPARDY      | 2005-06-16 17:51:01 | Mike           |
+| RONNIE        | HOLLOW JEOPARDY      | 2005-05-25 01:17:24 | Mike           |
+| MARC          | HOLLOW JEOPARDY      | 2005-06-16 00:27:51 | Mike           |
+| FREDDIE       | HOLIDAY GAMES        | 2005-08-23 01:29:59 | Mike           |
+| FRED          | HOLIDAY GAMES        | 2005-07-08 18:54:04 | Mike           |
+| JAVIER        | HOLIDAY GAMES        | 2005-08-22 11:04:52 | Mike           |
+| MORRIS        | HOLIDAY GAMES        | 2005-07-08 02:41:25 | Mike           |
+| HILDA         | HOLIDAY GAMES        | 2005-08-21 12:13:10 | Mike           |
+| LEWIS         | HOLIDAY GAMES        | 2005-07-06 09:46:12 | Mike           |
+| RHONDA        | HOLIDAY GAMES        | 2005-07-30 05:02:21 | Mike           |
+| ALEX          | HOLIDAY GAMES        | 2005-06-16 09:14:58 | Mike           |
+| MARION        | HOLES BRANNIGAN      | 2005-07-31 13:45:32 | Mike           |
+| DAVE          | HOLES BRANNIGAN      | 2005-07-11 03:21:49 | Mike           |
+| TYLER         | HOLES BRANNIGAN      | 2005-08-20 05:02:59 | Mike           |
+| SEAN          | HOLES BRANNIGAN      | 2005-08-01 08:50:51 | Mike           |
+| IRMA          | HOLES BRANNIGAN      | 2005-07-30 07:21:52 | Mike           |
+| CATHY         | HOLES BRANNIGAN      | 2006-02-14 15:16:03 | Mike           |
+| GINA          | HOLES BRANNIGAN      | 2005-07-30 23:07:22 | Mike           |
+| MINNIE        | HOLES BRANNIGAN      | 2005-08-17 15:30:44 | Mike           |
+| SHARON        | HOLES BRANNIGAN      | 2005-07-30 07:55:14 | Mike           |
+| SHERRY        | HOBBIT ALIEN         | 2005-08-22 13:06:26 | Mike           |
+| BESSIE        | HOBBIT ALIEN         | 2005-07-27 06:18:01 | Mike           |
+| IRENE         | HOBBIT ALIEN         | 2005-07-07 06:20:33 | Mike           |
+| DORA          | HOBBIT ALIEN         | 2005-06-17 20:58:32 | Mike           |
+| JENNIFER      | HOBBIT ALIEN         | 2005-07-27 06:38:25 | Mike           |
+| TYLER         | HOBBIT ALIEN         | 2005-07-06 03:17:23 | Mike           |
+| EDDIE         | HOBBIT ALIEN         | 2005-06-15 03:45:35 | Mike           |
+| ROSE          | HOBBIT ALIEN         | 2005-08-20 09:07:52 | Mike           |
+| ROGER         | HOBBIT ALIEN         | 2005-08-02 04:08:25 | Mike           |
+| BERNARD       | HOBBIT ALIEN         | 2005-08-21 16:03:02 | Mike           |
+| MAE           | HOBBIT ALIEN         | 2005-07-07 18:48:54 | Mike           |
+| RAFAEL        | HOBBIT ALIEN         | 2005-08-02 10:08:40 | Mike           |
+| ALVIN         | HOBBIT ALIEN         | 2005-07-09 08:57:07 | Mike           |
+| CATHERINE     | HOBBIT ALIEN         | 2005-08-17 07:49:17 | Mike           |
+| SERGIO        | HILLS NEIGHBORS      | 2005-08-21 21:15:23 | Mike           |
+| JOSE          | HILLS NEIGHBORS      | 2005-07-28 04:47:14 | Mike           |
+| CAROL         | HILLS NEIGHBORS      | 2005-07-08 10:15:38 | Mike           |
+| RONALD        | HILLS NEIGHBORS      | 2005-08-17 19:44:46 | Mike           |
+| BONNIE        | HILLS NEIGHBORS      | 2005-08-01 08:22:54 | Mike           |
+| THEODORE      | HILLS NEIGHBORS      | 2005-07-12 04:43:43 | Mike           |
+| RUBEN         | HILLS NEIGHBORS      | 2005-07-28 15:45:24 | Mike           |
+| ALFREDO       | HILLS NEIGHBORS      | 2005-07-08 05:51:19 | Mike           |
+| YOLANDA       | HILLS NEIGHBORS      | 2005-05-27 16:22:10 | Mike           |
+| SETH          | HILLS NEIGHBORS      | 2005-08-17 07:34:05 | Mike           |
+| DARLENE       | HILLS NEIGHBORS      | 2005-07-28 21:11:48 | Mike           |
+| TOMMY         | HILLS NEIGHBORS      | 2005-06-20 02:39:21 | Mike           |
+| JOHN          | HILLS NEIGHBORS      | 2005-05-29 14:18:32 | Mike           |
+| IDA           | HIGHBALL POTTER      | 2005-08-19 01:40:43 | Mike           |
+| MAURICE       | HIGHBALL POTTER      | 2005-08-21 22:22:29 | Mike           |
+| SONIA         | HIGHBALL POTTER      | 2005-07-06 03:33:23 | Mike           |
+| MAX           | HIGHBALL POTTER      | 2005-08-23 02:48:24 | Mike           |
+| ANNE          | HIGHBALL POTTER      | 2005-08-01 12:44:32 | Mike           |
+| ERNEST        | HIGHBALL POTTER      | 2005-06-17 12:39:50 | Mike           |
+| JAMES         | HIGHBALL POTTER      | 2005-07-12 13:58:51 | Mike           |
+| DARLENE       | HIGHBALL POTTER      | 2005-06-18 11:30:56 | Mike           |
+| ZACHARY       | HIGHBALL POTTER      | 2005-08-20 18:54:59 | Mike           |
+| TIFFANY       | HIGHBALL POTTER      | 2005-07-27 21:43:04 | Mike           |
+| FELIX         | HIGHBALL POTTER      | 2005-07-30 18:01:15 | Mike           |
+| GEORGIA       | HIGH ENCINO          | 2005-08-18 03:11:04 | Mike           |
+| MICHEAL       | HIGH ENCINO          | 2005-07-28 14:00:47 | Mike           |
+| NATHAN        | HIGH ENCINO          | 2005-06-17 22:50:36 | Mike           |
+| ROSS          | HIGH ENCINO          | 2005-08-22 14:30:09 | Mike           |
+| LAURIE        | HIGH ENCINO          | 2005-08-21 20:43:21 | Mike           |
+| BRYAN         | HIGH ENCINO          | 2005-08-01 10:19:53 | Mike           |
+| BRIAN         | HIGH ENCINO          | 2005-07-07 19:21:22 | Mike           |
+| HENRY         | HIGH ENCINO          | 2005-08-22 16:55:26 | Mike           |
+| EMILY         | HIGH ENCINO          | 2005-07-27 03:11:48 | Mike           |
+| MITCHELL      | HIGH ENCINO          | 2005-07-07 18:58:45 | Mike           |
+| ELLA          | HELLFIGHTERS SIERRA  | 2005-08-18 09:45:33 | Mike           |
+| RONNIE        | HELLFIGHTERS SIERRA  | 2005-07-07 08:19:20 | Mike           |
+| MILDRED       | HELLFIGHTERS SIERRA  | 2005-08-23 07:07:58 | Mike           |
+| ARNOLD        | HELLFIGHTERS SIERRA  | 2005-07-30 03:54:12 | Mike           |
+| TOMMY         | HELLFIGHTERS SIERRA  | 2005-08-22 12:53:58 | Mike           |
+| CHAD          | HELLFIGHTERS SIERRA  | 2005-07-27 14:58:27 | Mike           |
+| VIRGIL        | HELLFIGHTERS SIERRA  | 2005-07-10 01:13:52 | Mike           |
+| STEVEN        | HELLFIGHTERS SIERRA  | 2005-08-23 15:34:49 | Mike           |
+| ROLAND        | HELLFIGHTERS SIERRA  | 2005-08-22 20:32:39 | Mike           |
+| WENDY         | HELLFIGHTERS SIERRA  | 2005-07-31 18:25:30 | Mike           |
+| ELEANOR       | HELLFIGHTERS SIERRA  | 2005-08-22 22:26:13 | Mike           |
+| JENNY         | HELLFIGHTERS SIERRA  | 2005-07-09 16:17:44 | Mike           |
+| COURTNEY      | HELLFIGHTERS SIERRA  | 2005-06-20 21:07:54 | Mike           |
+| GARY          | HEDWIG ALTER         | 2005-08-17 04:00:40 | Mike           |
+| VIOLA         | HEDWIG ALTER         | 2005-08-02 04:04:32 | Mike           |
+| KATHLEEN      | HEDWIG ALTER         | 2005-08-23 08:42:40 | Mike           |
+| RICKY         | HEDWIG ALTER         | 2005-08-02 06:03:53 | Mike           |
+| RANDALL       | HEDWIG ALTER         | 2005-05-26 06:20:37 | Mike           |
+| EDITH         | HEDWIG ALTER         | 2005-08-23 00:26:52 | Mike           |
+| SALLY         | HEDWIG ALTER         | 2005-05-26 18:36:58 | Mike           |
+| WADE          | HEAVYWEIGHTS BEAST   | 2005-07-06 22:53:57 | Mike           |
+| JOHN          | HEAVYWEIGHTS BEAST   | 2005-08-20 01:52:30 | Mike           |
+| GINA          | HEAVYWEIGHTS BEAST   | 2005-06-18 09:44:21 | Mike           |
+| RUTH          | HEAVYWEIGHTS BEAST   | 2005-08-21 00:33:03 | Mike           |
+| LYDIA         | HEAVYWEIGHTS BEAST   | 2005-07-31 00:29:44 | Mike           |
+| VICTOR        | HEAVYWEIGHTS BEAST   | 2005-07-30 04:51:25 | Mike           |
+| KELLY         | HEAVYWEIGHTS BEAST   | 2005-08-20 12:21:05 | Mike           |
+| BERNICE       | HEAVYWEIGHTS BEAST   | 2005-07-28 01:13:26 | Mike           |
+| BRETT         | HEAVYWEIGHTS BEAST   | 2005-08-02 16:08:52 | Mike           |
+| KARL          | HEAVYWEIGHTS BEAST   | 2005-07-27 11:29:02 | Mike           |
+| TYRONE        | HEAVYWEIGHTS BEAST   | 2005-07-08 08:25:52 | Mike           |
+| GABRIEL       | HEAVENLY GUN         | 2005-08-19 09:48:52 | Mike           |
+| ERNEST        | HEAVENLY GUN         | 2005-08-17 10:19:51 | Mike           |
+| JERRY         | HEAVENLY GUN         | 2005-05-30 00:28:12 | Mike           |
+| KRISTINA      | HEAVEN FREEDOM       | 2005-05-26 01:46:20 | Mike           |
+| EARL          | HEAVEN FREEDOM       | 2005-07-27 13:11:57 | Mike           |
+| RICHARD       | HEAVEN FREEDOM       | 2005-07-09 03:59:43 | Mike           |
+| LILLIE        | HEAVEN FREEDOM       | 2005-06-18 17:35:08 | Mike           |
+| PAMELA        | HEAVEN FREEDOM       | 2005-05-30 11:58:50 | Mike           |
+| RITA          | HEAVEN FREEDOM       | 2005-07-27 05:22:04 | Mike           |
+| JEFF          | HEAVEN FREEDOM       | 2005-08-02 14:18:07 | Mike           |
+| EDNA          | HEAVEN FREEDOM       | 2005-08-19 17:27:10 | Mike           |
+| CASEY         | HEAVEN FREEDOM       | 2005-08-01 02:52:05 | Mike           |
+| PHILIP        | HEAVEN FREEDOM       | 2005-06-18 03:16:54 | Mike           |
+| KIM           | HEARTBREAKERS BRIGHT | 2005-08-21 17:35:17 | Mike           |
+| VERONICA      | HEARTBREAKERS BRIGHT | 2005-08-02 08:09:54 | Mike           |
+| HILDA         | HEARTBREAKERS BRIGHT | 2005-08-17 21:04:35 | Mike           |
+| MAX           | HEARTBREAKERS BRIGHT | 2005-06-20 16:58:19 | Mike           |
+| CHARLES       | HEARTBREAKERS BRIGHT | 2005-08-18 03:00:11 | Mike           |
+| STACY         | HEARTBREAKERS BRIGHT | 2005-08-01 13:46:02 | Mike           |
+| JUSTIN        | HEARTBREAKERS BRIGHT | 2005-07-29 03:50:54 | Mike           |
+| EDGAR         | HEARTBREAKERS BRIGHT | 2005-08-17 21:49:14 | Mike           |
+| ELSIE         | HEAD STRANGER        | 2005-08-22 18:20:07 | Mike           |
+| ALEX          | HEAD STRANGER        | 2005-06-19 11:17:12 | Mike           |
+| KELLY         | HEAD STRANGER        | 2005-05-27 02:22:26 | Mike           |
+| ANGEL         | HEAD STRANGER        | 2005-08-22 10:15:54 | Mike           |
+| BEVERLY       | HEAD STRANGER        | 2005-08-02 17:21:49 | Mike           |
+| ELIZABETH     | HEAD STRANGER        | 2005-07-09 01:57:57 | Mike           |
+| RHONDA        | HEAD STRANGER        | 2005-07-06 18:06:12 | Mike           |
+| JESSICA       | HEAD STRANGER        | 2005-06-19 01:27:46 | Mike           |
+| RYAN          | HEAD STRANGER        | 2005-08-23 04:51:52 | Mike           |
+| MARCUS        | HEAD STRANGER        | 2005-07-06 00:02:08 | Mike           |
+| KURT          | HEAD STRANGER        | 2005-08-21 14:44:41 | Mike           |
+| PEDRO         | HEAD STRANGER        | 2005-07-28 01:15:45 | Mike           |
+| EDITH         | HEAD STRANGER        | 2005-07-11 05:52:50 | Mike           |
+| GILBERT       | HEAD STRANGER        | 2005-07-30 15:05:36 | Mike           |
+| DOROTHY       | HAWK CHILL           | 2005-06-17 11:11:14 | Mike           |
+| EARL          | HAWK CHILL           | 2005-08-01 14:49:41 | Mike           |
+| SHANE         | HAUNTING PIANIST     | 2005-07-28 16:55:47 | Mike           |
+| RICARDO       | HAUNTING PIANIST     | 2005-06-18 02:08:27 | Mike           |
+| BOBBIE        | HAUNTING PIANIST     | 2005-07-28 05:38:20 | Mike           |
+| ROBERTA       | HAUNTING PIANIST     | 2005-07-27 03:53:52 | Mike           |
+| CLARA         | HAUNTING PIANIST     | 2005-07-30 04:31:08 | Mike           |
+| RUBY          | HAUNTING PIANIST     | 2005-08-16 23:54:47 | Mike           |
+| KATIE         | HAUNTING PIANIST     | 2005-07-28 23:34:22 | Mike           |
+| SEAN          | HAUNTING PIANIST     | 2005-07-11 04:06:25 | Mike           |
+| ELLA          | HAUNTING PIANIST     | 2005-06-19 23:13:04 | Mike           |
+| WENDY         | HAUNTING PIANIST     | 2005-05-30 11:20:27 | Mike           |
+| JAIME         | HAUNTED ANTITRUST    | 2005-07-09 07:25:19 | Mike           |
+| JOHN          | HARRY IDAHO          | 2005-08-21 21:07:59 | Mike           |
+| TYRONE        | HARRY IDAHO          | 2005-07-09 00:49:03 | Mike           |
+| ALBERT        | HARRY IDAHO          | 2005-06-16 11:08:28 | Mike           |
+| ARLENE        | HARRY IDAHO          | 2005-07-08 17:37:39 | Mike           |
+| CLARA         | HARRY IDAHO          | 2005-08-19 07:03:14 | Mike           |
+| BETH          | HARRY IDAHO          | 2005-08-01 23:53:45 | Mike           |
+| MELISSA       | HARRY IDAHO          | 2005-07-06 22:23:02 | Mike           |
+| MAE           | HARRY IDAHO          | 2005-06-17 01:17:12 | Mike           |
+| ANGEL         | HARRY IDAHO          | 2005-08-23 10:00:02 | Mike           |
+| MYRTLE        | HARRY IDAHO          | 2005-07-30 07:39:59 | Mike           |
+| NORA          | HARRY IDAHO          | 2005-08-20 00:56:44 | Mike           |
+| ANNA          | HARRY IDAHO          | 2005-07-28 14:53:06 | Mike           |
+| KYLE          | HARRY IDAHO          | 2005-06-20 21:32:32 | Mike           |
+| JUDITH        | HARRY IDAHO          | 2005-05-28 00:39:31 | Mike           |
+| ALFRED        | HARRY IDAHO          | 2005-07-27 21:39:42 | Mike           |
+| SHANE         | HARRY IDAHO          | 2005-07-07 13:00:20 | Mike           |
+| JEAN          | HARPER DYING         | 2005-08-02 19:44:04 | Mike           |
+| JULIAN        | HARPER DYING         | 2005-07-12 04:14:19 | Mike           |
+| CARLA         | HARPER DYING         | 2005-08-20 03:03:31 | Mike           |
+| REGINA        | HARPER DYING         | 2005-07-09 22:43:56 | Mike           |
+| BECKY         | HARPER DYING         | 2005-07-08 19:31:02 | Mike           |
+| LEWIS         | HARPER DYING         | 2005-08-19 13:28:26 | Mike           |
+| KENT          | HARPER DYING         | 2005-07-28 15:02:25 | Mike           |
+| PEDRO         | HARPER DYING         | 2005-07-06 23:11:11 | Mike           |
+| HERBERT       | HARPER DYING         | 2005-06-21 13:51:12 | Mike           |
+| STANLEY       | HARPER DYING         | 2005-08-18 06:41:30 | Mike           |
+| CRYSTAL       | HARPER DYING         | 2005-08-23 21:59:26 | Mike           |
+| GORDON        | HARPER DYING         | 2005-07-30 21:08:41 | Mike           |
+| CLAUDE        | HAROLD FRENCH        | 2005-05-26 07:30:37 | Mike           |
+| TONY          | HAROLD FRENCH        | 2005-08-21 09:16:19 | Mike           |
+| SUSAN         | HAROLD FRENCH        | 2005-07-12 10:43:53 | Mike           |
+| JULIA         | HARDLY ROBBERS       | 2005-08-18 22:52:13 | Mike           |
+| ANA           | HAPPINESS UNITED     | 2006-02-14 15:16:03 | Mike           |
+| SONIA         | HAPPINESS UNITED     | 2005-08-01 12:21:13 | Mike           |
+| WENDY         | HANOVER GALAXY       | 2005-07-28 14:23:01 | Mike           |
+| LEE           | HANOVER GALAXY       | 2005-07-05 23:41:08 | Mike           |
+| EDWIN         | HANOVER GALAXY       | 2005-06-20 23:59:57 | Mike           |
+| SEAN          | HANOVER GALAXY       | 2005-08-20 07:04:07 | Mike           |
+| MIGUEL        | HANOVER GALAXY       | 2005-07-27 00:57:42 | Mike           |
+| HILDA         | HANOVER GALAXY       | 2005-07-11 21:40:23 | Mike           |
+| HERMAN        | HANOVER GALAXY       | 2005-08-17 09:10:55 | Mike           |
+| BONNIE        | HANOVER GALAXY       | 2005-07-28 00:34:06 | Mike           |
+| DANA          | HANOVER GALAXY       | 2005-07-12 08:37:30 | Mike           |
+| VICTOR        | HANOVER GALAXY       | 2005-06-18 20:23:52 | Mike           |
+| JUDY          | HANOVER GALAXY       | 2005-05-28 11:49:00 | Mike           |
+| DAN           | HANKY OCTOBER        | 2005-08-23 18:23:30 | Mike           |
+| AMBER         | HANKY OCTOBER        | 2005-08-22 08:57:10 | Mike           |
+| MELVIN        | HANKY OCTOBER        | 2005-08-22 20:07:03 | Mike           |
+| JUDY          | HANKY OCTOBER        | 2005-07-11 22:07:32 | Mike           |
+| MARCUS        | HANKY OCTOBER        | 2005-06-15 16:25:26 | Mike           |
+| CURTIS        | HANKY OCTOBER        | 2005-08-02 21:49:06 | Mike           |
+| TYRONE        | HANKY OCTOBER        | 2005-06-20 06:39:11 | Mike           |
+| LESTER        | HANKY OCTOBER        | 2005-05-25 12:36:30 | Mike           |
+| BETTY         | HANKY OCTOBER        | 2005-07-31 03:21:16 | Mike           |
+| EDITH         | HANKY OCTOBER        | 2005-06-21 01:38:09 | Mike           |
+| MICHEAL       | HANKY OCTOBER        | 2005-08-21 20:01:18 | Mike           |
+| KEVIN         | HANKY OCTOBER        | 2005-07-29 16:17:05 | Mike           |
+| PEGGY         | HANKY OCTOBER        | 2005-07-10 12:40:17 | Mike           |
+| VALERIE       | HANKY OCTOBER        | 2005-06-18 01:41:37 | Mike           |
+| RICHARD       | HANKY OCTOBER        | 2005-08-22 23:54:04 | Mike           |
+| JULIAN        | HANGING DEEP         | 2005-07-07 11:53:14 | Mike           |
+| VICTORIA      | HANGING DEEP         | 2005-06-17 05:19:47 | Mike           |
+| JORGE         | HANGING DEEP         | 2005-05-27 04:50:56 | Mike           |
+| RICK          | HANGING DEEP         | 2005-08-17 13:09:01 | Mike           |
+| ARNOLD        | HANGING DEEP         | 2005-07-10 01:09:42 | Mike           |
+| JUNE          | HANGING DEEP         | 2005-08-20 23:42:31 | Mike           |
+| KEITH         | HANGING DEEP         | 2005-08-01 11:07:44 | Mike           |
+| NATHANIEL     | HANGING DEEP         | 2005-07-06 10:49:30 | Mike           |
+| ANTONIO       | HANGING DEEP         | 2005-05-27 23:51:12 | Mike           |
+| EILEEN        | HANDICAP BOONDOCK    | 2005-06-18 04:17:44 | Mike           |
+| JORGE         | HANDICAP BOONDOCK    | 2005-08-17 08:48:39 | Mike           |
+| BILLY         | HANDICAP BOONDOCK    | 2005-08-20 18:00:37 | Mike           |
+| JILL          | HANDICAP BOONDOCK    | 2005-05-28 07:35:37 | Mike           |
+| TRAVIS        | HANDICAP BOONDOCK    | 2005-08-02 15:39:18 | Mike           |
+| TONY          | HANDICAP BOONDOCK    | 2005-07-10 21:40:06 | Mike           |
+| YVONNE        | HANDICAP BOONDOCK    | 2005-06-21 20:45:51 | Mike           |
+| BETTY         | HANDICAP BOONDOCK    | 2005-05-28 04:25:33 | Mike           |
+| CURTIS        | HANDICAP BOONDOCK    | 2005-08-01 23:30:22 | Mike           |
+| CASEY         | HANDICAP BOONDOCK    | 2005-07-06 21:22:17 | Mike           |
+| KATHRYN       | HANDICAP BOONDOCK    | 2005-06-15 18:38:51 | Mike           |
+| JAVIER        | HANDICAP BOONDOCK    | 2005-05-29 14:09:53 | Mike           |
+| ELAINE        | HAMLET WISDOM        | 2005-08-19 10:40:10 | Mike           |
+| AGNES         | HAMLET WISDOM        | 2005-07-10 12:48:01 | Mike           |
+| CHARLES       | HAMLET WISDOM        | 2005-05-27 08:49:21 | Mike           |
+| DENISE        | HAMLET WISDOM        | 2005-07-06 15:35:06 | Mike           |
+| VIRGINIA      | HAMLET WISDOM        | 2005-08-20 10:31:01 | Mike           |
+| JAY           | HAMLET WISDOM        | 2005-08-02 04:30:02 | Mike           |
+| PHILLIP       | HAMLET WISDOM        | 2005-08-17 01:20:26 | Mike           |
+| MISTY         | HAMLET WISDOM        | 2005-07-27 09:27:45 | Mike           |
+| MITCHELL      | HALLOWEEN NUTS       | 2005-07-29 02:32:41 | Mike           |
+| CAROLE        | HALLOWEEN NUTS       | 2005-05-27 03:15:23 | Mike           |
+| ARMANDO       | HALLOWEEN NUTS       | 2005-07-08 18:13:10 | Mike           |
+| RUBEN         | HALL CASSIDY         | 2005-08-22 17:46:17 | Mike           |
+| LARRY         | HALL CASSIDY         | 2005-08-23 19:51:30 | Mike           |
+| CLIFTON       | HALL CASSIDY         | 2005-07-27 15:18:42 | Mike           |
+| MELVIN        | HALL CASSIDY         | 2005-08-22 02:48:05 | Mike           |
+| GLENDA        | HALL CASSIDY         | 2005-07-29 09:02:13 | Mike           |
+| ELLA          | HALL CASSIDY         | 2005-07-06 18:41:33 | Mike           |
+| ANTONIO       | HALL CASSIDY         | 2005-06-20 19:55:47 | Mike           |
+| SHANE         | HALL CASSIDY         | 2005-08-18 12:38:37 | Mike           |
+| KURT          | HALL CASSIDY         | 2005-07-06 13:01:47 | Mike           |
+| LYNN          | HALF OUTFIELD        | 2005-08-18 19:50:43 | Mike           |
+| CLARA         | HALF OUTFIELD        | 2005-07-27 22:34:45 | Mike           |
+| TROY          | HALF OUTFIELD        | 2005-08-20 03:30:00 | Mike           |
+| AMY           | HALF OUTFIELD        | 2005-07-07 22:48:34 | Mike           |
+| LAWRENCE      | HALF OUTFIELD        | 2006-02-14 15:16:03 | Mike           |
+| FRED          | HALF OUTFIELD        | 2005-07-29 22:30:16 | Mike           |
+| CHRISTIAN     | HALF OUTFIELD        | 2006-02-14 15:16:03 | Mike           |
+| CODY          | HALF OUTFIELD        | 2005-08-02 19:05:06 | Mike           |
+| JUANITA       | HALF OUTFIELD        | 2005-07-12 01:14:03 | Mike           |
+| ALEX          | HALF OUTFIELD        | 2005-06-18 18:30:26 | Mike           |
+| ELSIE         | HALF OUTFIELD        | 2005-08-17 09:29:22 | Mike           |
+| ERIKA         | HALF OUTFIELD        | 2005-07-06 11:29:00 | Mike           |
+| GERALDINE     | HALF OUTFIELD        | 2005-08-22 14:12:05 | Mike           |
+| ALMA          | HALF OUTFIELD        | 2005-07-09 01:12:57 | Mike           |
+| CRYSTAL       | GUYS FALCON          | 2005-08-19 22:57:25 | Mike           |
+| FLORENCE      | GUYS FALCON          | 2005-07-27 18:02:08 | Mike           |
+| NATHANIEL     | GUYS FALCON          | 2005-06-20 05:17:22 | Mike           |
+| CHRISTINE     | GUYS FALCON          | 2005-05-25 20:26:42 | Mike           |
+| GLADYS        | GUYS FALCON          | 2005-07-30 19:42:07 | Mike           |
+| STEVEN        | GUNFIGHTER MUSSOLINI | 2005-08-21 04:55:37 | Mike           |
+| HARRY         | GUNFIGHTER MUSSOLINI | 2005-08-01 19:21:42 | Mike           |
+| CATHY         | GUNFIGHTER MUSSOLINI | 2005-08-23 03:30:45 | Mike           |
+| LESLIE        | GUNFIGHTER MUSSOLINI | 2005-07-11 05:05:30 | Mike           |
+| PHILLIP       | GUNFIGHTER MUSSOLINI | 2005-08-19 09:44:17 | Mike           |
+| WALTER        | GUNFIGHTER MUSSOLINI | 2005-07-11 04:52:40 | Mike           |
+| OLGA          | GUNFIGHTER MUSSOLINI | 2005-06-17 23:45:47 | Mike           |
+| CHARLIE       | GUNFIGHT MOON        | 2005-06-20 18:57:48 | Mike           |
+| TERESA        | GUNFIGHT MOON        | 2005-05-26 07:03:49 | Mike           |
+| ALEX          | GUNFIGHT MOON        | 2005-08-18 07:18:10 | Mike           |
+| AUSTIN        | GUNFIGHT MOON        | 2005-07-09 04:42:00 | Mike           |
+| SHELLY        | GUNFIGHT MOON        | 2005-08-17 14:16:48 | Mike           |
+| CHERYL        | GUNFIGHT MOON        | 2005-07-08 20:06:19 | Mike           |
+| ENRIQUE       | GUNFIGHT MOON        | 2006-02-14 15:16:03 | Mike           |
+| BILLIE        | GUNFIGHT MOON        | 2005-07-27 10:20:27 | Mike           |
+| YVONNE        | GUNFIGHT MOON        | 2005-07-08 16:56:34 | Mike           |
+| LEROY         | GUNFIGHT MOON        | 2005-05-27 20:57:07 | Mike           |
+| LAUREN        | GUNFIGHT MOON        | 2005-07-30 11:30:37 | Mike           |
+| DUANE         | GUNFIGHT MOON        | 2005-07-06 18:00:19 | Mike           |
+| CHERYL        | GUNFIGHT MOON        | 2005-06-20 04:13:04 | Mike           |
+| GLORIA        | GUNFIGHT MOON        | 2005-05-28 00:43:41 | Mike           |
+| JERRY         | GUNFIGHT MOON        | 2006-02-14 15:16:03 | Mike           |
+| ASHLEY        | GUN BONNIE           | 2005-08-19 10:38:56 | Mike           |
+| SONIA         | GUN BONNIE           | 2005-05-27 15:32:57 | Mike           |
+| BESSIE        | GUN BONNIE           | 2005-07-31 12:58:20 | Mike           |
+| DON           | GUN BONNIE           | 2005-07-12 19:24:07 | Mike           |
+| STEVE         | GUN BONNIE           | 2005-08-18 02:59:09 | Mike           |
+| LUCY          | GUN BONNIE           | 2005-07-28 10:02:01 | Mike           |
+| JOAN          | GUN BONNIE           | 2005-06-16 04:52:28 | Mike           |
+| SUE           | GUN BONNIE           | 2005-05-28 19:35:45 | Mike           |
+| CONNIE        | GUN BONNIE           | 2005-07-09 22:24:11 | Mike           |
+| ELEANOR       | GUN BONNIE           | 2005-06-15 22:02:35 | Mike           |
+| JENNY         | GUN BONNIE           | 2005-05-25 06:20:46 | Mike           |
+| MICHELLE      | GUN BONNIE           | 2005-08-17 17:53:09 | Mike           |
+| LOUISE        | GUN BONNIE           | 2005-08-02 19:25:13 | Mike           |
+| JANET         | GUN BONNIE           | 2005-07-11 01:24:44 | Mike           |
+| STEVEN        | GUN BONNIE           | 2005-06-18 22:01:31 | Mike           |
+| DWAYNE        | GUN BONNIE           | 2005-08-17 19:29:44 | Mike           |
+| CHRISTOPHER   | GROUNDHOG UNCUT      | 2005-07-11 00:18:21 | Mike           |
+| JUNE          | GROUNDHOG UNCUT      | 2005-05-27 09:34:39 | Mike           |
+| HUGH          | GROUNDHOG UNCUT      | 2005-08-18 10:37:49 | Mike           |
+| PAULA         | GROUNDHOG UNCUT      | 2005-07-27 19:02:19 | Mike           |
+| RHONDA        | GROUNDHOG UNCUT      | 2005-07-11 03:12:19 | Mike           |
+| PATRICK       | GROUNDHOG UNCUT      | 2005-06-18 01:06:01 | Mike           |
+| LORI          | GROUNDHOG UNCUT      | 2005-07-28 05:50:11 | Mike           |
+| RUSSELL       | GROUNDHOG UNCUT      | 2005-08-21 15:08:31 | Mike           |
+| PAUL          | GROUNDHOG UNCUT      | 2005-06-16 07:33:18 | Mike           |
+| VALERIE       | GROUNDHOG UNCUT      | 2005-08-01 19:31:24 | Mike           |
+| IVAN          | GROSSE WONDERFUL     | 2005-08-17 20:36:37 | Mike           |
+| NATHAN        | GROSSE WONDERFUL     | 2005-07-09 06:13:54 | Mike           |
+| HERMAN        | GROSSE WONDERFUL     | 2005-07-28 08:55:27 | Mike           |
+| BOBBIE        | GROOVE FICTION       | 2005-07-30 21:19:26 | Mike           |
+| ESTHER        | GROOVE FICTION       | 2005-07-08 20:50:05 | Mike           |
+| JEFFERY       | GROOVE FICTION       | 2005-06-16 18:12:17 | Mike           |
+| TIM           | GROOVE FICTION       | 2005-05-28 22:07:30 | Mike           |
+| ENRIQUE       | GROOVE FICTION       | 2005-08-21 11:13:35 | Mike           |
+| TERRANCE      | GROOVE FICTION       | 2005-07-26 23:15:50 | Mike           |
+| DAVID         | GROOVE FICTION       | 2005-07-10 12:20:36 | Mike           |
+| DOROTHY       | GROOVE FICTION       | 2005-08-18 09:19:12 | Mike           |
+| TAMARA        | GROOVE FICTION       | 2005-08-19 02:39:47 | Mike           |
+| THELMA        | GROOVE FICTION       | 2005-08-19 13:48:54 | Mike           |
+| KENT          | GROOVE FICTION       | 2005-07-27 21:53:21 | Mike           |
+| SUZANNE       | GROOVE FICTION       | 2005-07-06 21:46:36 | Mike           |
+| MARCIA        | GROOVE FICTION       | 2005-06-21 21:46:56 | Mike           |
+| ROY           | GRIT CLOCKWORK       | 2005-08-18 01:51:44 | Mike           |
+| JEFFREY       | GRIT CLOCKWORK       | 2005-07-28 15:35:41 | Mike           |
+| REGINALD      | GRIT CLOCKWORK       | 2005-07-28 12:10:02 | Mike           |
+| IVAN          | GRIT CLOCKWORK       | 2005-06-18 05:46:15 | Mike           |
+| RHONDA        | GRIT CLOCKWORK       | 2005-08-19 12:55:30 | Mike           |
+| MEGAN         | GRIT CLOCKWORK       | 2005-07-27 13:58:57 | Mike           |
+| MARGIE        | GRIT CLOCKWORK       | 2005-06-19 16:55:59 | Mike           |
+| YVONNE        | GRIT CLOCKWORK       | 2005-05-25 05:12:29 | Mike           |
+| BARRY         | GRIT CLOCKWORK       | 2005-08-17 04:49:46 | Mike           |
+| BEVERLY       | GRIT CLOCKWORK       | 2005-07-28 03:11:29 | Mike           |
+| ANDREW        | GRIT CLOCKWORK       | 2005-08-18 10:24:17 | Mike           |
+| NICOLE        | GRIT CLOCKWORK       | 2005-07-08 04:48:36 | Mike           |
+| ARMANDO       | GRIT CLOCKWORK       | 2005-06-21 19:31:40 | Mike           |
+| ANNETTE       | GRINCH MASSAGE       | 2005-07-31 15:31:25 | Mike           |
+| BERNICE       | GRINCH MASSAGE       | 2005-08-20 17:22:51 | Mike           |
+| TONYA         | GRINCH MASSAGE       | 2005-07-27 05:46:43 | Mike           |
+| MARION        | GRINCH MASSAGE       | 2005-08-01 06:24:26 | Mike           |
+| SUZANNE       | GRINCH MASSAGE       | 2005-07-07 10:59:39 | Mike           |
+| VINCENT       | GRINCH MASSAGE       | 2005-08-20 08:01:39 | Mike           |
+| TONYA         | GRINCH MASSAGE       | 2005-08-01 15:57:55 | Mike           |
+| MITCHELL      | GREEK EVERYONE       | 2005-08-19 23:38:02 | Mike           |
+| LEON          | GREEK EVERYONE       | 2005-08-19 20:18:53 | Mike           |
+| JENNY         | GREEK EVERYONE       | 2005-07-27 17:32:20 | Mike           |
+| GILBERT       | GREEDY ROOTS         | 2005-08-23 18:01:31 | Mike           |
+| ELLEN         | GREEDY ROOTS         | 2005-07-28 13:48:09 | Mike           |
+| ALEXANDER     | GREEDY ROOTS         | 2005-06-19 08:07:31 | Mike           |
+| GWENDOLYN     | GREEDY ROOTS         | 2005-07-11 22:23:09 | Mike           |
+| ALLEN         | GREEDY ROOTS         | 2005-07-29 15:54:22 | Mike           |
++---------------+----------------------+---------------------+----------------+
+500 rows in set (0.0423 sec)
+ MySQL  localhost:3306 ssl  sakila  SQL >
