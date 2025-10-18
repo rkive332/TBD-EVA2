@@ -1,0 +1,246 @@
+MySQL Shell 8.0.43
+
+Copyright (c) 2016, 2025, Oracle and/or its affiliates.
+Oracle is a registered trademark of Oracle Corporation and/or its affiliates.
+Other names may be trademarks of their respective owners.
+
+Type '\help' or '\?' for help; '\quit' to exit.
+ MySQL  JS > \sql
+Switching to SQL mode... Commands end with ;
+ MySQL  SQL >
+ MySQL  SQL > \c --mc root@localhost
+Creating a Classic session to 'root@localhost'
+Fetching global names for auto-completion... Press ^C to stop.
+Your MySQL connection id is 14
+Server version: 8.0.43 MySQL Community Server - GPL
+No default schema selected; type \use <schema> to set one.
+ MySQL  localhost:3306 ssl  SQL > SHOW DATABASES;
++--------------------+
+| Database           |
++--------------------+
+| creditcards        |
+| examenpractico_1   |
+| humanresources     |
+| information_schema |
+| mysql              |
+| orders             |
+| performance_schema |
+| prueba_tbd         |
+| sakila             |
+| sys                |
+| tbd1               |
+| tbd2               |
+| world              |
++--------------------+
+13 rows in set (0.0018 sec)
+ MySQL  localhost:3306 ssl  SQL > USE tbd2;
+Default schema set to `tbd2`.
+Fetching global names, object names from `tbd2` for auto-completion... Press ^C to stop.
+ MySQL  localhost:3306 ssl  tbd2  SQL >
+ MySQL  localhost:3306 ssl  tbd2  SQL > CREATE TABLE tablaA(
+                                     -> id INT,
+                                     -> valor VARCHAR(1));
+Query OK, 0 rows affected (0.0438 sec)
+ MySQL  localhost:3306 ssl  tbd2  SQL > CREATE TABLE tablaB(
+                                     -> id INT,
+                                     -> valor VARCHAR(1));
+Query OK, 0 rows affected (0.0426 sec)
+ MySQL  localhost:3306 ssl  tbd2  SQL >
+ MySQL  localhost:3306 ssl  tbd2  SQL > INSERT INTO tablaA
+                                     -> VALUES(1, "A"), (2, "B"), (3, "C"), (4, "D");
+Query OK, 4 rows affected (0.0061 sec)
+
+Records: 4  Duplicates: 0  Warnings: 0
+ MySQL  localhost:3306 ssl  tbd2  SQL >
+ MySQL  localhost:3306 ssl  tbd2  SQL > INSERT INTO tablaB
+                                     -> VALUES(1, "X"), (2, "Y"), (3, "Z"), (4, "A"), (5, "B");
+Query OK, 5 rows affected (0.0066 sec)
+
+Records: 5  Duplicates: 0  Warnings: 0
+ MySQL  localhost:3306 ssl  tbd2  SQL >
+ MySQL  localhost:3306 ssl  tbd2  SQL > SELECT * FROM tablaA;
++----+-------+
+| id | valor |
++----+-------+
+|  1 | A     |
+|  2 | B     |
+|  3 | C     |
+|  4 | D     |
++----+-------+
+4 rows in set (0.0006 sec)
+ MySQL  localhost:3306 ssl  tbd2  SQL >
+ MySQL  localhost:3306 ssl  tbd2  SQL > SELECT * FROM tablaB;
++----+-------+
+| id | valor |
++----+-------+
+|  1 | X     |
+|  2 | Y     |
+|  3 | Z     |
+|  4 | A     |
+|  5 | B     |
++----+-------+
+5 rows in set (0.0008 sec)
+ MySQL  localhost:3306 ssl  tbd2  SQL >
+ MySQL  localhost:3306 ssl  tbd2  SQL > SELECT * FROM tablaA
+                                     -> UNION
+                                     -> SELECT * FROM tablaB;
++----+-------+
+| id | valor |
++----+-------+
+|  1 | A     |
+|  2 | B     |
+|  3 | C     |
+|  4 | D     |
+|  1 | X     |
+|  2 | Y     |
+|  3 | Z     |
+|  4 | A     |
+|  5 | B     |
++----+-------+
+9 rows in set (0.0010 sec)
+ MySQL  localhost:3306 ssl  tbd2  SQL > SELECT * FROM tablaA WHERE valor IN (
+                                     -> SELECT DISTINCT valor FROM tablaB);
++----+-------+
+| id | valor |
++----+-------+
+|  1 | A     |
+|  2 | B     |
++----+-------+
+2 rows in set (0.0128 sec)
+ MySQL  localhost:3306 ssl  tbd2  SQL > SELECT * FROM  tablaA WHERE valor NOT IN (
+                                     -> SELECT DISTINCT valor FROM tablaB);
++----+-------+
+| id | valor |
++----+-------+
+|  3 | C     |
+|  4 | D     |
++----+-------+
+2 rows in set (0.0022 sec)
+ MySQL  localhost:3306 ssl  tbd2  SQL >
+ MySQL  localhost:3306 ssl  tbd2  SQL > SELECT a.valor, b.valor
+                                     -> FROM tablaA a, tablaB b;
++-------+-------+
+| valor | valor |
++-------+-------+
+| D     | X     |
+| C     | X     |
+| B     | X     |
+| A     | X     |
+| D     | Y     |
+| C     | Y     |
+| B     | Y     |
+| A     | Y     |
+| D     | Z     |
+| C     | Z     |
+| B     | Z     |
+| A     | Z     |
+| D     | A     |
+| C     | A     |
+| B     | A     |
+| A     | A     |
+| D     | B     |
+| C     | B     |
+| B     | B     |
+| A     | B     |
++-------+-------+
+20 rows in set (0.0012 sec)
+ MySQL  localhost:3306 ssl  tbd2  SQL > USE mysql;
+Default schema set to `mysql`.
+Fetching global names, object names from `mysql` for auto-completion... Press ^C to stop.
+ MySQL  localhost:3306 ssl  mysql  SQL > SHOW TABLES;
++------------------------------------------------------+
+| Tables_in_mysql                                      |
++------------------------------------------------------+
+| columns_priv                                         |
+| component                                            |
+| db                                                   |
+| default_roles                                        |
+| engine_cost                                          |
+| func                                                 |
+| general_log                                          |
+| global_grants                                        |
+| gtid_executed                                        |
+| help_category                                        |
+| help_keyword                                         |
+| help_relation                                        |
+| help_topic                                           |
+| innodb_index_stats                                   |
+| innodb_table_stats                                   |
+| ndb_binlog_index                                     |
+| password_history                                     |
+| plugin                                               |
+| procs_priv                                           |
+| proxies_priv                                         |
+| replication_asynchronous_connection_failover         |
+| replication_asynchronous_connection_failover_managed |
+| replication_group_configuration_version              |
+| replication_group_member_actions                     |
+| role_edges                                           |
+| server_cost                                          |
+| servers                                              |
+| slave_master_info                                    |
+| slave_relay_log_info                                 |
+| slave_worker_info                                    |
+| slow_log                                             |
+| tables_priv                                          |
+| time_zone                                            |
+| time_zone_leap_second                                |
+| time_zone_name                                       |
+| time_zone_transition                                 |
+| time_zone_transition_type                            |
+| user                                                 |
++------------------------------------------------------+
+38 rows in set (0.0037 sec)
+ MySQL  localhost:3306 ssl  mysql  SQL > SELECT * FROM user;
++-----------+------------------+-------------+-------------+-------------+-------------+-------------+-----------+-------------+---------------+--------------+-----------+------------+-----------------+------------+------------+--------------+------------+-----------------------+------------------+--------------+-----------------+------------------+------------------+----------------+---------------------+--------------------+------------------+------------+--------------+------------------------+----------+------------+-------------+--------------+---------------+-------------+-----------------+----------------------+-----------------------+------------------------------------------------------------------------+------------------+-----------------------+-------------------+----------------+------------------+----------------+------------------------+---------------------+--------------------------+-----------------+
+| Host      | User             | Select_priv | Insert_priv | Update_priv | Delete_priv | Create_priv | Drop_priv | Reload_priv | Shutdown_priv | Process_priv | File_priv | Grant_priv | References_priv | Index_priv | Alter_priv | Show_db_priv | Super_priv | Create_tmp_table_priv | Lock_tables_priv | Execute_priv | Repl_slave_priv | Repl_client_priv | Create_view_priv | Show_view_priv | Create_routine_priv | Alter_routine_priv | Create_user_priv | Event_priv | Trigger_priv | Create_tablespace_priv | ssl_type | ssl_cipher | x509_issuer | x509_subject | max_questions | max_updates | max_connections | max_user_connections | plugin                | authentication_string                                                  | password_expired | password_last_changed | password_lifetime | account_locked | Create_role_priv | Drop_role_priv | Password_reuse_history | Password_reuse_time | Password_require_current | User_attributes |
++-----------+------------------+-------------+-------------+-------------+-------------+-------------+-----------+-------------+---------------+--------------+-----------+------------+-----------------+------------+------------+--------------+------------+-----------------------+------------------+--------------+-----------------+------------------+------------------+----------------+---------------------+--------------------+------------------+------------+--------------+------------------------+----------+------------+-------------+--------------+---------------+-------------+-----------------+----------------------+-----------------------+------------------------------------------------------------------------+------------------+-----------------------+-------------------+----------------+------------------+----------------+------------------------+---------------------+--------------------------+-----------------+
+| localhost | mysql.infoschema | Y           | N           | N           | N           | N           | N         | N           | N             | N            | N         | N          | N               | N          | N          | N            | N          | N                     | N                | N            | N               | N                | N                | N              | N                   | N                  | N                | N          | N            | N                      |          | 0x         | 0x          | 0x           |             0 |           0 |               0 |                    0 | caching_sha2_password | $A$005$THISISACOMBINATIONOFINVALIDSALTANDPASSWORDTHATMUSTNEVERBRBEUSED | N                | 2025-08-20 19:39:13   |              NULL | Y              | N                | N              |                   NULL |                NULL | NULL                     | NULL            |
+| localhost | mysql.session    | N           | N           | N           | N           | N           | N         | N           | Y             | N            | N         | N          | N               | N          | N          | N            | Y          | N                     | N                | N            | N               | N                | N                | N              | N                   | N                  | N                | N          | N            | N                      |          | 0x         | 0x          | 0x           |             0 |           0 |               0 |                    0 | caching_sha2_password | $A$005$THISISACOMBINATIONOFINVALIDSALTANDPASSWORDTHATMUSTNEVERBRBEUSED | N                | 2025-08-20 19:39:13   |              NULL | Y              | N                | N              |                   NULL |                NULL | NULL                     | NULL            |
+| localhost | mysql.sys        | N           | N           | N           | N           | N           | N         | N           | N             | N            | N         | N          | N               | N          | N          | N            | N          | N                     | N                | N            | N               | N                | N                | N              | N                   | N                  | N                | N          | N            | N                      |          | 0x         | 0x          | 0x           |             0 |           0 |               0 |                    0 | caching_sha2_password | $A$005$THISISACOMBINATIONOFINVALIDSALTANDPASSWORDTHATMUSTNEVERBRBEUSED | N                | 2025-08-20 19:39:13   |              NULL | Y              | N                | N              |                   NULL |                NULL | NULL                     | NULL            |
+| localhost | rkive            | Y           | Y           | Y           | Y           | Y           | Y         | Y           | Y             | Y            | Y         | Y          | Y               | Y          | Y          | Y            | Y          | Y                     | Y                | Y            | Y               | Y                | Y                | Y              | Y                   | Y                  | Y                | Y          | Y            | Y                      |          | 0x         | 0x          | 0x           |             0 |           0 |               0 |                    0 | caching_sha2_password | $A$005$cq
+NWk\}Hg@xb<eeyMBzmHXKXugHsV0CFAO/kKh3sQI0kw0ui.Zp1Y.Po5 | N                | 2025-08-20 19:39:17   |              NULL | N              | N                | N              |                   NULL |                NULL | NULL                     | NULL            |
+| localhost | root             | Y           | Y           | Y           | Y           | Y           | Y         | Y           | Y             | Y            | Y         | Y          | Y               | Y          | Y          | Y            | Y          | Y                     | Y                | Y            | Y               | Y                | Y                | Y              | Y                   | Y                  | Y                | Y          | Y            | Y                      |          | 0x         | 0x          | 0x           |             0 |           0 |               0 |                    0 | caching_sha2_password | $A$005$PR    ~}B+E␦K
+hporP4bCL1aSgL8YguPWfso2MqL/9kTUj0zL1zOe8BBWx. | N                | 2025-08-20 19:39:17   |              NULL | N              | Y                | Y              |                   NULL |                NULL | NULL                     | NULL            |
++-----------+------------------+-------------+-------------+-------------+-------------+-------------+-----------+-------------+---------------+--------------+-----------+------------+-----------------+------------+------------+--------------+------------+-----------------------+------------------+--------------+-----------------+------------------+------------------+----------------+---------------------+--------------------+------------------+------------+--------------+------------------------+----------+------------+-------------+--------------+---------------+-------------+-----------------+----------------------+-----------------------+------------------------------------------------------------------------+------------------+-----------------------+-------------------+----------------+------------------+----------------+------------------------+---------------------+--------------------------+-----------------+
+5 rows in set (0.0014 sec)
+ MySQL  localhost:3306 ssl  mysql  SQL > CREATE user "prueba"@"localhost"
+                                      -> IDENTIFIED BY "123456789";
+Query OK, 0 rows affected (0.0318 sec)
+ MySQL  localhost:3306 ssl  mysql  SQL > SELECT * FROM user;
++---------------+------------------+-------------+-------------+-------------+-------------+-------------+-----------+-------------+---------------+--------------+-----------+------------+-----------------+------------+------------+--------------+------------+-----------------------+------------------+--------------+-----------------+------------------+------------------+----------------+---------------------+--------------------+------------------+------------+--------------+------------------------+----------+------------+-------------+--------------+---------------+-------------+-----------------+----------------------+-----------------------+------------------------------------------------------------------------+------------------+-----------------------+-------------------+----------------+------------------+----------------+------------------------+---------------------+--------------------------+-----------------+
+| Host          | User             | Select_priv | Insert_priv | Update_priv | Delete_priv | Create_priv | Drop_priv | Reload_priv | Shutdown_priv | Process_priv | File_priv | Grant_priv | References_priv | Index_priv | Alter_priv | Show_db_priv | Super_priv | Create_tmp_table_priv | Lock_tables_priv | Execute_priv | Repl_slave_priv | Repl_client_priv | Create_view_priv | Show_view_priv | Create_routine_priv | Alter_routine_priv | Create_user_priv | Event_priv | Trigger_priv | Create_tablespace_priv | ssl_type | ssl_cipher | x509_issuer | x509_subject | max_questions | max_updates | max_connections | max_user_connections | plugin                | authentication_string                                                  | password_expired | password_last_changed | password_lifetime | account_locked | Create_role_priv | Drop_role_priv | Password_reuse_history | Password_reuse_time | Password_require_current | User_attributes |
++---------------+------------------+-------------+-------------+-------------+-------------+-------------+-----------+-------------+---------------+--------------+-----------+------------+-----------------+------------+------------+--------------+------------+-----------------------+------------------+--------------+-----------------+------------------+------------------+----------------+---------------------+--------------------+------------------+------------+--------------+------------------------+----------+------------+-------------+--------------+---------------+-------------+-----------------+----------------------+-----------------------+------------------------------------------------------------------------+------------------+-----------------------+-------------------+----------------+------------------+----------------+------------------------+---------------------+--------------------------+-----------------+
+| localhost
+;
+c | prueba           | N           | N           | N           | N           | N           | N         | N           | N             | N            | N         | N          | N               | N          | N          | N            | N          | N                     | N                | N            | N               | N                | N                | N              | N                   | N                  | N                | N          | N            | N                      |          | 0x         | 0x          | 0x           |             0 |           0 |               0 |                    0 | caching_sha2_password |                                                                        | N                | 2025-10-15 19:30:26   |              NULL | N              | N                | N              |                   NULL |                NULL | NULL                     | NULL            |
+| localhost     | mysql.infoschema | Y           | N           | N           | N           | N           | N         | N           | N             | N            | N         | N          | N               | N          | N          | N            | N          | N                     | N                | N            | N               | N                | N                | N              | N                   | N                  | N                | N          | N            | N                      |          | 0x         | 0x          | 0x           |             0 |           0 |               0 |                    0 | caching_sha2_password | $A$005$THISISACOMBINATIONOFINVALIDSALTANDPASSWORDTHATMUSTNEVERBRBEUSED | N                | 2025-08-20 19:39:13   |              NULL | Y              | N                | N              |                   NULL |                NULL | NULL                     | NULL            |
+| localhost     | mysql.session    | N           | N           | N           | N           | N           | N         | N           | Y             | N            | N         | N          | N               | N          | N          | N            | Y          | N                     | N                | N            | N               | N                | N                | N              | N                   | N                  | N                | N          | N            | N                      |          | 0x         | 0x          | 0x           |             0 |           0 |               0 |                    0 | caching_sha2_password | $A$005$THISISACOMBINATIONOFINVALIDSALTANDPASSWORDTHATMUSTNEVERBRBEUSED | N                | 2025-08-20 19:39:13   |              NULL | Y              | N                | N              |                   NULL |                NULL | NULL                     | NULL            |
+| localhost     | mysql.sys        | N           | N           | N           | N           | N           | N         | N           | N             | N            | N         | N          | N               | N          | N          | N            | N          | N                     | N                | N            | N               | N                | N                | N              | N                   | N                  | N                | N          | N            | N                      |          | 0x         | 0x          | 0x           |             0 |           0 |               0 |                    0 | caching_sha2_password | $A$005$THISISACOMBINATIONOFINVALIDSALTANDPASSWORDTHATMUSTNEVERBRBEUSED | N                | 2025-08-20 19:39:13   |              NULL | Y              | N                | N              |                   NULL |                NULL | NULL                     | NULL            |
+| localhost     | prueba           | N           | N           | N           | N           | N           | N         | N           | N             | N            | N         | N          | N               | N          | N          | N            | N          | N                     | N                | N            | N               | N                | N                | N              | N                   | N                  | N                | N          | N            | N                      |          | 0x         | 0x          | 0x           |             0 |           0 |               0 |                    0 | caching_sha2_password | $A$005$CRyD0GU%Ikr␦r2sMmbbblRJq26W1Jaq3NZZU41Bf6oVD.EgmFd0AECmA1 | N                | 2025-10-15 19:32:22   |              NULL | N              | N                | N              |                   NULL |                NULL | NULL                     | NULL            |
+| localhost     | rkive            | Y           | Y           | Y           | Y           | Y           | Y         | Y           | Y             | Y            | Y         | Y          | Y               | Y          | Y          | Y            | Y          | Y                     | Y                | Y            | Y               | Y                | Y                | Y              | Y                   | Y                  | Y                | Y          | Y            | Y                      |          | 0x         | 0x          | 0x           |             0 |           0 |               0 |                    0 | caching_sha2_password | $A$005$cq
+NWk\}Hg@xb<eeyMBzmHXKXugHsV0CFAO/kKh3sQI0kw0ui.Zp1Y.Po5 | N                | 2025-08-20 19:39:17   |              NULL | N              | N                | N              |                   NULL |                NULL | NULL                     | NULL            |
+| localhost     | root             | Y           | Y           | Y           | Y           | Y           | Y         | Y           | Y             | Y            | Y         | Y          | Y               | Y          | Y          | Y            | Y          | Y                     | Y                | Y            | Y               | Y                | Y                | Y              | Y                   | Y                  | Y                | Y          | Y            | Y                      |          | 0x         | 0x          | 0x           |             0 |           0 |               0 |                    0 | caching_sha2_password | $A$005$PR        ~}B+E␦K
+hporP4bCL1aSgL8YguPWfso2MqL/9kTUj0zL1zOe8BBWx. | N                | 2025-08-20 19:39:17   |              NULL | N              | Y                | Y              |                   NULL |                NULL | NULL                     | NULL            |
++---------------+------------------+-------------+-------------+-------------+-------------+-------------+-----------+-------------+---------------+--------------+-----------+------------+-----------------+------------+------------+--------------+------------+-----------------------+------------------+--------------+-----------------+------------------+------------------+----------------+---------------------+--------------------+------------------+------------+--------------+------------------------+----------+------------+-------------+--------------+---------------+-------------+-----------------+----------------------+-----------------------+------------------------------------------------------------------------+------------------+-----------------------+-------------------+----------------+------------------+----------------+------------------------+---------------------+--------------------------+-----------------+
+7 rows in set (0.0016 sec)
+ MySQL  localhost:3306 ssl  mysql  SQL > \c --mc prueba@localhost
+Creating a Classic session to 'prueba@localhost'
+Please provide the password for 'prueba@localhost': *********
+Save password for 'prueba@localhost'? [Y]es/[N]o/Ne[v]er (default No): N
+Fetching global names for auto-completion... Press ^C to stop.
+Error during auto-completion cache update: Access denied; you need (at least one of) the PROCESS privilege(s) for this operation
+Closing old connection...
+Your MySQL connection id is 15
+Server version: 8.0.43 MySQL Community Server - GPL
+No default schema selected; type \use <schema> to set one.
+ MySQL  localhost:3306 ssl  SQL > SHOW DATABASES;
++--------------------+
+| Database           |
++--------------------+
+| information_schema |
+| performance_schema |
++--------------------+
+2 rows in set (0.0020 sec)
+ MySQL  localhost:3306 ssl  SQL > CREATE DATABASE miprueba;
+ERROR: 1044 (42000): Access denied for user 'prueba'@'localhost' to database 'miprueba'
