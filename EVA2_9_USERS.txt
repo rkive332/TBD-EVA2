@@ -244,3 +244,328 @@ No default schema selected; type \use <schema> to set one.
 2 rows in set (0.0020 sec)
  MySQL  localhost:3306 ssl  SQL > CREATE DATABASE miprueba;
 ERROR: 1044 (42000): Access denied for user 'prueba'@'localhost' to database 'miprueba'
+ MySQL  localhost:3306 ssl  SQL > USE information_schema;
+Default schema set to `information_schema`.
+Fetching global names, object names from `information_schema` for auto-completion... Press ^C to stop.
+ MySQL  localhost:3306 ssl  information_... SQL > SHOW TABLES;
++---------------------------------------+
+| Tables_in_information_schema          |
++---------------------------------------+
+| ADMINISTRABLE_ROLE_AUTHORIZATIONS     |
+| APPLICABLE_ROLES                      |
+| CHARACTER_SETS                        |
+| CHECK_CONSTRAINTS                     |
+| COLLATION_CHARACTER_SET_APPLICABILITY |
+| COLLATIONS                            |
+| COLUMN_PRIVILEGES                     |
+| COLUMN_STATISTICS                     |
+| COLUMNS                               |
+| COLUMNS_EXTENSIONS                    |
+| ENABLED_ROLES                         |
+| ENGINES                               |
+| EVENTS                                |
+| FILES                                 |
+| INNODB_BUFFER_PAGE                    |
+| INNODB_BUFFER_PAGE_LRU                |
+| INNODB_BUFFER_POOL_STATS              |
+| INNODB_CACHED_INDEXES                 |
+| INNODB_CMP                            |
+| INNODB_CMP_PER_INDEX                  |
+| INNODB_CMP_PER_INDEX_RESET            |
+| INNODB_CMP_RESET                      |
+| INNODB_CMPMEM                         |
+| INNODB_CMPMEM_RESET                   |
+| INNODB_COLUMNS                        |
+| INNODB_DATAFILES                      |
+| INNODB_FIELDS                         |
+| INNODB_FOREIGN                        |
+| INNODB_FOREIGN_COLS                   |
+| INNODB_FT_BEING_DELETED               |
+| INNODB_FT_CONFIG                      |
+| INNODB_FT_DEFAULT_STOPWORD            |
+| INNODB_FT_DELETED                     |
+| INNODB_FT_INDEX_CACHE                 |
+| INNODB_FT_INDEX_TABLE                 |
+| INNODB_INDEXES                        |
+| INNODB_METRICS                        |
+| INNODB_SESSION_TEMP_TABLESPACES       |
+| INNODB_TABLES                         |
+| INNODB_TABLESPACES                    |
+| INNODB_TABLESPACES_BRIEF              |
+| INNODB_TABLESTATS                     |
+| INNODB_TEMP_TABLE_INFO                |
+| INNODB_TRX                            |
+| INNODB_VIRTUAL                        |
+| KEY_COLUMN_USAGE                      |
+| KEYWORDS                              |
+| OPTIMIZER_TRACE                       |
+| PARAMETERS                            |
+| PARTITIONS                            |
+| PLUGINS                               |
+| PROCESSLIST                           |
+| PROFILING                             |
+| REFERENTIAL_CONSTRAINTS               |
+| RESOURCE_GROUPS                       |
+| ROLE_COLUMN_GRANTS                    |
+| ROLE_ROUTINE_GRANTS                   |
+| ROLE_TABLE_GRANTS                     |
+| ROUTINES                              |
+| SCHEMA_PRIVILEGES                     |
+| SCHEMATA                              |
+| SCHEMATA_EXTENSIONS                   |
+| ST_GEOMETRY_COLUMNS                   |
+| ST_SPATIAL_REFERENCE_SYSTEMS          |
+| ST_UNITS_OF_MEASURE                   |
+| STATISTICS                            |
+| TABLE_CONSTRAINTS                     |
+| TABLE_CONSTRAINTS_EXTENSIONS          |
+| TABLE_PRIVILEGES                      |
+| TABLES                                |
+| TABLES_EXTENSIONS                     |
+| TABLESPACES                           |
+| TABLESPACES_EXTENSIONS                |
+| TRIGGERS                              |
+| USER_ATTRIBUTES                       |
+| USER_PRIVILEGES                       |
+| VIEW_ROUTINE_USAGE                    |
+| VIEW_TABLE_USAGE                      |
+| VIEWS                                 |
++---------------------------------------+
+79 rows in set (0.0035 sec)
+ MySQL  localhost:3306 ssl  information_schema  SQL > SELECT * FROM views;
+Empty set (0.0170 sec)
+ MySQL  localhost:3306 ssl  information_schema  SQL > SELECT * FROM tables;
++---------------+--------------------+---------------------------------------+-------------+--------------------+---------+------------+------------+----------------+-------------+-----------------+--------------+-----------+----------------+---------------------+-------------+------------+--------------------+----------+----------------+---------------+
+| TABLE_CATALOG | TABLE_SCHEMA       | TABLE_NAME                            | TABLE_TYPE  | ENGINE             | VERSION | ROW_FORMAT | TABLE_ROWS | AVG_ROW_LENGTH | DATA_LENGTH | MAX_DATA_LENGTH | INDEX_LENGTH | DATA_FREE | AUTO_INCREMENT | CREATE_TIME         | UPDATE_TIME | CHECK_TIME | TABLE_COLLATION    | CHECKSUM | CREATE_OPTIONS | TABLE_COMMENT |
++---------------+--------------------+---------------------------------------+-------------+--------------------+---------+------------+------------+----------------+-------------+-----------------+--------------+-----------+----------------+---------------------+-------------+------------+--------------------+----------+----------------+---------------+
+| def           | information_schema | CHARACTER_SETS                        | SYSTEM VIEW | NULL               |      10 | NULL       |          0 |              0 |           0 |               0 |            0 |         0 |           NULL | 2025-08-20 19:39:11 | NULL        | NULL       | NULL               |     NULL |                |               |
+| def           | information_schema | CHECK_CONSTRAINTS                     | SYSTEM VIEW | NULL               |      10 | NULL       |          0 |              0 |           0 |               0 |            0 |         0 |           NULL | 2025-08-20 19:39:11 | NULL        | NULL       | NULL               |     NULL |                |               |
+| def           | information_schema | COLLATIONS                            | SYSTEM VIEW | NULL               |      10 | NULL       |          0 |              0 |           0 |               0 |            0 |         0 |           NULL | 2025-08-20 19:39:11 | NULL        | NULL       | NULL               |     NULL |                |               |
+| def           | information_schema | COLLATION_CHARACTER_SET_APPLICABILITY | SYSTEM VIEW | NULL               |      10 | NULL       |          0 |              0 |           0 |               0 |            0 |         0 |           NULL | 2025-08-20 19:39:11 | NULL        | NULL       | NULL               |     NULL |                |               |
+| def           | information_schema | COLUMNS                               | SYSTEM VIEW | NULL               |      10 | NULL       |          0 |              0 |           0 |               0 |            0 |         0 |           NULL | 2025-08-20 19:39:11 | NULL        | NULL       | NULL               |     NULL |                |               |
+| def           | information_schema | COLUMNS_EXTENSIONS                    | SYSTEM VIEW | NULL               |      10 | NULL       |          0 |              0 |           0 |               0 |            0 |         0 |           NULL | 2025-08-20 19:39:11 | NULL        | NULL       | NULL               |     NULL |                |               |
+| def           | information_schema | COLUMN_STATISTICS                     | SYSTEM VIEW | NULL               |      10 | NULL       |          0 |              0 |           0 |               0 |            0 |         0 |           NULL | 2025-08-20 19:39:11 | NULL        | NULL       | NULL               |     NULL |                |               |
+| def           | information_schema | EVENTS                                | SYSTEM VIEW | NULL               |      10 | NULL       |          0 |              0 |           0 |               0 |            0 |         0 |           NULL | 2025-08-20 19:39:11 | NULL        | NULL       | NULL               |     NULL |                |               |
+| def           | information_schema | FILES                                 | SYSTEM VIEW | NULL               |      10 | NULL       |          0 |              0 |           0 |               0 |            0 |         0 |           NULL | 2025-08-20 19:39:11 | NULL        | NULL       | NULL               |     NULL |                |               |
+| def           | information_schema | INNODB_DATAFILES                      | SYSTEM VIEW | NULL               |      10 | NULL       |          0 |              0 |           0 |               0 |            0 |         0 |           NULL | 2025-08-20 19:39:11 | NULL        | NULL       | NULL               |     NULL |                |               |
+| def           | information_schema | INNODB_FOREIGN                        | SYSTEM VIEW | NULL               |      10 | NULL       |          0 |              0 |           0 |               0 |            0 |         0 |           NULL | 2025-08-20 19:39:11 | NULL        | NULL       | NULL               |     NULL |                |               |
+| def           | information_schema | INNODB_FOREIGN_COLS                   | SYSTEM VIEW | NULL               |      10 | NULL       |          0 |              0 |           0 |               0 |            0 |         0 |           NULL | 2025-08-20 19:39:11 | NULL        | NULL       | NULL               |     NULL |                |               |
+| def           | information_schema | INNODB_FIELDS                         | SYSTEM VIEW | NULL               |      10 | NULL       |          0 |              0 |           0 |               0 |            0 |         0 |           NULL | 2025-08-20 19:39:11 | NULL        | NULL       | NULL               |     NULL |                |               |
+| def           | information_schema | INNODB_TABLESPACES_BRIEF              | SYSTEM VIEW | NULL               |      10 | NULL       |          0 |              0 |           0 |               0 |            0 |         0 |           NULL | 2025-08-20 19:39:11 | NULL        | NULL       | NULL               |     NULL |                |               |
+| def           | information_schema | KEY_COLUMN_USAGE                      | SYSTEM VIEW | NULL               |      10 | NULL       |          0 |              0 |           0 |               0 |            0 |         0 |           NULL | 2025-08-20 19:39:11 | NULL        | NULL       | NULL               |     NULL |                |               |
+| def           | information_schema | KEYWORDS                              | SYSTEM VIEW | NULL               |      10 | NULL       |          0 |              0 |           0 |               0 |            0 |         0 |           NULL | 2025-08-20 19:39:11 | NULL        | NULL       | NULL               |     NULL |                |               |
+| def           | information_schema | PARAMETERS                            | SYSTEM VIEW | NULL               |      10 | NULL       |          0 |              0 |           0 |               0 |            0 |         0 |           NULL | 2025-08-20 19:39:11 | NULL        | NULL       | NULL               |     NULL |                |               |
+| def           | information_schema | PARTITIONS                            | SYSTEM VIEW | NULL               |      10 | NULL       |          0 |              0 |           0 |               0 |            0 |         0 |           NULL | 2025-08-20 19:39:11 | NULL        | NULL       | NULL               |     NULL |                |               |
+| def           | information_schema | REFERENTIAL_CONSTRAINTS               | SYSTEM VIEW | NULL               |      10 | NULL       |          0 |              0 |           0 |               0 |            0 |         0 |           NULL | 2025-08-20 19:39:11 | NULL        | NULL       | NULL               |     NULL |                |               |
+| def           | information_schema | RESOURCE_GROUPS                       | SYSTEM VIEW | NULL               |      10 | NULL       |          0 |              0 |           0 |               0 |            0 |         0 |           NULL | 2025-08-20 19:39:11 | NULL        | NULL       | NULL               |     NULL |                |               |
+| def           | information_schema | ROUTINES                              | SYSTEM VIEW | NULL               |      10 | NULL       |          0 |              0 |           0 |               0 |            0 |         0 |           NULL | 2025-08-20 19:39:11 | NULL        | NULL       | NULL               |     NULL |                |               |
+| def           | information_schema | SCHEMATA                              | SYSTEM VIEW | NULL               |      10 | NULL       |          0 |              0 |           0 |               0 |            0 |         0 |           NULL | 2025-08-20 19:39:11 | NULL        | NULL       | NULL               |     NULL |                |               |
+| def           | information_schema | SCHEMATA_EXTENSIONS                   | SYSTEM VIEW | NULL               |      10 | NULL       |          0 |              0 |           0 |               0 |            0 |         0 |           NULL | 2025-08-20 19:39:11 | NULL        | NULL       | NULL               |     NULL |                |               |
+| def           | information_schema | ST_SPATIAL_REFERENCE_SYSTEMS          | SYSTEM VIEW | NULL               |      10 | NULL       |          0 |              0 |           0 |               0 |            0 |         0 |           NULL | 2025-08-20 19:39:11 | NULL        | NULL       | NULL               |     NULL |                |               |
+| def           | information_schema | ST_UNITS_OF_MEASURE                   | SYSTEM VIEW | NULL               |      10 | NULL       |          0 |              0 |           0 |               0 |            0 |         0 |           NULL | 2025-08-20 19:39:11 | NULL        | NULL       | NULL               |     NULL |                |               |
+| def           | information_schema | ST_GEOMETRY_COLUMNS                   | SYSTEM VIEW | NULL               |      10 | NULL       |          0 |              0 |           0 |               0 |            0 |         0 |           NULL | 2025-08-20 19:39:11 | NULL        | NULL       | NULL               |     NULL |                |               |
+| def           | information_schema | STATISTICS                            | SYSTEM VIEW | NULL               |      10 | NULL       |          0 |              0 |           0 |               0 |            0 |         0 |           NULL | 2025-08-20 19:39:11 | NULL        | NULL       | NULL               |     NULL |                |               |
+| def           | information_schema | TABLE_CONSTRAINTS                     | SYSTEM VIEW | NULL               |      10 | NULL       |          0 |              0 |           0 |               0 |            0 |         0 |           NULL | 2025-08-20 19:39:11 | NULL        | NULL       | NULL               |     NULL |                |               |
+| def           | information_schema | TABLE_CONSTRAINTS_EXTENSIONS          | SYSTEM VIEW | NULL               |      10 | NULL       |          0 |              0 |           0 |               0 |            0 |         0 |           NULL | 2025-08-20 19:39:11 | NULL        | NULL       | NULL               |     NULL |                |               |
+| def           | information_schema | TABLES                                | SYSTEM VIEW | NULL               |      10 | NULL       |          0 |              0 |           0 |               0 |            0 |         0 |           NULL | 2025-08-20 19:39:11 | NULL        | NULL       | NULL               |     NULL |                |               |
+| def           | information_schema | TABLES_EXTENSIONS                     | SYSTEM VIEW | NULL               |      10 | NULL       |          0 |              0 |           0 |               0 |            0 |         0 |           NULL | 2025-08-20 19:39:11 | NULL        | NULL       | NULL               |     NULL |                |               |
+| def           | information_schema | TABLESPACES_EXTENSIONS                | SYSTEM VIEW | NULL               |      10 | NULL       |          0 |              0 |           0 |               0 |            0 |         0 |           NULL | 2025-08-20 19:39:11 | NULL        | NULL       | NULL               |     NULL |                |               |
+| def           | information_schema | TRIGGERS                              | SYSTEM VIEW | NULL               |      10 | NULL       |          0 |              0 |           0 |               0 |            0 |         0 |           NULL | 2025-08-20 19:39:11 | NULL        | NULL       | NULL               |     NULL |                |               |
+| def           | information_schema | VIEW_ROUTINE_USAGE                    | SYSTEM VIEW | NULL               |      10 | NULL       |          0 |              0 |           0 |               0 |            0 |         0 |           NULL | 2025-08-20 19:39:11 | NULL        | NULL       | NULL               |     NULL |                |               |
+| def           | information_schema | VIEW_TABLE_USAGE                      | SYSTEM VIEW | NULL               |      10 | NULL       |          0 |              0 |           0 |               0 |            0 |         0 |           NULL | 2025-08-20 19:39:11 | NULL        | NULL       | NULL               |     NULL |                |               |
+| def           | information_schema | VIEWS                                 | SYSTEM VIEW | NULL               |      10 | NULL       |          0 |              0 |           0 |               0 |            0 |         0 |           NULL | 2025-08-20 19:39:11 | NULL        | NULL       | NULL               |     NULL |                |               |
+| def           | information_schema | COLUMN_PRIVILEGES                     | SYSTEM VIEW | NULL               |      10 | NULL       |          0 |              0 |           0 |               0 |            0 |         0 |           NULL | 2025-08-20 19:39:11 | NULL        | NULL       | NULL               |     NULL |                |               |
+| def           | information_schema | ENGINES                               | SYSTEM VIEW | NULL               |      10 | NULL       |          0 |              0 |           0 |               0 |            0 |         0 |           NULL | 2025-08-20 19:39:11 | NULL        | NULL       | NULL               |     NULL |                |               |
+| def           | information_schema | OPTIMIZER_TRACE                       | SYSTEM VIEW | NULL               |      10 | NULL       |          0 |              0 |           0 |               0 |            0 |         0 |           NULL | 2025-08-20 19:39:11 | NULL        | NULL       | NULL               |     NULL |                |               |
+| def           | information_schema | PLUGINS                               | SYSTEM VIEW | NULL               |      10 | NULL       |          0 |              0 |           0 |               0 |            0 |         0 |           NULL | 2025-08-20 19:39:11 | NULL        | NULL       | NULL               |     NULL |                |               |
+| def           | information_schema | PROCESSLIST                           | SYSTEM VIEW | NULL               |      10 | NULL       |          0 |              0 |           0 |               0 |            0 |         0 |           NULL | 2025-08-20 19:39:11 | NULL        | NULL       | NULL               |     NULL |                |               |
+| def           | information_schema | PROFILING                             | SYSTEM VIEW | NULL               |      10 | NULL       |          0 |              0 |           0 |               0 |            0 |         0 |           NULL | 2025-08-20 19:39:11 | NULL        | NULL       | NULL               |     NULL |                |               |
+| def           | information_schema | SCHEMA_PRIVILEGES                     | SYSTEM VIEW | NULL               |      10 | NULL       |          0 |              0 |           0 |               0 |            0 |         0 |           NULL | 2025-08-20 19:39:11 | NULL        | NULL       | NULL               |     NULL |                |               |
+| def           | information_schema | TABLESPACES                           | SYSTEM VIEW | NULL               |      10 | NULL       |          0 |              0 |           0 |               0 |            0 |         0 |           NULL | 2025-08-20 19:39:11 | NULL        | NULL       | NULL               |     NULL |                |               |
+| def           | information_schema | TABLE_PRIVILEGES                      | SYSTEM VIEW | NULL               |      10 | NULL       |          0 |              0 |           0 |               0 |            0 |         0 |           NULL | 2025-08-20 19:39:11 | NULL        | NULL       | NULL               |     NULL |                |               |
+| def           | information_schema | USER_PRIVILEGES                       | SYSTEM VIEW | NULL               |      10 | NULL       |          0 |              0 |           0 |               0 |            0 |         0 |           NULL | 2025-08-20 19:39:11 | NULL        | NULL       | NULL               |     NULL |                |               |
+| def           | performance_schema | processlist                           | BASE TABLE  | PERFORMANCE_SCHEMA |      10 | Dynamic    |        256 |              0 |           0 |               0 |            0 |         0 |           NULL | 2025-08-20 19:39:11 | NULL        | NULL       | utf8mb4_0900_ai_ci |     NULL |                |               |
+| def           | performance_schema | session_account_connect_attrs         | BASE TABLE  | PERFORMANCE_SCHEMA |      10 | Dynamic    |     131072 |              0 |           0 |               0 |            0 |         0 |           NULL | 2025-08-20 19:39:11 | NULL        | NULL       | utf8mb4_bin        |     NULL |                |               |
+| def           | performance_schema | global_status                         | BASE TABLE  | PERFORMANCE_SCHEMA |      10 | Dynamic    |        258 |              0 |           0 |               0 |            0 |         0 |           NULL | 2025-08-20 19:39:11 | NULL        | NULL       | utf8mb4_0900_ai_ci |     NULL |                |               |
+| def           | performance_schema | session_status                        | BASE TABLE  | PERFORMANCE_SCHEMA |      10 | Dynamic    |        258 |              0 |           0 |               0 |            0 |         0 |           NULL | 2025-08-20 19:39:11 | NULL        | NULL       | utf8mb4_0900_ai_ci |     NULL |                |               |
+| def           | performance_schema | global_variables                      | BASE TABLE  | PERFORMANCE_SCHEMA |      10 | Dynamic    |        675 |              0 |           0 |               0 |            0 |         0 |           NULL | 2025-08-20 19:39:11 | NULL        | NULL       | utf8mb4_0900_ai_ci |     NULL |                |               |
+| def           | performance_schema | session_variables                     | BASE TABLE  | PERFORMANCE_SCHEMA |      10 | Dynamic    |        675 |              0 |           0 |               0 |            0 |         0 |           NULL | 2025-08-20 19:39:11 | NULL        | NULL       | utf8mb4_0900_ai_ci |     NULL |                |               |
+| def           | performance_schema | variables_info                        | BASE TABLE  | PERFORMANCE_SCHEMA |      10 | Dynamic    |        675 |              0 |           0 |               0 |            0 |         0 |           NULL | 2025-08-20 19:39:11 | NULL        | NULL       | utf8mb4_0900_ai_ci |     NULL |                |               |
+| def           | performance_schema | persisted_variables                   | BASE TABLE  | PERFORMANCE_SCHEMA |      10 | Dynamic    |          0 |              0 |           0 |               0 |            0 |         0 |           NULL | 2025-08-20 19:39:11 | NULL        | NULL       | utf8mb4_0900_ai_ci |     NULL |                |               |
+| def           | information_schema | ENABLED_ROLES                         | SYSTEM VIEW | NULL               |      10 | NULL       |          0 |              0 |           0 |               0 |            0 |         0 |           NULL | 2025-08-20 19:39:13 | NULL        | NULL       | NULL               |     NULL |                |               |
+| def           | information_schema | APPLICABLE_ROLES                      | SYSTEM VIEW | NULL               |      10 | NULL       |          0 |              0 |           0 |               0 |            0 |         0 |           NULL | 2025-08-20 19:39:13 | NULL        | NULL       | NULL               |     NULL |                |               |
+| def           | information_schema | ADMINISTRABLE_ROLE_AUTHORIZATIONS     | SYSTEM VIEW | NULL               |      10 | NULL       |          0 |              0 |           0 |               0 |            0 |         0 |           NULL | 2025-08-20 19:39:13 | NULL        | NULL       | NULL               |     NULL |                |               |
+| def           | information_schema | ROLE_COLUMN_GRANTS                    | SYSTEM VIEW | NULL               |      10 | NULL       |          0 |              0 |           0 |               0 |            0 |         0 |           NULL | 2025-08-20 19:39:13 | NULL        | NULL       | NULL               |     NULL |                |               |
+| def           | information_schema | ROLE_ROUTINE_GRANTS                   | SYSTEM VIEW | NULL               |      10 | NULL       |          0 |              0 |           0 |               0 |            0 |         0 |           NULL | 2025-08-20 19:39:13 | NULL        | NULL       | NULL               |     NULL |                |               |
+| def           | information_schema | ROLE_TABLE_GRANTS                     | SYSTEM VIEW | NULL               |      10 | NULL       |          0 |              0 |           0 |               0 |            0 |         0 |           NULL | 2025-08-20 19:39:13 | NULL        | NULL       | NULL               |     NULL |                |               |
+| def           | information_schema | USER_ATTRIBUTES                       | SYSTEM VIEW | NULL               |      10 | NULL       |          0 |              0 |           0 |               0 |            0 |         0 |           NULL | 2025-08-20 19:39:13 | NULL        | NULL       | NULL               |     NULL |                |               |
+| def           | information_schema | INNODB_CMP                            | SYSTEM VIEW | NULL               |      10 | NULL       |          0 |              0 |           0 |               0 |            0 |         0 |           NULL | 2025-08-20 19:39:15 | NULL        | NULL       | NULL               |     NULL |                |               |
+| def           | information_schema | INNODB_CMPMEM                         | SYSTEM VIEW | NULL               |      10 | NULL       |          0 |              0 |           0 |               0 |            0 |         0 |           NULL | 2025-08-20 19:39:15 | NULL        | NULL       | NULL               |     NULL |                |               |
+| def           | information_schema | INNODB_TRX                            | SYSTEM VIEW | NULL               |      10 | NULL       |          0 |              0 |           0 |               0 |            0 |         0 |           NULL | 2025-08-20 19:39:15 | NULL        | NULL       | NULL               |     NULL |                |               |
+| def           | information_schema | INNODB_CMP_PER_INDEX                  | SYSTEM VIEW | NULL               |      10 | NULL       |          0 |              0 |           0 |               0 |            0 |         0 |           NULL | 2025-08-20 19:39:15 | NULL        | NULL       | NULL               |     NULL |                |               |
+| def           | information_schema | INNODB_CMP_RESET                      | SYSTEM VIEW | NULL               |      10 | NULL       |          0 |              0 |           0 |               0 |            0 |         0 |           NULL | 2025-08-20 19:39:15 | NULL        | NULL       | NULL               |     NULL |                |               |
+| def           | information_schema | INNODB_FT_DELETED                     | SYSTEM VIEW | NULL               |      10 | NULL       |          0 |              0 |           0 |               0 |            0 |         0 |           NULL | 2025-08-20 19:39:15 | NULL        | NULL       | NULL               |     NULL |                |               |
+| def           | information_schema | INNODB_BUFFER_POOL_STATS              | SYSTEM VIEW | NULL               |      10 | NULL       |          0 |              0 |           0 |               0 |            0 |         0 |           NULL | 2025-08-20 19:39:15 | NULL        | NULL       | NULL               |     NULL |                |               |
+| def           | information_schema | INNODB_CMPMEM_RESET                   | SYSTEM VIEW | NULL               |      10 | NULL       |          0 |              0 |           0 |               0 |            0 |         0 |           NULL | 2025-08-20 19:39:15 | NULL        | NULL       | NULL               |     NULL |                |               |
+| def           | information_schema | INNODB_BUFFER_PAGE_LRU                | SYSTEM VIEW | NULL               |      10 | NULL       |          0 |              0 |           0 |               0 |            0 |         0 |           NULL | 2025-08-20 19:39:15 | NULL        | NULL       | NULL               |     NULL |                |               |
+| def           | information_schema | INNODB_CMP_PER_INDEX_RESET            | SYSTEM VIEW | NULL               |      10 | NULL       |          0 |              0 |           0 |               0 |            0 |         0 |           NULL | 2025-08-20 19:39:15 | NULL        | NULL       | NULL               |     NULL |                |               |
+| def           | information_schema | INNODB_FT_CONFIG                      | SYSTEM VIEW | NULL               |      10 | NULL       |          0 |              0 |           0 |               0 |            0 |         0 |           NULL | 2025-08-20 19:39:15 | NULL        | NULL       | NULL               |     NULL |                |               |
+| def           | information_schema | INNODB_BUFFER_PAGE                    | SYSTEM VIEW | NULL               |      10 | NULL       |          0 |              0 |           0 |               0 |            0 |         0 |           NULL | 2025-08-20 19:39:15 | NULL        | NULL       | NULL               |     NULL |                |               |
+| def           | information_schema | INNODB_TABLESPACES                    | SYSTEM VIEW | NULL               |      10 | NULL       |          0 |              0 |           0 |               0 |            0 |         0 |           NULL | 2025-08-20 19:39:15 | NULL        | NULL       | NULL               |     NULL |                |               |
+| def           | information_schema | INNODB_FT_BEING_DELETED               | SYSTEM VIEW | NULL               |      10 | NULL       |          0 |              0 |           0 |               0 |            0 |         0 |           NULL | 2025-08-20 19:39:15 | NULL        | NULL       | NULL               |     NULL |                |               |
+| def           | information_schema | INNODB_TEMP_TABLE_INFO                | SYSTEM VIEW | NULL               |      10 | NULL       |          0 |              0 |           0 |               0 |            0 |         0 |           NULL | 2025-08-20 19:39:15 | NULL        | NULL       | NULL               |     NULL |                |               |
+| def           | information_schema | INNODB_FT_DEFAULT_STOPWORD            | SYSTEM VIEW | NULL               |      10 | NULL       |          0 |              0 |           0 |               0 |            0 |         0 |           NULL | 2025-08-20 19:39:15 | NULL        | NULL       | NULL               |     NULL |                |               |
+| def           | information_schema | INNODB_METRICS                        | SYSTEM VIEW | NULL               |      10 | NULL       |          0 |              0 |           0 |               0 |            0 |         0 |           NULL | 2025-08-20 19:39:15 | NULL        | NULL       | NULL               |     NULL |                |               |
+| def           | information_schema | INNODB_FT_INDEX_CACHE                 | SYSTEM VIEW | NULL               |      10 | NULL       |          0 |              0 |           0 |               0 |            0 |         0 |           NULL | 2025-08-20 19:39:15 | NULL        | NULL       | NULL               |     NULL |                |               |
+| def           | information_schema | INNODB_FT_INDEX_TABLE                 | SYSTEM VIEW | NULL               |      10 | NULL       |          0 |              0 |           0 |               0 |            0 |         0 |           NULL | 2025-08-20 19:39:15 | NULL        | NULL       | NULL               |     NULL |                |               |
+| def           | information_schema | INNODB_TABLES                         | SYSTEM VIEW | NULL               |      10 | NULL       |          0 |              0 |           0 |               0 |            0 |         0 |           NULL | 2025-08-20 19:39:15 | NULL        | NULL       | NULL               |     NULL |                |               |
+| def           | information_schema | INNODB_TABLESTATS                     | SYSTEM VIEW | NULL               |      10 | NULL       |          0 |              0 |           0 |               0 |            0 |         0 |           NULL | 2025-08-20 19:39:15 | NULL        | NULL       | NULL               |     NULL |                |               |
+| def           | information_schema | INNODB_INDEXES                        | SYSTEM VIEW | NULL               |      10 | NULL       |          0 |              0 |           0 |               0 |            0 |         0 |           NULL | 2025-08-20 19:39:15 | NULL        | NULL       | NULL               |     NULL |                |               |
+| def           | information_schema | INNODB_COLUMNS                        | SYSTEM VIEW | NULL               |      10 | NULL       |          0 |              0 |           0 |               0 |            0 |         0 |           NULL | 2025-08-20 19:39:15 | NULL        | NULL       | NULL               |     NULL |                |               |
+| def           | information_schema | INNODB_VIRTUAL                        | SYSTEM VIEW | NULL               |      10 | NULL       |          0 |              0 |           0 |               0 |            0 |         0 |           NULL | 2025-08-20 19:39:15 | NULL        | NULL       | NULL               |     NULL |                |               |
+| def           | information_schema | INNODB_CACHED_INDEXES                 | SYSTEM VIEW | NULL               |      10 | NULL       |          0 |              0 |           0 |               0 |            0 |         0 |           NULL | 2025-08-20 19:39:15 | NULL        | NULL       | NULL               |     NULL |                |               |
+| def           | information_schema | INNODB_SESSION_TEMP_TABLESPACES       | SYSTEM VIEW | NULL               |      10 | NULL       |          0 |              0 |           0 |               0 |            0 |         0 |           NULL | 2025-08-20 19:39:15 | NULL        | NULL       | NULL               |     NULL |                |               |
++---------------+--------------------+---------------------------------------+-------------+--------------------+---------+------------+------------+----------------+-------------+-----------------+--------------+-----------+----------------+---------------------+-------------+------------+--------------------+----------+----------------+---------------+
+87 rows in set (0.0662 sec)
+ MySQL  localhost:3306 ssl  information_schema  SQL > CREATE TABLE tablaC;
+ERROR: 1044 (42000): Access denied for user 'prueba'@'localhost' to database 'information_schema'
+ MySQL  localhost:3306 ssl  information_schema  SQL > \c --mc root@localhost
+
+Creating a Classic session to 'root@localhost'
+Fetching global names for auto-completion... Press ^C to stop.
+Closing old connection...
+Your MySQL connection id is 19
+Server version: 8.0.43 MySQL Community Server - GPL
+No default schema selected; type \use <schema> to set one.
+ MySQL  localhost:3306 ssl  SQL > GRANT ALL ON tbd2.* TO "prueba@localhost";
+
+ERROR: 1410 (42000): You are not allowed to create a user with GRANT
+ MySQL  localhost:3306 ssl  SQL > grant all on tbd2.* to "prueba"@"localhost";
+Query OK, 0 rows affected (0.0180 sec)
+ MySQL  localhost:3306 ssl  SQL > \c --mc prueba@localhost
+Creating a Classic session to 'prueba@localhost'
+Please provide the password for 'prueba@localhost': *********
+Save password for 'prueba@localhost'? [Y]es/[N]o/Ne[v]er (default No): N
+Fetching global names for auto-completion... Press ^C to stop.
+Error during auto-completion cache update: Access denied; you need (at least one of) the PROCESS privilege(s) for this operation
+Closing old connection...
+Your MySQL connection id is 20
+Server version: 8.0.43 MySQL Community Server - GPL
+No default schema selected; type \use <schema> to set one.
+ MySQL  localhost:3306 ssl  SQL > SHOW DATABASES;
++--------------------+
+| Database           |
++--------------------+
+| information_schema |
+| performance_schema |
+| tbd2               |
++--------------------+
+3 rows in set (0.0020 sec)
+ MySQL  localhost:3306 ssl  SQL > USE tbd2;
+Default schema set to `tbd2`.
+Fetching global names, object names from `tbd2` for auto-completion... Press ^C to stop.
+ MySQL  localhost:3306 ssl  tbd2  SQL > SHOW TABLES;
++----------------+
+| Tables_in_tbd2 |
++----------------+
+| asignatura     |
+| cliente        |
+| detallehorario |
+| estudiante     |
+| horario        |
+| producto       |
+| tablaa         |
+| tablab         |
+| venta          |
+| venta_detalle  |
++----------------+
+10 rows in set (0.0027 sec)
+ MySQL  localhost:3306 ssl  tbd2  SQL > CREATE TABLE prueba(ID INT);
+Query OK, 0 rows affected (0.0623 sec)
+ MySQL  localhost:3306 ssl  tbd2  SQL > \c --mc root@localhost
+Creating a Classic session to 'root@localhost'
+Fetching global names for auto-completion... Press ^C to stop.
+Closing old connection...
+Your MySQL connection id is 21
+Server version: 8.0.43 MySQL Community Server - GPL
+No default schema selected; type \use <schema> to set one.
+ MySQL  localhost:3306 ssl  SQL > CREATE user "prueba2"@"localhost"
+                               -> IDENTIFIED BY "123456789";
+Query OK, 0 rows affected (0.0236 sec)
+ MySQL  localhost:3306 ssl  SQL > GRANT SELECT ON tbd2.tablaA to "prueba2"@"localhost";
+Query OK, 0 rows affected (0.0151 sec)
+ MySQL  localhost:3306 ssl  SQL > \c --mc prueba2@localhost
+Creating a Classic session to 'prueba2@localhost'
+Please provide the password for 'prueba2@localhost': *********
+Save password for 'prueba2@localhost'? [Y]es/[N]o/Ne[v]er (default No): n
+Fetching global names for auto-completion... Press ^C to stop.
+Error during auto-completion cache update: Access denied; you need (at least one of) the PROCESS privilege(s) for this operation
+Closing old connection...
+Your MySQL connection id is 22
+Server version: 8.0.43 MySQL Community Server - GPL
+No default schema selected; type \use <schema> to set one.
+ MySQL  localhost:3306 ssl  SQL > USE tbd2;
+Default schema set to `tbd2`.
+Fetching global names, object names from `tbd2` for auto-completion... Press ^C to stop.
+ MySQL  localhost:3306 ssl  tbd2  SQL > SHOW TABLES;
++----------------+
+| Tables_in_tbd2 |
++----------------+
+| tablaa         |
++----------------+
+1 row in set (0.0025 sec)
+ MySQL  localhost:3306 ssl  tbd2  SQL > SELECT * FROM tablaA;
++----+-------+
+| id | valor |
++----+-------+
+|  1 | A     |
+|  2 | B     |
+|  3 | C     |
+|  4 | D     |
++----+-------+
+4 rows in set (0.0017 sec)
+ MySQL  localhost:3306 ssl  tbd2  SQL > \c --mc root@localhost
+Creating a Classic session to 'root@localhost'
+Fetching global names for auto-completion... Press ^C to stop.
+Closing old connection...
+Your MySQL connection id is 23
+Server version: 8.0.43 MySQL Community Server - GPL
+No default schema selected; type \use <schema> to set one.
+ MySQL  localhost:3306 ssl  SQL > CREATE user "prueba3"@"localhost"
+                               -> IDENTIFIED BY "123456789";
+Query OK, 0 rows affected (0.0318 sec)
+ MySQL  localhost:3306 ssl  SQL > GRANT SELECT(valor) ON tbd2.tablaA TO "prueba3"@"localhost";
+Query OK, 0 rows affected (0.0145 sec)
+ MySQL  localhost:3306 ssl  SQL > \c --mc prueba3@localhost
+Creating a Classic session to 'prueba3@localhost'
+Please provide the password for 'prueba3@localhost': *********
+Save password for 'prueba3@localhost'? [Y]es/[N]o/Ne[v]er (default No): N
+Fetching global names for auto-completion... Press ^C to stop.
+Error during auto-completion cache update: Access denied; you need (at least one of) the PROCESS privilege(s) for this operation
+Closing old connection...
+Your MySQL connection id is 24
+Server version: 8.0.43 MySQL Community Server - GPL
+No default schema selected; type \use <schema> to set one.
+ MySQL  localhost:3306 ssl  SQL > USE tbd2;
+Default schema set to `tbd2`.
+Fetching global names, object names from `tbd2` for auto-completion... Press ^C to stop.
+ MySQL  localhost:3306 ssl  tbd2  SQL > SHOW TABLES;
++----------------+
+| Tables_in_tbd2 |
++----------------+
+| tablaa         |
++----------------+
+1 row in set (0.0025 sec)
+ MySQL  localhost:3306 ssl  tbd2  SQL > SELECT *  FROM tablaA;
+ERROR: 1143 (42000): SELECT command denied to user 'prueba3'@'localhost' for column 'id' in table 'tablaa'
+ MySQL  localhost:3306 ssl  tbd2  SQL > SELECT valor  FROM tablaA;
++-------+
+| valor |
++-------+
+| A     |
+| B     |
+| C     |
+| D     |
++-------+
+4 rows in set (0.0008 sec)
+ MySQL  localhost:3306 ssl  tbd2  SQL >
